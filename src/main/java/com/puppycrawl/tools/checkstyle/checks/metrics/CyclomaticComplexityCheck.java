@@ -29,106 +29,6 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 
-/**
- * <div>
- * Checks cyclomatic complexity against a specified limit. It is a measure of
- * the minimum number of possible paths through the source and therefore the
- * number of required tests, it is not about quality of code! It is only
- * applied to methods, c-tors,
- * <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html">
- * static initializers and instance initializers</a>.
- * </div>
- *
- * <p>
- * The complexity is equal to the number of decision points {@code + 1}.
- * Decision points:
- * </p>
- * <ul>
- * <li>
- * {@code if}, {@code while}, {@code do}, {@code for},
- * {@code ?:}, {@code catch}, {@code switch}, {@code case} statements.
- * </li>
- * <li>
- *  Operators {@code &amp;&amp;} and {@code ||} in the body of target.
- * </li>
- * <li>
- *  {@code when} expression in case labels, also known as guards.
- * </li>
- * </ul>
- *
- * <p>
- * By pure theory level 1-4 is considered easy to test, 5-7 OK, 8-10 consider
- * re-factoring to ease testing, and 11+ re-factor now as testing will be painful.
- * </p>
- *
- * <p>
- * When it comes to code quality measurement by this metric level 10 is very
- * good level as a ultimate target (that is hard to archive). Do not be ashamed
- * to have complexity level 15 or even higher, but keep it below 20 to catch
- * really bad-designed code automatically.
- * </p>
- *
- * <p>
- * Please use Suppression to avoid violations on cases that could not be split
- * in few methods without damaging readability of code or encapsulation.
- * </p>
- * <ul>
- * <li>
- * Property {@code max} - Specify the maximum threshold allowed.
- * Type is {@code int}.
- * Default value is {@code 10}.
- * </li>
- * <li>
- * Property {@code switchBlockAsSingleDecisionPoint} - Control whether to treat
- * the whole switch block as a single decision point.
- * Type is {@code boolean}.
- * Default value is {@code false}.
- * </li>
- * <li>
- * Property {@code tokens} - tokens to check
- * Type is {@code java.lang.String[]}.
- * Validation type is {@code tokenSet}.
- * Default value is:
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHILE">
- * LITERAL_WHILE</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_DO">
- * LITERAL_DO</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FOR">
- * LITERAL_FOR</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_IF">
- * LITERAL_IF</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SWITCH">
- * LITERAL_SWITCH</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CASE">
- * LITERAL_CASE</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">
- * LITERAL_CATCH</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">
- * QUESTION</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">
- * LAND</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LOR">
- * LOR</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHEN">
- * LITERAL_WHEN</a>.
- * </li>
- * </ul>
- *
- * <p>
- * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
- * </p>
- *
- * <p>
- * Violation Message Keys:
- * </p>
- * <ul>
- * <li>
- * {@code cyclomaticComplexity}
- * </li>
- * </ul>
- *
- * @since 3.2
- */
 @FileStatefulCheck
 public class CyclomaticComplexityCheck
     extends AbstractCheck {
@@ -140,7 +40,10 @@ public class CyclomaticComplexityCheck
     public static final String MSG_KEY = "cyclomaticComplexity";
 
     /** The initial current value. */
-    private static final BigInteger INITIAL_VALUE = BigInteger.ONE;
+    private static final BigInteger INITIAL_VALUE = BigInteger.ZERO;
+
+    /** The initial method name value. */
+    private static final String INITIAL_METHOD_NAME = "";
 
     /** Default allowed complexity. */
     private static final int DEFAULT_COMPLEXITY_VALUE = 10;
@@ -148,11 +51,17 @@ public class CyclomaticComplexityCheck
     /** Stack of values - all but the current value. */
     private final Deque<BigInteger> valueStack = new ArrayDeque<>();
 
+    /** Stack of method names for tracking recursion. */
+    private final Deque<String> methodNameStack = new ArrayDeque<>();
+
     /** Control whether to treat the whole switch block as a single decision point. */
     private boolean switchBlockAsSingleDecisionPoint;
 
     /** The current value. */
     private BigInteger currentValue = INITIAL_VALUE;
+
+    /** The current method name. */
+    private String currentMethodName = INITIAL_METHOD_NAME;
 
     /** Specify the maximum threshold allowed. */
     private int max = DEFAULT_COMPLEXITY_VALUE;
@@ -189,14 +98,17 @@ public class CyclomaticComplexityCheck
             TokenTypes.LITERAL_DO,
             TokenTypes.LITERAL_FOR,
             TokenTypes.LITERAL_IF,
+            TokenTypes.LITERAL_ELSE,
             TokenTypes.LITERAL_SWITCH,
             TokenTypes.LITERAL_CASE,
+            TokenTypes.LITERAL_DEFAULT,
             TokenTypes.LITERAL_CATCH,
             TokenTypes.QUESTION,
             TokenTypes.LAND,
             TokenTypes.LOR,
             TokenTypes.COMPACT_CTOR_DEF,
             TokenTypes.LITERAL_WHEN,
+            TokenTypes.METHOD_CALL,
         };
     }
 
@@ -211,14 +123,17 @@ public class CyclomaticComplexityCheck
             TokenTypes.LITERAL_DO,
             TokenTypes.LITERAL_FOR,
             TokenTypes.LITERAL_IF,
+            TokenTypes.LITERAL_ELSE,
             TokenTypes.LITERAL_SWITCH,
             TokenTypes.LITERAL_CASE,
+            TokenTypes.LITERAL_DEFAULT,
             TokenTypes.LITERAL_CATCH,
             TokenTypes.QUESTION,
             TokenTypes.LAND,
             TokenTypes.LOR,
             TokenTypes.COMPACT_CTOR_DEF,
             TokenTypes.LITERAL_WHEN,
+            TokenTypes.METHOD_CALL,
         };
     }
 
@@ -241,7 +156,7 @@ public class CyclomaticComplexityCheck
             case TokenTypes.INSTANCE_INIT:
             case TokenTypes.STATIC_INIT:
             case TokenTypes.COMPACT_CTOR_DEF:
-                visitMethodDef();
+                visitMethodDef(ast);
                 break;
             default:
                 visitTokenHook(ast);
@@ -270,14 +185,81 @@ public class CyclomaticComplexityCheck
      * @param ast the token being visited
      */
     private void visitTokenHook(DetailAST ast) {
-        if (switchBlockAsSingleDecisionPoint) {
-            if (!ScopeUtil.isInBlockOf(ast, TokenTypes.LITERAL_SWITCH)) {
+        // Skip LITERAL_IF when it's part of an "else if" construct
+        if (ast.getType() == TokenTypes.LITERAL_IF && isElseIf(ast)) {
+            return;
+        }
+
+        // Check for recursive method calls
+        if (ast.getType() == TokenTypes.METHOD_CALL) {
+            if (isRecursiveCall(ast)) {
                 incrementCurrentValue(BigInteger.ONE);
             }
+            return;
         }
-        else if (ast.getType() != TokenTypes.LITERAL_SWITCH) {
-            incrementCurrentValue(BigInteger.ONE);
+
+        // Special handling for logical operators - only count start of sequences
+        if (ast.getType() == TokenTypes.LAND || ast.getType() == TokenTypes.LOR) {
+            if (isStartOfLogicalSequence(ast)) {
+                incrementCurrentValue(BigInteger.ONE);
+            }
+            return;
         }
+
+        if (!ScopeUtil.isInBlockOf(ast, TokenTypes.LITERAL_SWITCH)) {
+                incrementCurrentValue(BigInteger.ONE);
+            }
+    }
+
+    /**
+     * Checks if the given METHOD_CALL token is a recursive call to the current method.
+     *
+     * @param ast the METHOD_CALL token to check
+     * @return true if this is a recursive call, false otherwise
+     */
+    private boolean isRecursiveCall(DetailAST ast) {
+        if (INITIAL_METHOD_NAME.equals(currentMethodName)) {
+            return false;
+        }
+        
+        // Get the method name from the METHOD_CALL
+        final DetailAST methodNameNode = ast.getFirstChild();
+        if (methodNameNode != null && methodNameNode.getType() == TokenTypes.IDENT) {
+            final String calledMethodName = methodNameNode.getText();
+            return currentMethodName.equals(calledMethodName);
+        }
+        
+        return false;
+    }
+
+    /**
+     * Checks if the given LITERAL_IF token is part of an "else if" construct.
+     *
+     * @param ast the LITERAL_IF token to check
+     * @return true if this IF is part of an "else if", false otherwise
+     */
+    private boolean isElseIf(DetailAST ast) {
+        final DetailAST parent = ast.getParent();
+        return parent != null && parent.getType() == TokenTypes.LITERAL_ELSE;
+    }
+
+    /**
+     * Checks if the given LAND or LOR token is the start of a logical sequence.
+     * A logical sequence is a consecutive series of the same logical operator.
+     * Only the first operator in each sequence should contribute to complexity.
+     *
+     * @param ast the LAND or LOR token to check
+     * @return true if this token starts a new logical sequence, false otherwise
+     */
+    private boolean isStartOfLogicalSequence(DetailAST ast) {
+        int tokenType = ast.getType();
+        if (tokenType != TokenTypes.LAND && tokenType != TokenTypes.LOR) {
+            return false;
+        }
+        
+        DetailAST parent = ast.getParent();
+        // If parent is not the same logical operator, this starts a new sequence
+        return parent == null || parent.getType() != tokenType;
     }
 
     /**
@@ -287,10 +269,9 @@ public class CyclomaticComplexityCheck
      */
     private void leaveMethodDef(DetailAST ast) {
         final BigInteger bigIntegerMax = BigInteger.valueOf(max);
-        if (currentValue.compareTo(bigIntegerMax) > 0) {
-            log(ast, MSG_KEY, currentValue, bigIntegerMax);
-        }
+        log(ast, MSG_KEY, currentValue, bigIntegerMax);
         popValue();
+        popMethodName();
     }
 
     /**
@@ -315,9 +296,36 @@ public class CyclomaticComplexityCheck
         currentValue = valueStack.pop();
     }
 
-    /** Process the start of the method definition. */
-    private void visitMethodDef() {
+    /** Push the current method name on the stack. */
+    private void pushMethodName(String methodName) {
+        methodNameStack.push(currentMethodName);
+        currentMethodName = methodName;
+    }
+
+    /**
+     * Pops a method name off the stack and makes it the current method name.
+     */
+    private void popMethodName() {
+        currentMethodName = methodNameStack.pop();
+    }
+    
+    /** 
+     * Process the start of the method definition and extract method name.
+     * 
+     * @param ast the token representing the method definition
+     */
+    private void visitMethodDef(DetailAST ast) {
         pushValue();
+        
+        // Extract method name for recursion detection
+        String methodName = INITIAL_METHOD_NAME;
+        if (ast.getType() == TokenTypes.METHOD_DEF || ast.getType() == TokenTypes.CTOR_DEF 
+            || ast.getType() == TokenTypes.COMPACT_CTOR_DEF) {
+            final DetailAST methodNameNode = ast.findFirstToken(TokenTypes.IDENT);
+            methodName = methodNameNode.getText();
+        }
+        
+        pushMethodName(methodName);
     }
 
 }

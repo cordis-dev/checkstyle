@@ -1,9 +1,9 @@
 /*
 CyclomaticComplexity
 max = 0
-switchBlockAsSingleDecisionPoint = (default)false
-tokens = (default)LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, LITERAL_IF, LITERAL_SWITCH, \
-         LITERAL_CASE, LITERAL_CATCH, QUESTION, LAND, LOR
+switchBlockAsSingleDecisionPoint = true
+tokens = (default)LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH, \
+         LITERAL_CASE, LITERAL_DEFAULT, LITERAL_CATCH, QUESTION, LAND, LOR, METHOD_CALL
 
 
 */
@@ -11,112 +11,104 @@ tokens = (default)LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, LITERAL_IF, LITERAL_SW
 package com.puppycrawl.tools.checkstyle.checks.metrics.cyclomaticcomplexity;
 
 public class InputCyclomaticComplexity {
-    // NP = 2
-    public void foo() { // violation
-        //NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
-        while (true) {
-            Runnable runnable = new Runnable() {
-               // NP = 2
-                public void run() { // violation
-                    // NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
-                    while (true) {
-                    }
-                }
-            };
 
-            new Thread(runnable).start();
+    public void basic() { // violation
+        // 0
+    }
+
+    public void oneIf() { // violation
+        if (System.currentTimeMillis() == 0) { // +1
         }
     }
 
-    // NP = 10
-    public void bar() { // violation
-        // NP = (if-range=3*3) + (expr=0) + 1 = 10
-        if (System.currentTimeMillis() == 0) {
-            //NP = (if-range=1) + 1 + (expr=1) = 3
-            if (System.currentTimeMillis() == 0 && System.currentTimeMillis() == 0) {
-            }
-            //NP = (if-range=1) + 1 + (expr=1) = 3
-            if (System.currentTimeMillis() == 0 || System.currentTimeMillis() == 0) {
-            }
+    public void oneIfElse() { // violation
+        if (System.currentTimeMillis() == 0) { // +1
+        } else { // +1
         }
     }
 
-    // NP = 3
-    public void simpleElseIf() { // violation
-        // NP = (if-range=1) + (else-range=2) + 0 = 3
-        if (System.currentTimeMillis() == 0) {
-        // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+    public void oneIfElseIf() { // violation
+        if (System.currentTimeMillis() == 0) { // +1
+        } else if (System.currentTimeMillis() == 1) { // +1
         }
     }
 
-    // NP = 7
-    public void stupidElseIf() { // violation
-        // NP = (if-range=1) + (else-range=3*2) + (expr=0) = 7
-        if (System.currentTimeMillis() == 0) {
-        } else {
-            // NP = (if-range=1) + (else-range=2) + (expr=0) = 3
-            if (System.currentTimeMillis() == 0) {
-            } else {
-                // NP = (if-range=1) + 1 + (expr=0) = 2
-                if (System.currentTimeMillis() == 0) {
-                }
-            }
-            // NP = (if-range=1) + 1 + (expr=0) = 2
-            if (System.currentTimeMillis() == 0) {
-            }
+    public void ternary() { // violation
+        int a = 0;
+        int b = 1;
+        int c = (a == b) ? 1 : 2; // +1
+    }
+
+    public void tryCatch() { // violation
+        try {
+            // do something
+        }
+        catch (Exception e) { // +1
+            // handle exception
         }
     }
 
-    // NP = 3
-    public InputCyclomaticComplexity() // violation
-    {
-        int i = 1;
-        // NP = (if-range=1) + (else-range=2) + 0 = 3
-        if (System.currentTimeMillis() == 0) {
-        // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+    public void switchWithCases() { // violation
+        int n = 0;
+        switch (n) { // +1
+            case 1:
+                break;
+            case 2:
+                break;
         }
     }
 
-    // STATIC_INIT
-    // NP = 3
-    static { // violation
-        int i = 1;
-        // NP = (if-range=1) + (else-range=2) + 0 = 3
-        if (System.currentTimeMillis() == 0) {
-        // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+    public void switchWithCasesAndDefault() { // violation
+        int n = 0;
+        switch (n) { // +1
+            case 1:
+                break;
+            case 2:
+                break;
+            default: // +1
+                break;
         }
     }
 
-    // INSTANCE_INIT
-    // NP = 3
-    { // violation
-        int i = 1;
-        // NP = (if-range=1) + (else-range=2) + 0 = 3
-        if (System.currentTimeMillis() == 0) {
-        // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+    public void sameLogicalAndSequence() { // violation
+        if (System.currentTimeMillis() != 0 && System.currentTimeMillis() != 1 && System.currentTimeMillis() != 2) { // +1 for if; +1 for all &&
+            // do something
         }
     }
 
-    /** Inner */
-    // NP = 0
-    public InputCyclomaticComplexity(int aParam) // violation
-    {
-        Runnable runnable = new Runnable() {
-            // NP = 2
-            public void run() { // violation
-                // NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
-                while (true) {
-                }
-            }
-        };
-        new Thread(runnable).start();
+    public void sameLogicalOrSequence() { // violation
+        if (System.currentTimeMillis() == 0 || System.currentTimeMillis() == 1 || System.currentTimeMillis() == 2) { // +1 for if; +1 for all ||
+            // do something
+        }
+    }
+
+    public void twoRepeatingLogicalSequences() { // violation
+        if (System.currentTimeMillis() != 0 && System.currentTimeMillis() != 1 && System.currentTimeMillis() != 2 || System.currentTimeMillis() == 10 || System.currentTimeMillis() == 20) { // +1 for if; +1 for all &&; +1 for all ||
+            // do something
+        }
+    }
+
+    public void twoMixedLogicalSequences() { // violation
+        if (System.currentTimeMillis() != 0 && System.currentTimeMillis() != 1 || System.currentTimeMillis() != 2 && System.currentTimeMillis() != 3) { // +1 for if; +1 for &&; +1 for ||; +1 for && (new)
+            // do something
+        }
+    }
+
+    public void recursionSample() { // violation
+        if (System.currentTimeMillis() == 0) { // +1
+            recursionSample(); // +1
+        }
+    }
+
+    public void multipleRecursions() { // violation
+        if (System.currentTimeMillis() == 0) { // +1
+            multipleRecursions(); // +1
+        }
+
+        multipleRecursions(); // +1
+    }
+
+    public void noRecursion() { // violation
+        System.currentTimeMillis();
     }
 }
