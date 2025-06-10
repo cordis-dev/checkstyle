@@ -50,7 +50,7 @@ public class CyclomaticComplexityCheckTest
             "97:5: " + getCheckMessage(MSG_KEY, "recursionSample", 2),
             "103:5: " + getCheckMessage(MSG_KEY, "multipleRecursions", 3),
             "111:5: " + getCheckMessage(MSG_KEY, "noRecursion", 0),
-            "116:5: " + getCheckMessage(MSG_KEY, "INSTANCE_INIT", 0),
+            "116:5: " + getCheckMessage(MSG_KEY, "InputCyclomaticComplexity.INSTANCE_INIT", 0),
         };
 
         verifyWithInlineConfigParser(

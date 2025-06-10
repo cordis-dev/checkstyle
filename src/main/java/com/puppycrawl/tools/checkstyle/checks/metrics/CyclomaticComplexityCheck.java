@@ -328,10 +328,10 @@ public class CyclomaticComplexityCheck
                 }
                 break;
             case TokenTypes.INSTANCE_INIT:
-                methodName = "INSTANCE_INIT";
+                methodName = getParentClassName(ast) + ".INSTANCE_INIT";
                 break;
             case TokenTypes.STATIC_INIT:
-                methodName = "STATIC_INIT";
+                methodName = getParentClassName(ast) + ".STATIC_INIT";
                 break;
             default:
                 // Keep INITIAL_METHOD_NAME for other types
@@ -341,4 +341,21 @@ public class CyclomaticComplexityCheck
         pushMethodName(methodName);
     }
 
+    /**
+     * Gets the name of the parent class for the given AST node.
+     * 
+     * @param ast the AST node to find the parent class for
+     * @return the parent class name, or "Unknown" if not found
+     */
+    private String getParentClassName(DetailAST ast) {
+        // For initializer blocks: ast -> OBJBLOCK -> CLASS_DEF
+        final DetailAST classNode = ast.getParent().getParent();
+        if (classNode != null) {
+            final DetailAST classNameNode = classNode.findFirstToken(TokenTypes.IDENT);
+            if (classNameNode != null) {
+                return classNameNode.getText();
+            }
+        }
+        return "Unknown";
+    }
 }
