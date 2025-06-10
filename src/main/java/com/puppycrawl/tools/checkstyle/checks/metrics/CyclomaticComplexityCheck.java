@@ -268,8 +268,7 @@ public class CyclomaticComplexityCheck
      * @param ast the token representing the method definition
      */
     private void leaveMethodDef(DetailAST ast) {
-        final BigInteger bigIntegerMax = BigInteger.valueOf(max);
-        log(ast, MSG_KEY, currentValue, bigIntegerMax);
+        log(ast, MSG_KEY, currentMethodName, currentValue);
         popValue();
         popMethodName();
     }
@@ -319,10 +318,24 @@ public class CyclomaticComplexityCheck
         
         // Extract method name for recursion detection
         String methodName = INITIAL_METHOD_NAME;
-        if (ast.getType() == TokenTypes.METHOD_DEF || ast.getType() == TokenTypes.CTOR_DEF 
-            || ast.getType() == TokenTypes.COMPACT_CTOR_DEF) {
-            final DetailAST methodNameNode = ast.findFirstToken(TokenTypes.IDENT);
-            methodName = methodNameNode.getText();
+        switch (ast.getType()) {
+            case TokenTypes.METHOD_DEF:
+            case TokenTypes.CTOR_DEF:
+            case TokenTypes.COMPACT_CTOR_DEF:
+                final DetailAST methodNameNode = ast.findFirstToken(TokenTypes.IDENT);
+                if (methodNameNode != null) {
+                    methodName = methodNameNode.getText();
+                }
+                break;
+            case TokenTypes.INSTANCE_INIT:
+                methodName = "INSTANCE_INIT";
+                break;
+            case TokenTypes.STATIC_INIT:
+                methodName = "STATIC_INIT";
+                break;
+            default:
+                // Keep INITIAL_METHOD_NAME for other types
+                break;
         }
         
         pushMethodName(methodName);

@@ -35,21 +35,22 @@ public class CyclomaticComplexityCheckTest
     public void test() throws Exception {
 
         final String[] expected = {
-            "15:5: " + getCheckMessage(MSG_KEY, 0, 0),
-            "19:5: " + getCheckMessage(MSG_KEY, 1, 0), // oneIf
-            "24:5: " + getCheckMessage(MSG_KEY, 2, 0), // oneIfElse
-            "30:5: " + getCheckMessage(MSG_KEY, 2, 0), // oneIfElseIf
-            "36:5: " + getCheckMessage(MSG_KEY, 1, 0), // ternary
-            "42:5: " + getCheckMessage(MSG_KEY, 1, 0), // tryCatch
-            "51:5: " + getCheckMessage(MSG_KEY, 1, 0), // switchWithCases
-            "61:5: " + getCheckMessage(MSG_KEY, 1, 0), // switchWithCasesAndDefault
-            "73:5: " + getCheckMessage(MSG_KEY, 2, 0), // sameLogicalAndSequence
-            "79:5: " + getCheckMessage(MSG_KEY, 2, 0), // sameLogicalOrSequence
-            "85:5: " + getCheckMessage(MSG_KEY, 3, 0), // twoRepeatingLogicalSequences
-            "91:5: " + getCheckMessage(MSG_KEY, 4, 0), // twoMixedLogicalSequences
-            "97:5: " + getCheckMessage(MSG_KEY, 2, 0), // recursionSample
-            "103:5: " + getCheckMessage(MSG_KEY, 3, 0), // multipleRecursions
-            "111:5: " + getCheckMessage(MSG_KEY, 0, 0), // noRecursion
+            "15:5: " + getCheckMessage(MSG_KEY, "basic", 0),
+            "19:5: " + getCheckMessage(MSG_KEY, "oneIf", 1),
+            "24:5: " + getCheckMessage(MSG_KEY, "oneIfElse", 2),
+            "30:5: " + getCheckMessage(MSG_KEY, "oneIfElseIf", 2),
+            "36:5: " + getCheckMessage(MSG_KEY, "ternary", 1),
+            "42:5: " + getCheckMessage(MSG_KEY, "tryCatch", 1),
+            "51:5: " + getCheckMessage(MSG_KEY, "switchWithCases", 1),
+            "61:5: " + getCheckMessage(MSG_KEY, "switchWithCasesAndDefault", 1),
+            "73:5: " + getCheckMessage(MSG_KEY, "sameLogicalAndSequence", 2),
+            "79:5: " + getCheckMessage(MSG_KEY, "sameLogicalOrSequence", 2),
+            "85:5: " + getCheckMessage(MSG_KEY, "twoRepeatingLogicalSequences", 3),
+            "91:5: " + getCheckMessage(MSG_KEY, "twoMixedLogicalSequences", 4),
+            "97:5: " + getCheckMessage(MSG_KEY, "recursionSample", 2),
+            "103:5: " + getCheckMessage(MSG_KEY, "multipleRecursions", 3),
+            "111:5: " + getCheckMessage(MSG_KEY, "noRecursion", 0),
+            "116:5: " + getCheckMessage(MSG_KEY, "INSTANCE_INIT", 0),
         };
 
         verifyWithInlineConfigParser(

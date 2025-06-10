@@ -111,4 +111,9 @@ public class InputCyclomaticComplexity {
     public void noRecursion() { // violation
         System.currentTimeMillis();
     }
+
+    // instance initializer
+    { // violation
+        // 0
+    }
 }
