@@ -116,6 +116,16 @@ public class IndentationTest extends AbstractIndentationTestSupport {
     }
 
     @Test
+    public void testNewKeywordChildren() throws Exception {
+        verifyWithWholeConfig(getPath("InputNewKeywordChildren.java"));
+    }
+
+    @Test
+    public void testFormattedNewKeywordChildren() throws Exception {
+        verifyWithWholeConfig(getPath("InputFormattedNewKeywordChildren.java"));
+    }
+
+    @Test
     public void testLambdaChild() throws Exception {
         verifyWithWholeConfig(getNonCompilablePath("InputLambdaChild.java"));
     }
@@ -123,5 +133,25 @@ public class IndentationTest extends AbstractIndentationTestSupport {
     @Test
     public void testLambdaAndChildOnTheSameLine() throws Exception {
         verifyWithWholeConfig(getNonCompilablePath("InputLambdaAndChildOnTheSameLine.java"));
+    }
+
+    @Test
+    public void testAnnotationArrayInitMultiline1() throws Exception {
+        verifyWithWholeConfig(getPath("InputAnnotationArrayInitMultiline.java"));
+    }
+
+    @Test
+    public void testFormattedAnnotationArrayInitMultiline1() throws Exception {
+        verifyWithWholeConfig(getPath("InputFormattedAnnotationArrayInitMultiline.java"));
+    }
+
+    @Test
+    public void testAnnotationArrayInitMultiline2() throws Exception {
+        verifyWithWholeConfig(getPath("InputAnnotationArrayInitMultiline2.java"));
+    }
+
+    @Test
+    public void testFormattedAnnotationArrayInitMultiline2() throws Exception {
+        verifyWithWholeConfig(getPath("InputFormattedAnnotationArrayInitMultiline2.java"));
     }
 }
