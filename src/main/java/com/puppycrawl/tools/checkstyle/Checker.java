@@ -185,7 +185,8 @@ public class Checker extends AbstractAutomaticBean implements MessageDispatcher,
                 cacheFile.persist();
             }
             catch (IOException exc) {
-                throw new IllegalStateException("Unable to persist cache file.", exc);
+                throw new IllegalStateException(
+                        getLocalizedMessage("Checker.cacheFilesException"), exc);
             }
         }
     }
@@ -317,7 +318,7 @@ public class Checker extends AbstractAutomaticBean implements MessageDispatcher,
                 }
 
                 // We need to catch all errors to put a reason failure (file name) in error
-                throw new Error("Error was thrown while processing " + filePath, error);
+                throw new Error(getLocalizedMessage("Checker.error", filePath), error);
             }
         }
     }
@@ -433,6 +434,12 @@ public class Checker extends AbstractAutomaticBean implements MessageDispatcher,
         }
     }
 
+    /**
+     * Performs final setup of the Checker after configuration is complete.
+     *
+     * @noinspection deprecation
+     * @noinspectionreason Disabled until #17646
+     */
     @Override
     protected void finishLocalSetup() throws CheckstyleException {
         final Locale locale = new Locale(localeLanguage, localeCountry);

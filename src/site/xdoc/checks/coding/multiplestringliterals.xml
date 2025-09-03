@@ -8,7 +8,7 @@
   <body>
     <section name="MultipleStringLiterals">
       <p>Since Checkstyle 3.5</p>
-      <subsection name="Description" id="Description">
+      <subsection name="Description" id="MultipleStringLiterals_Description">
         <div>
           Checks for multiple occurrences of the same string literal within a single file.
         </div>
@@ -19,7 +19,7 @@
         </p>
       </subsection>
 
-      <subsection name="Properties" id="Properties">
+      <subsection name="Properties" id="MultipleStringLiterals_Properties">
         <div class="wrapper">
           <table>
             <tr>
@@ -30,14 +30,14 @@
               <th>since</th>
             </tr>
             <tr>
-              <td>allowedDuplicates</td>
+              <td><a id="allowedDuplicates"/><a href="#allowedDuplicates">allowedDuplicates</a></td>
               <td>Specify the maximum number of occurrences to allow without generating a warning.</td>
               <td><a href="../../property_types.html#int">int</a></td>
               <td><code>1</code></td>
               <td>3.5</td>
             </tr>
             <tr>
-              <td>ignoreOccurrenceContext</td>
+              <td><a id="ignoreOccurrenceContext"/><a href="#ignoreOccurrenceContext">ignoreOccurrenceContext</a></td>
               <td>Specify token type names where duplicate strings are ignored even if they don't match ignoredStringsRegexp. This allows you to exclude syntactical contexts like annotations or static initializers from the check.</td>
               <td>subset of tokens <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a></td>
               <td>
@@ -47,7 +47,7 @@
               <td>4.4</td>
             </tr>
             <tr>
-              <td>ignoreStringsRegexp</td>
+              <td><a id="ignoreStringsRegexp"/><a href="#ignoreStringsRegexp">ignoreStringsRegexp</a></td>
               <td>Specify RegExp for ignored strings (with quotation marks).</td>
               <td><a href="../../property_types.html#Pattern">Pattern</a></td>
               <td><code>&quot;^&quot;&quot;$&quot;</code></td>
@@ -57,7 +57,7 @@
         </div>
       </subsection>
 
-      <subsection name="Examples" id="Examples">
+      <subsection name="Examples" id="MultipleStringLiterals_Examples">
         <p id="Example1-config">
           To configure the check:
         </p>
@@ -166,7 +166,7 @@ public class Example4 {
 </code></pre></div>
       </subsection>
 
-      <subsection name="Example of Usage" id="Example_of_Usage">
+      <subsection name="Example of Usage" id="MultipleStringLiterals_Example_of_Usage">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Aconfig%20path%3A**%2Fcheckstyle-checks.xml+repo%3Acheckstyle%2Fcheckstyle+MultipleStringLiterals">
@@ -175,7 +175,7 @@ public class Example4 {
         </ul>
       </subsection>
 
-      <subsection name="Violation Messages" id="Violation_Messages">
+      <subsection name="Violation Messages" id="MultipleStringLiterals_Violation_Messages">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fcoding%20path%3A**%2Fmessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22multiple.string.literal%22">
@@ -190,13 +190,13 @@ public class Example4 {
         </p>
       </subsection>
 
-      <subsection name="Package" id="Package">
+      <subsection name="Package" id="MultipleStringLiterals_Package">
         <p>
           com.puppycrawl.tools.checkstyle.checks.coding
         </p>
       </subsection>
 
-      <subsection name="Parent Module" id="Parent_Module">
+      <subsection name="Parent Module" id="MultipleStringLiterals_Parent_Module">
         <p>
           <a href="../../config.html#TreeWalker">TreeWalker</a>
         </p>

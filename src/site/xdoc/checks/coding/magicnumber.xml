@@ -8,7 +8,7 @@
   <body>
     <section name="MagicNumber">
       <p>Since Checkstyle 3.1</p>
-      <subsection name="Description" id="Description">
+      <subsection name="Description" id="MagicNumber_Description">
         <div>
           Checks that there are no
           <a href="https://en.wikipedia.org/wiki/Magic_number_%28programming%29">
@@ -30,7 +30,7 @@ static final Integer ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE = new Integer(42);
         </code></pre></div>
       </subsection>
 
-      <subsection name="Properties" id="Properties">
+      <subsection name="Properties" id="MagicNumber_Properties">
         <div class="wrapper">
           <table>
             <tr>
@@ -41,7 +41,7 @@ static final Integer ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE = new Integer(42);
               <th>since</th>
             </tr>
             <tr>
-              <td>constantWaiverParentToken</td>
+              <td><a id="constantWaiverParentToken"/><a href="#constantWaiverParentToken">constantWaiverParentToken</a></td>
               <td>Specify tokens that are allowed in the AST path from the number literal to the enclosing constant definition.</td>
               <td>subset of tokens <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a></td>
               <td>
@@ -107,42 +107,42 @@ static final Integer ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE = new Integer(42);
               <td>6.11</td>
             </tr>
             <tr>
-              <td>ignoreAnnotation</td>
+              <td><a id="ignoreAnnotation"/><a href="#ignoreAnnotation">ignoreAnnotation</a></td>
               <td>Ignore magic numbers in annotation declarations.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>5.4</td>
             </tr>
             <tr>
-              <td>ignoreAnnotationElementDefaults</td>
+              <td><a id="ignoreAnnotationElementDefaults"/><a href="#ignoreAnnotationElementDefaults">ignoreAnnotationElementDefaults</a></td>
               <td>Ignore magic numbers in annotation elements defaults.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.23</td>
             </tr>
             <tr>
-              <td>ignoreFieldDeclaration</td>
+              <td><a id="ignoreFieldDeclaration"/><a href="#ignoreFieldDeclaration">ignoreFieldDeclaration</a></td>
               <td>Ignore magic numbers in field declarations.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>6.6</td>
             </tr>
             <tr>
-              <td>ignoreHashCodeMethod</td>
+              <td><a id="ignoreHashCodeMethod"/><a href="#ignoreHashCodeMethod">ignoreHashCodeMethod</a></td>
               <td>Ignore magic numbers in hashCode methods.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>5.3</td>
             </tr>
             <tr>
-              <td>ignoreNumbers</td>
+              <td><a id="ignoreNumbers"/><a href="#ignoreNumbers">ignoreNumbers</a></td>
               <td>Specify non-magic numbers.</td>
               <td><a href="../../property_types.html#double.5B.5D">double[]</a></td>
               <td><code>-1, 0, 1, 2</code></td>
               <td>3.1</td>
             </tr>
             <tr>
-              <td>tokens</td>
+              <td><a id="tokens"/><a href="#tokens">tokens</a></td>
               <td>tokens to check</td>
               <td>subset of tokens
                 <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
@@ -172,7 +172,7 @@ static final Integer ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE = new Integer(42);
         </div>
       </subsection>
 
-      <subsection name="Examples" id="Examples">
+      <subsection name="Examples" id="MagicNumber_Examples">
         <p id="Example1-config">
           To configure the check with default configuration:
         </p>
@@ -497,7 +497,7 @@ public class Example6 {
 
       </subsection>
 
-      <subsection name="Example of Usage" id="Example_of_Usage">
+      <subsection name="Example of Usage" id="MagicNumber_Example_of_Usage">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fsun_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MagicNumber">
@@ -510,7 +510,7 @@ public class Example6 {
         </ul>
       </subsection>
 
-      <subsection name="Violation Messages" id="Violation_Messages">
+      <subsection name="Violation Messages" id="MagicNumber_Violation_Messages">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fcoding%20path%3A**%2Fmessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22magic.number%22">
@@ -525,13 +525,13 @@ public class Example6 {
         </p>
       </subsection>
 
-      <subsection name="Package" id="Package">
+      <subsection name="Package" id="MagicNumber_Package">
         <p>
           com.puppycrawl.tools.checkstyle.checks.coding
         </p>
       </subsection>
 
-      <subsection name="Parent Module" id="Parent_Module">
+      <subsection name="Parent Module" id="MagicNumber_Parent_Module">
         <p>
           <a href="../../config.html#TreeWalker">TreeWalker</a>
         </p>

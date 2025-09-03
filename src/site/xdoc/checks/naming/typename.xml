@@ -8,13 +8,13 @@
   <body>
     <section name="TypeName">
       <p>Since Checkstyle 3.0</p>
-      <subsection name="Description" id="Description">
+      <subsection name="Description" id="TypeName_Description">
         <div>
           Checks that type names conform to a specified pattern.
         </div>
       </subsection>
 
-      <subsection name="Properties" id="Properties">
+      <subsection name="Properties" id="TypeName_Properties">
         <div class="wrapper">
           <table>
             <tr>
@@ -25,42 +25,42 @@
               <th>since</th>
             </tr>
             <tr>
-              <td>applyToPackage</td>
+              <td><a id="applyToPackage"/><a href="#applyToPackage">applyToPackage</a></td>
               <td>Control if check should apply to package-private members.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>5.0</td>
             </tr>
             <tr>
-              <td>applyToPrivate</td>
+              <td><a id="applyToPrivate"/><a href="#applyToPrivate">applyToPrivate</a></td>
               <td>Control if check should apply to private members.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>5.0</td>
             </tr>
             <tr>
-              <td>applyToProtected</td>
+              <td><a id="applyToProtected"/><a href="#applyToProtected">applyToProtected</a></td>
               <td>Control if check should apply to protected members.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>5.0</td>
             </tr>
             <tr>
-              <td>applyToPublic</td>
+              <td><a id="applyToPublic"/><a href="#applyToPublic">applyToPublic</a></td>
               <td>Control if check should apply to public members.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>5.0</td>
             </tr>
             <tr>
-              <td>format</td>
+              <td><a id="format"/><a href="#format">format</a></td>
               <td>Sets the pattern to match valid identifiers.</td>
               <td><a href="../../property_types.html#Pattern">Pattern</a></td>
               <td><code>&quot;^[A-Z][a-zA-Z0-9]*$&quot;</code></td>
               <td>3.0</td>
             </tr>
             <tr>
-              <td>tokens</td>
+              <td><a id="tokens"/><a href="#tokens">tokens</a></td>
               <td>tokens to check</td>
               <td>subset of tokens
                 <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
@@ -94,7 +94,7 @@
         </div>
       </subsection>
 
-      <subsection name="Examples" id="Examples">
+      <subsection name="Examples" id="TypeName_Examples">
         <p id="Example1-config">
           To configure the check:
         </p>
@@ -167,7 +167,7 @@ class Example3 {
 
       </subsection>
 
-      <subsection name="Example of Usage" id="Example_of_Usage">
+      <subsection name="Example of Usage" id="TypeName_Example_of_Usage">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fgoogle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+TypeName">
@@ -184,7 +184,7 @@ class Example3 {
         </ul>
       </subsection>
 
-      <subsection name="Violation Messages" id="Violation_Messages">
+      <subsection name="Violation Messages" id="TypeName_Violation_Messages">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fnaming%20path%3A**%2Fmessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22name.invalidPattern%22">
@@ -199,11 +199,11 @@ class Example3 {
         </p>
       </subsection>
 
-      <subsection name="Package" id="Package">
+      <subsection name="Package" id="TypeName_Package">
         <p> com.puppycrawl.tools.checkstyle.checks.naming </p>
       </subsection>
 
-      <subsection name="Parent Module" id="Parent_Module">
+      <subsection name="Parent Module" id="TypeName_Parent_Module">
         <p>
           <a href="../../config.html#TreeWalker">TreeWalker</a>
         </p>

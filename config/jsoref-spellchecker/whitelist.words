@@ -1,10 +1,8 @@
 aaaa
-aaaaaa
 Aapt
 aarch
 abbreviationaswordinname
 abcun
-abego
 abstractcheck
 abstractclassname
 abstractfileset
@@ -16,6 +14,7 @@ acm
 Aconfig
 actionlint
 addons
+Adoptium
 adr
 AFBR
 AFilter
@@ -277,6 +276,7 @@ Dantlr
 Darguments
 DArray
 Datasource
+datatransfer
 DATETIME
 daveho
 davidwalsh
@@ -325,6 +325,7 @@ Dlinkcheck
 DMail
 Dmaven
 DMC
+dnd
 Dnew
 doccheck
 Dockter
@@ -354,6 +355,7 @@ Dtag
 Dtest
 Dubinin
 Duser
+dv
 Dversion
 Dxml
 eb
@@ -548,6 +550,7 @@ Haml
 hardcoded
 hashcode
 hashtable
+HASHTAG
 hazelcast
 hbase
 hcoles
@@ -572,6 +575,7 @@ htmlunit
 http
 httpcomponents
 hurz
+HXKS
 hyperlink
 hz
 iae
@@ -717,6 +721,7 @@ JLabel
 Jlo
 jls
 JNDI
+JNullness
 jooq
 JOption
 Jpa
@@ -766,6 +771,7 @@ keyscan
 konstantinos
 Kordas
 Kotlin
+Kp
 lambdabodylength
 lambdaparametername
 LBRACK
@@ -855,6 +861,7 @@ missingswitchdefault
 missingtag
 mixin
 mkdir
+MKo
 mkordas
 mktemp
 MLINKCHECK
@@ -1103,7 +1110,6 @@ Popup
 Postgresql
 powershell
 prebuilts
-prefs
 PRESIZE
 prettyprint
 printf
@@ -1141,6 +1147,7 @@ qux
 qw
 qwe
 qwerty
+QX
 rawtypes
 rb
 rbrack
@@ -1160,6 +1167,7 @@ redundantmodifier
 refactor
 refactoring
 refid
+refreshenv
 regex
 regexp
 regexpheader
@@ -1395,7 +1403,6 @@ toolongpackagetotestcoveragegooglesjavastylerule
 TOSTRING
 Touchscreen
 trailingcomment
-treelayout
 treemap
 treeset
 treetable
@@ -1480,11 +1487,13 @@ Vladislav
 Vladlis
 vm
 vnd
+Vnen
 vscode
 Vtl
 Vuillamy
 Wadl
 Wakelock
+walkthrough
 Warni
 wbr
 Weakento
@@ -1510,6 +1519,7 @@ wikipedia
 wiktionary
 windowsservercore
 withgoogle
+wj
 wnd
 WOC
 woff
@@ -1525,6 +1535,7 @@ writingjavadocchecks
 writinglisteners
 Wsdl
 www
+Wyq
 xa
 xar
 xargs
@@ -1586,10 +1597,12 @@ Yaroslavtsev
 YC
 yml
 youtrack
+youtu
 youtube
 Yoyodyne
 yyyy
 Yzz
+Zbbh
 zf
 zh
 zm

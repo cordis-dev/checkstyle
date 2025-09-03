@@ -8,7 +8,7 @@
   <body>
     <section name="LineLength">
       <p>Since Checkstyle 3.0</p>
-      <subsection name="Description" id="Description">
+      <subsection name="Description" id="LineLength_Description">
         <div>
           Checks for long lines.
         </div>
@@ -20,7 +20,7 @@
         </p>
       </subsection>
 
-      <subsection name="Notes" id="Notes">
+      <subsection name="Notes" id="LineLength_Notes">
         <ul>
         <li>
           The calculation of the length of a line takes into account the number of
@@ -45,7 +45,7 @@ import java.util.regex.Pattern; // The length of this comment will be taken into
         </ul>
       </subsection>
 
-      <subsection name="Properties" id="Properties">
+      <subsection name="Properties" id="LineLength_Properties">
         <div class="wrapper">
           <table>
             <tr>
@@ -56,21 +56,21 @@ import java.util.regex.Pattern; // The length of this comment will be taken into
               <th>since</th>
             </tr>
             <tr>
-              <td>fileExtensions</td>
+              <td><a id="fileExtensions"/><a href="#fileExtensions">fileExtensions</a></td>
               <td>Specify the file extensions of the files to process.</td>
               <td><a href="../../property_types.html#String.5B.5D">String[]</a></td>
               <td><code>all files</code></td>
               <td>8.24</td>
             </tr>
             <tr>
-              <td>ignorePattern</td>
+              <td><a id="ignorePattern"/><a href="#ignorePattern">ignorePattern</a></td>
               <td>Specify pattern for lines to ignore.</td>
               <td><a href="../../property_types.html#Pattern">Pattern</a></td>
               <td><code>&quot;^(package|import) .*&quot;</code></td>
               <td>3.0</td>
             </tr>
             <tr>
-              <td>max</td>
+              <td><a id="max"/><a href="#max">max</a></td>
               <td>Specify the maximum line length allowed.</td>
               <td><a href="../../property_types.html#int">int</a></td>
               <td><code>80</code></td>
@@ -80,7 +80,7 @@ import java.util.regex.Pattern; // The length of this comment will be taken into
         </div>
       </subsection>
 
-      <subsection name="Examples" id="Examples">
+      <subsection name="Examples" id="LineLength_Examples">
         <p id="Example1-config">
           To configure the check to accept lines up to 80 characters long:
         </p>
@@ -246,10 +246,44 @@ class Example5 {
     System.out.println("This line is long and exceeds the default limit of 80 characters.");
   }
 }
+</code></pre></div><hr class="example-separator"/>
+        <p id="Example6-config">
+          To prevent this check from flagging lines in text-blocks, with
+          <a href="https://github.com/checkstyle/checkstyle/issues/17707">side effects</a>:
+        </p>
+        <div class="wrapper"><pre class="prettyprint"><code class="language-xml">
+&lt;module name="Checker"&gt;
+  &lt;module name="LineLength"&gt;
+    &lt;property name="max" value="70"/&gt;
+  &lt;/module&gt;
+  &lt;module name="SuppressWithPlainTextCommentFilter"&gt;
+    &lt;property name="checkFormat" value="LineLength"/&gt;
+    &lt;property name="offCommentFormat" value='^.*"""$'/&gt;
+    &lt;property name="onCommentFormat" value='^\s*"""\s*(?:[,;]|.+)$'/&gt;
+  &lt;/module&gt;
+&lt;/module&gt;
+</code></pre></div>
+        <p id="Example6-code">
+          Example:
+        </p>
+        <div class="wrapper"><pre class="prettyprint"><code class="language-java">
+package com.puppycrawl.tools.checkstyle.checks.sizes.linelength;
+
+public class Example6 {
+  void testMethod() {
+    String str1 = """
+        This is a very really long string that exceeds the limit but no error....
+        """;
+    String str2 =
+        """
+        This is a very really long string that exceeds the limit but no error.....
+        """;
+  }
+}
 </code></pre></div>
       </subsection>
 
-      <subsection name="Example of Usage" id="Example_of_Usage">
+      <subsection name="Example of Usage" id="LineLength_Example_of_Usage">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fgoogle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+LineLength">
@@ -266,7 +300,7 @@ class Example5 {
         </ul>
       </subsection>
 
-      <subsection name="Violation Messages" id="Violation_Messages">
+      <subsection name="Violation Messages" id="LineLength_Violation_Messages">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes%20path%3A**%2Fmessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22maxLineLen%22">
@@ -281,13 +315,13 @@ class Example5 {
         </p>
       </subsection>
 
-      <subsection name="Package" id="Package">
+      <subsection name="Package" id="LineLength_Package">
         <p>
           com.puppycrawl.tools.checkstyle.checks.sizes
         </p>
       </subsection>
 
-      <subsection name="Parent Module" id="Parent_Module">
+      <subsection name="Parent Module" id="LineLength_Parent_Module">
         <p>
           <a href="../../config.html#Checker">Checker</a>
         </p>

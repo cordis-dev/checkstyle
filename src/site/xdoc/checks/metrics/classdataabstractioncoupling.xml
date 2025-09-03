@@ -8,7 +8,7 @@
   <body>
     <section name="ClassDataAbstractionCoupling">
       <p>Since Checkstyle 3.4</p>
-      <subsection name="Description" id="Description">
+      <subsection name="Description" id="ClassDataAbstractionCoupling_Description">
         <div>
           Measures the number of distinct classes that are instantiated
           within the given class or record. This type of coupling is not caused by inheritance or
@@ -68,7 +68,7 @@
         </ol>
       </subsection>
 
-      <subsection name="Properties" id="Properties">
+      <subsection name="Properties" id="ClassDataAbstractionCoupling_Properties">
         <div class="wrapper">
           <table>
             <tr>
@@ -79,28 +79,28 @@
               <th>since</th>
             </tr>
             <tr>
-              <td>excludeClassesRegexps</td>
+              <td><a id="excludeClassesRegexps"/><a href="#excludeClassesRegexps">excludeClassesRegexps</a></td>
               <td>Specify user-configured regular expressions to ignore classes.</td>
               <td><a href="../../property_types.html#Pattern.5B.5D">Pattern[]</a></td>
               <td><code>^$</code></td>
               <td>7.7</td>
             </tr>
             <tr>
-              <td>excludedClasses</td>
+              <td><a id="excludedClasses"/><a href="#excludedClasses">excludedClasses</a></td>
               <td>Specify user-configured class names to ignore.</td>
               <td><a href="../../property_types.html#String.5B.5D">String[]</a></td>
               <td><code>ArrayIndexOutOfBoundsException, ArrayList, Boolean, Byte, Character, Class, Collection, Deprecated, Deque, Double, DoubleStream, EnumSet, Exception, Float, FunctionalInterface, HashMap, HashSet, IllegalArgumentException, IllegalStateException, IndexOutOfBoundsException, IntStream, Integer, LinkedHashMap, LinkedHashSet, LinkedList, List, Long, LongStream, Map, NullPointerException, Object, Optional, OptionalDouble, OptionalInt, OptionalLong, Override, Queue, RuntimeException, SafeVarargs, SecurityException, Set, Short, SortedMap, SortedSet, Stream, String, StringBuffer, StringBuilder, SuppressWarnings, Throwable, TreeMap, TreeSet, UnsupportedOperationException, Void, boolean, byte, char, double, float, int, long, short, var, void</code></td>
               <td>5.7</td>
             </tr>
             <tr>
-              <td>excludedPackages</td>
+              <td><a id="excludedPackages"/><a href="#excludedPackages">excludedPackages</a></td>
               <td>Specify user-configured packages to ignore.</td>
               <td><a href="../../property_types.html#String.5B.5D">String[]</a></td>
               <td><code>{}</code></td>
               <td>7.7</td>
             </tr>
             <tr>
-              <td>max</td>
+              <td><a id="max"/><a href="#max">max</a></td>
               <td>Specify the maximum threshold allowed.</td>
               <td><a href="../../property_types.html#int">int</a></td>
               <td><code>7</code></td>
@@ -110,7 +110,7 @@
         </div>
       </subsection>
 
-      <subsection name="Examples" id="Examples">
+      <subsection name="Examples" id="ClassDataAbstractionCoupling_Examples">
         <p id="Example1-config">
           To configure the check:
         </p>
@@ -482,7 +482,7 @@ class Example11 {
         </p>
       </subsection>
 
-      <subsection name="Example of Usage" id="Example_of_Usage">
+      <subsection name="Example of Usage" id="ClassDataAbstractionCoupling_Example_of_Usage">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Aconfig%20path%3A**%2Fcheckstyle-checks.xml+repo%3Acheckstyle%2Fcheckstyle+ClassDataAbstractionCoupling">
@@ -491,7 +491,7 @@ class Example11 {
         </ul>
       </subsection>
 
-      <subsection name="Violation Messages" id="Violation_Messages">
+      <subsection name="Violation Messages" id="ClassDataAbstractionCoupling_Violation_Messages">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fmetrics%20path%3A**%2Fmessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22classDataAbstractionCoupling%22">
@@ -506,13 +506,13 @@ class Example11 {
         </p>
       </subsection>
 
-      <subsection name="Package" id="Package">
+      <subsection name="Package" id="ClassDataAbstractionCoupling_Package">
         <p>
           com.puppycrawl.tools.checkstyle.checks.metrics
         </p>
       </subsection>
 
-      <subsection name="Parent Module" id="Parent_Module">
+      <subsection name="Parent Module" id="ClassDataAbstractionCoupling_Parent_Module">
         <p>
           <a href="../../config.html#TreeWalker">TreeWalker</a>
         </p>

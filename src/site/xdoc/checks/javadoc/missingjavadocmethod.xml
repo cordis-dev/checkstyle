@@ -8,7 +8,7 @@
   <body>
     <section name="MissingJavadocMethod">
       <p>Since Checkstyle 8.21</p>
-      <subsection name="Description" id="Description">
+      <subsection name="Description" id="MissingJavadocMethod_Description">
         <div>
           Checks for missing Javadoc comments for a method or constructor. The scope to verify is
           specified using the <code>Scope</code> class and defaults to <code>Scope.PUBLIC</code>. To verify
@@ -45,7 +45,7 @@ public boolean isSomething()
         </code></pre></div>
       </subsection>
 
-      <subsection name="Properties" id="Properties">
+      <subsection name="Properties" id="MissingJavadocMethod_Properties">
         <div class="wrapper">
           <table>
             <tr>
@@ -56,49 +56,49 @@ public boolean isSomething()
               <th>since</th>
             </tr>
             <tr>
-              <td>allowMissingPropertyJavadoc</td>
+              <td><a id="allowMissingPropertyJavadoc"/><a href="#allowMissingPropertyJavadoc">allowMissingPropertyJavadoc</a></td>
               <td>Control whether to allow missing Javadoc on accessor methods for properties (setters and getters).</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>8.21</td>
             </tr>
             <tr>
-              <td>allowedAnnotations</td>
+              <td><a id="allowedAnnotations"/><a href="#allowedAnnotations">allowedAnnotations</a></td>
               <td>Configure annotations that allow missed documentation.</td>
               <td><a href="../../property_types.html#String.5B.5D">String[]</a></td>
               <td><code>Override</code></td>
               <td>8.21</td>
             </tr>
             <tr>
-              <td>excludeScope</td>
+              <td><a id="excludeScope"/><a href="#excludeScope">excludeScope</a></td>
               <td>Specify the visibility scope where Javadoc comments are not checked.</td>
               <td><a href="../../property_types.html#Scope">Scope</a></td>
               <td><code>null</code></td>
               <td>8.21</td>
             </tr>
             <tr>
-              <td>ignoreMethodNamesRegex</td>
+              <td><a id="ignoreMethodNamesRegex"/><a href="#ignoreMethodNamesRegex">ignoreMethodNamesRegex</a></td>
               <td>Ignore method whose names are matching specified regex.</td>
               <td><a href="../../property_types.html#Pattern">Pattern</a></td>
               <td><code>null</code></td>
               <td>8.21</td>
             </tr>
             <tr>
-              <td>minLineCount</td>
+              <td><a id="minLineCount"/><a href="#minLineCount">minLineCount</a></td>
               <td>Control the minimal amount of lines in method to allow no documentation.</td>
               <td><a href="../../property_types.html#int">int</a></td>
               <td><code>-1</code></td>
               <td>8.21</td>
             </tr>
             <tr>
-              <td>scope</td>
+              <td><a id="scope"/><a href="#scope">scope</a></td>
               <td>Specify the visibility scope where Javadoc comments are checked.</td>
               <td><a href="../../property_types.html#Scope">Scope</a></td>
               <td><code>public</code></td>
               <td>8.21</td>
             </tr>
             <tr>
-              <td>tokens</td>
+              <td><a id="tokens"/><a href="#tokens">tokens</a></td>
               <td>tokens to check</td>
               <td>subset of tokens
                 <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
@@ -128,7 +128,7 @@ public boolean isSomething()
         </div>
       </subsection>
 
-      <subsection name="Examples" id="Examples">
+      <subsection name="Examples" id="MissingJavadocMethod_Examples">
         <p id="Example1-config">
           To configure the default check:
         </p>
@@ -326,7 +326,7 @@ public class Example6 {
 </code></pre></div>
       </subsection>
 
-      <subsection name="Example of Usage" id="Example_of_Usage">
+      <subsection name="Example of Usage" id="MissingJavadocMethod_Example_of_Usage">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fgoogle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MissingJavadocMethod">
@@ -343,7 +343,7 @@ public class Example6 {
         </ul>
       </subsection>
 
-      <subsection name="Violation Messages" id="Violation_Messages">
+      <subsection name="Violation Messages" id="MissingJavadocMethod_Violation_Messages">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fjavadoc%20path%3A**%2Fmessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22javadoc.missing%22">
@@ -358,13 +358,13 @@ public class Example6 {
         </p>
       </subsection>
 
-      <subsection name="Package" id="Package">
+      <subsection name="Package" id="MissingJavadocMethod_Package">
         <p>
           com.puppycrawl.tools.checkstyle.checks.javadoc
         </p>
       </subsection>
 
-      <subsection name="Parent Module" id="Parent_Module">
+      <subsection name="Parent Module" id="MissingJavadocMethod_Parent_Module">
         <p>
           <a href="../../config.html#TreeWalker">TreeWalker</a>
         </p>
