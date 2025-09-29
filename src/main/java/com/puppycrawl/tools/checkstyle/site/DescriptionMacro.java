@@ -20,8 +20,6 @@
 package com.puppycrawl.tools.checkstyle.site;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Set;
 
 import org.apache.maven.doxia.macro.AbstractMacro;
 import org.apache.maven.doxia.macro.Macro;
@@ -31,7 +29,6 @@ import org.apache.maven.doxia.sink.Sink;
 import org.codehaus.plexus.component.annotations.Component;
 
 import com.puppycrawl.tools.checkstyle.api.DetailNode;
-import com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraper;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 /**
@@ -42,10 +39,8 @@ public class DescriptionMacro extends AbstractMacro {
 
     @Override
     public void execute(Sink sink, MacroRequest request) throws MacroExecutionException {
-        final Path modulePath = Paths.get((String) request.getParameter("modulePath"));
+        final Path modulePath = Path.of((String) request.getParameter("modulePath"));
         final String moduleName = CommonUtil.getFileNameWithoutExtension(modulePath.toString());
-
-        final Set<String> propertyNames = ModuleJavadocParsingUtil.getPropertyNames(moduleName);
 
         final DetailNode moduleJavadoc = SiteUtil.getModuleJavadoc(moduleName, modulePath);
         if (moduleJavadoc == null) {
@@ -53,40 +48,11 @@ public class DescriptionMacro extends AbstractMacro {
                 "Javadoc of module " + moduleName + " is not found.");
         }
 
-        final int descriptionEndIndex = getDescriptionEndIndex(moduleJavadoc, propertyNames);
-        final String moduleDescription = JavadocMetadataScraper.constructSubTreeText(
-            moduleJavadoc, 0, descriptionEndIndex);
+        final String moduleDescription = ModuleJavadocParsingUtil.getModuleDescription(
+            moduleJavadoc);
 
         ModuleJavadocParsingUtil.writeOutJavadocPortion(moduleDescription, sink);
 
-    }
-
-    /**
-     * Gets the end index of the description.
-     *
-     * @param moduleJavadoc javadoc of module.
-     * @param propertyNamesSet Set with property names.
-     * @return the end index.
-     */
-    private static int getDescriptionEndIndex(DetailNode moduleJavadoc,
-                                              Set<String> propertyNamesSet) {
-        int descriptionEndIndex = -1;
-
-        final int notesStartingIndex =
-            ModuleJavadocParsingUtil.getNotesSectionStartIndex(moduleJavadoc);
-        if (notesStartingIndex > -1) {
-            descriptionEndIndex += notesStartingIndex;
-        }
-        else if (propertyNamesSet.isEmpty()) {
-            descriptionEndIndex += ModuleJavadocParsingUtil.getParentSectionStartIndex(
-                moduleJavadoc);
-        }
-        else {
-            descriptionEndIndex += ModuleJavadocParsingUtil.getPropertySectionStartIndex(
-                moduleJavadoc, propertyNamesSet);
-        }
-
-        return descriptionEndIndex;
     }
 
 }

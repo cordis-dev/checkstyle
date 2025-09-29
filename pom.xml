@@ -12,7 +12,7 @@
 
   <groupId>com.puppycrawl.tools</groupId>
   <artifactId>checkstyle</artifactId>
-  <version>11.0.2-SNAPSHOT</version>
+  <version>11.1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>checkstyle</name>
@@ -198,30 +198,32 @@
   </issueManagement>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <surefire.options />
     <projectVersion>${project.version}</projectVersion>
     <antlr4.version>4.13.2</antlr4.version>
     <maven.site.plugin.version>3.21.0</maven.site.plugin.version>
-    <maven.spotbugs.plugin.version>4.9.4.0</maven.spotbugs.plugin.version>
+    <maven.spotbugs.plugin.version>4.9.6.0</maven.spotbugs.plugin.version>
     <maven.pmd.plugin.version>3.27.0</maven.pmd.plugin.version>
     <pmd.version>7.16.0</pmd.version>
     <maven.jacoco.plugin.version>0.8.13</maven.jacoco.plugin.version>
     <mockito.version>5.2.0</mockito.version>
-    <saxon.version>12.8</saxon.version>
+    <saxon.version>12.9</saxon.version>
     <maven.checkstyle.plugin.version>3.6.0</maven.checkstyle.plugin.version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
     <maven.sevntu-checkstyle-check.checkstyle.version>
       10.4
     </maven.sevntu-checkstyle-check.checkstyle.version>
-    <maven.versions.plugin.version>2.18.0</maven.versions.plugin.version>
-    <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
+    <maven.versions.plugin.version>2.19.0</maven.versions.plugin.version>
+    <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
     <checkstyle.skipCompileInputResources>true</checkstyle.skipCompileInputResources>
+    <checkstyle.openrewrite.version>1.0.0-SNAPSHOT</checkstyle.openrewrite.version>
+    <rewrite-migrate-java.version>3.18.0</rewrite-migrate-java.version>
+    <rewrite-static-analysis.version>2.18.0</rewrite-static-analysis.version>
     <java.version>17</java.version>
     <next.java.version>21</next.java.version>
     <maven.compiler.release>${java.version}</maven.compiler.release>
-    <pitest.plugin.version>1.20.2</pitest.plugin.version>
+    <pitest.plugin.version>1.20.3</pitest.plugin.version>
     <pitest.plugin.timeout.factor>10</pitest.plugin.timeout.factor>
     <pitest.plugin.output.formats>HTML,XML</pitest.plugin.output.formats>
     <pitest.plugin.timeout.constant>50000</pitest.plugin.timeout.constant>
@@ -232,8 +234,8 @@
     <junit.version>5.13.4</junit.version>
     <forbiddenapis.version>3.9</forbiddenapis.version>
     <json-schema-validator.version>1.2.0</json-schema-validator.version>
-    <checkerframework.version>3.49.5</checkerframework.version>
-    <error-prone.version>2.41.0</error-prone.version>
+    <checkerframework.version>3.51.0</checkerframework.version>
+    <error-prone.version>2.42.0</error-prone.version>
     <error-prone-support.version>0.24.0</error-prone-support.version>
     <doxia.version>1.12.0</doxia.version>
     <error-prone.configuration-args>
@@ -309,7 +311,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>33.4.8-jre</version>
+      <version>33.5.0-jre</version>
       <exclusions>
         <exclusion>
           <groupId>org.checkerframework</groupId>
@@ -379,7 +381,7 @@
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier</artifactId>
-      <version>4.0.9</version>
+      <version>4.1.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -490,14 +492,17 @@
         <!-- we need to override just make "mvn versions:plugin-updates-report"
              see no old versions -->
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>3.7.1</version>
         </plugin>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
           <version>3.8.1</version>
         </plugin>
@@ -521,7 +526,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.6.0</version>
+          <version>3.6.1</version>
         </plugin>
         <plugin>
           <groupId>org.pitest</groupId>
@@ -543,7 +548,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.11.3</version>
+          <version>3.12.0</version>
           <configuration>
             <!-- Exclude generated sources. -->
             <excludePackageNames>
@@ -553,8 +558,8 @@
             <source>${java.version}</source>
             <show>private</show>
             <failOnError>true</failOnError>
-            <!-- disabled till https://github.com/checkstyle/checkstyle/issues/17642 -->
-            <failOnWarnings>false</failOnWarnings>
+            <failOnWarnings>true</failOnWarnings>
+            <doclint>-missing</doclint>
             <linksource>true</linksource>
             <tags>
               <tag>
@@ -563,6 +568,10 @@
               </tag>
               <tag>
                 <name>noinspectionreason</name>
+                <placement>X</placement>
+              </tag>
+              <tag>
+                <name>propertySince</name>
                 <placement>X</placement>
               </tag>
             </tags>
@@ -630,7 +639,7 @@
               <plugin>
                 <groupId>com.mebigfatguy.sb-contrib</groupId>
                 <artifactId>sb-contrib</artifactId>
-                <version>7.6.13</version>
+                <version>7.6.14</version>
               </plugin>
             </plugins>
           </configuration>
@@ -795,7 +804,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${basedir}/target/site/dtds</outputDirectory>
+              <outputDirectory>${project.basedir}/target/site/dtds</outputDirectory>
               <resources>
                 <resource>
                   <directory>src/main/resources/com/puppycrawl/tools/checkstyle</directory>
@@ -871,7 +880,7 @@
         <version>${maven.versions.plugin.version}</version>
         <configuration>
           <generateBackupPoms>false</generateBackupPoms>
-          <rulesUri>file://${basedir}/config/version-number-rules.xml</rulesUri>
+          <rulesUri>file://${project.basedir}/config/version-number-rules.xml</rulesUri>
           <formats>
             <format>xml</format>
             <format>html</format>
@@ -957,8 +966,9 @@
                              com.puppycrawl.tools.checkstyle.gui.TreeTableModelAdapter.UpdatingTreeModelListener
                     </exclude>
                     <!-- Metadata Generator related classes -->
+                    <exclude>com.puppycrawl.tools.checkstyle.meta.MetadataGeneratorUtil</exclude>
                     <exclude>com.puppycrawl.tools.checkstyle.meta.ModuleDetails*</exclude>
-                    <exclude>com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraper*</exclude>
+                    <exclude>com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraperUtil*</exclude>
                     <exclude>com.puppycrawl.tools.checkstyle.meta.XmlMeta*</exclude>
                     <!-- OS specific utility providing class -->
                     <exclude>com.puppycrawl.tools.checkstyle.utils.OsSpecificUtil</exclude>
@@ -973,6 +983,25 @@
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
                       <minimum>1.00</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <!-- Until #17746 -->
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>com.puppycrawl.tools.checkstyle.meta.MetadataGeneratorUtil</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.85</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
                     </limit>
                   </limits>
                 </rule>
@@ -1286,19 +1315,14 @@
                   <element>CLASS</element>
                   <includes>
                     <include>
-                      com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraper
+                      com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraperUtil
                     </include>
                   </includes>
                   <limits>
                     <limit>
-                      <counter>LINE</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.98</minimum>
-                    </limit>
-                    <limit>
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.95</minimum>
+                      <minimum>0.90</minimum>
                     </limit>
                   </limits>
                 </rule>
@@ -1318,7 +1342,7 @@
                     <limit>
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.77</minimum>
+                      <minimum>0.75</minimum>
                     </limit>
                   </limits>
                 </rule>
@@ -1351,7 +1375,7 @@
       <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>
-        <version>0.8.0</version>
+        <version>0.9.0</version>
         <extensions>true</extensions>
         <configuration>
           <publishingServerId>central</publishingServerId>
@@ -1426,7 +1450,7 @@
         <configuration>
           <visitor>true</visitor>
           <listener>false</listener>
-          <sourceDirectory>${basedir}/src/main/resources/</sourceDirectory>
+          <sourceDirectory>${project.basedir}/src/main/resources/</sourceDirectory>
           <outputDirectory>${project.build.directory}/generated-sources/antlr/</outputDirectory>
           <includes>
             <include>com/puppycrawl/tools/checkstyle/grammar/javadoc/*.g4</include>
@@ -1528,7 +1552,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <configuration>
           <includes>
             <include>com/google/**/*.java</include>
@@ -1555,7 +1579,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <configuration>
           <argLine>-Dfile.encoding=UTF-8 ${surefire.options}</argLine>
           <systemPropertyVariables>
@@ -1746,6 +1770,7 @@
                 <exclude>jsoref-spellchecker/**</exclude>
                 <exclude>projects-to-test/**</exclude>
                 <exclude>yamllint.yaml</exclude>
+                <exclude>openrewrite-recipes-checkstyle.properties</exclude>
               </excludes>
             </validationSet>
             <validationSet>
@@ -1819,7 +1844,7 @@
             </goals>
             <configuration>
               <signaturesFiles>
-                <signaturesFile>${basedir}/config/signatures.txt</signaturesFile>
+                <signaturesFile>${project.basedir}/config/signatures.txt</signaturesFile>
               </signaturesFiles>
               <excludes>
                 <!-- system-out is ok there, that is CLI -->
@@ -1850,7 +1875,7 @@
                 <exclude>**/SingleLineJavadocCheck.class</exclude>
                 <exclude>**/SummaryJavadocCheck.class</exclude>
                 <exclude>**/WriteTagCheck.class</exclude>
-                <exclude>**/JavadocMetadataScraper.class</exclude>
+                <exclude>**/JavadocMetadataScraperUtil.class</exclude>
               </excludes>
             </configuration>
           </execution>
@@ -1862,7 +1887,7 @@
             </goals>
             <configuration>
               <signaturesFiles>
-                <signaturesFile>${basedir}/config/signatures-test.txt</signaturesFile>
+                <signaturesFile>${project.basedir}/config/signatures-test.txt</signaturesFile>
               </signaturesFiles>
               <excludes>
                 <exclude>**/Example*</exclude>
@@ -1940,7 +1965,7 @@
         <configuration>
           <validations>
             <validation>
-              <directory>${basedir}/src/test/resources/com/puppycrawl/tools/checkstyle/sariflogger</directory>
+              <directory>${project.basedir}/src/test/resources/com/puppycrawl/tools/checkstyle/sariflogger</directory>
               <jsonSchema>https://raw.githubusercontent.com/oasis-tcs/sarif-spec/main/sarif-2.1/schema/sarif-schema-2.1.0.json</jsonSchema>
               <includes>
                 <include>**/*.sarif</include>
@@ -1955,11 +1980,13 @@
   <reporting>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>3.9.0</version>
       </plugin>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <reportSets>
           <reportSet>
@@ -1983,7 +2010,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <reportSets>
           <reportSet>
             <reports>
@@ -2116,6 +2143,9 @@
             <!-- we did too many requests to GitHub,
                  now GitHub reject all requests "429 Too Many Requests" -->
             <excludedLink>https://github.com/*</excludedLink>
+            <excludedLink>http://jeremymanson.blogspot.com/*</excludedLink>
+            <excludedLink>https://javarevisited.blogspot.com/*</excludedLink>
+            <excludedLink>https://webtoolkit.googleblog.com/*</excludedLink>
             <!-- redirects to US page, it is better to stay international -->
             <excludedLink>https://help.github.com/*</excludedLink>
             <excludedLink>http://search.maven.org/*</excludedLink>
@@ -2380,6 +2410,7 @@
 
           <!-- Creates the binary and source distributions -->
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
               <descriptors>
@@ -2567,6 +2598,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -2599,6 +2631,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -2626,6 +2659,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -2658,6 +2692,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -2685,6 +2720,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -2716,6 +2752,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -2743,6 +2780,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -2773,6 +2811,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -2800,6 +2839,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -2830,6 +2870,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -2857,6 +2898,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -2890,6 +2932,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -2917,6 +2960,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -2949,6 +2993,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -2976,6 +3021,7 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.plugin.version}</version>
             <configuration>
@@ -3008,6 +3054,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
@@ -3846,8 +3893,6 @@
               </targetClasses>
               <targetTests>
                 <param>com.puppycrawl.tools.checkstyle.checks.javadoc.*</param>
-                <!-- JavadocMetadataScraper extends AbstractJavadocCheck -->
-                <param>com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraperTest</param>
               </targetTests>
               <avoidCallsTo>
                 <avoidCallsTo>com.puppycrawl.tools.checkstyle.utils.UnmodifiableCollectionUtil</avoidCallsTo>
@@ -5132,7 +5177,7 @@
         <dependency>
           <groupId>org.eclipse.jdt</groupId>
           <artifactId>org.eclipse.jdt.annotation</artifactId>
-          <version>2.3.100</version>
+          <version>2.4.0</version>
         </dependency>
       </dependencies>
       <build>
@@ -5282,6 +5327,89 @@
               <threads>${pitest.plugin.threads}</threads>
               <outputFormats>${pitest.plugin.output.formats}</outputFormats>
             </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>checkstyle-autofix</id>
+      <build>
+        <plugins>
+          <!-- Checkstyle Autofix -->
+          <plugin>
+            <groupId>org.openrewrite.maven</groupId>
+            <artifactId>rewrite-maven-plugin</artifactId>
+            <version>6.19.0</version>
+            <configuration>
+              <exportDatatables>true</exportDatatables>
+              <skipMavenParsing>true</skipMavenParsing>
+              <activeRecipes>
+                <recipe>org.checkstyle.CheckstyleAutoFix</recipe>
+                <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
+                <recipe>org.openrewrite.java.format.RemoveTrailingWhitespace</recipe>
+                <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>
+                <recipe>org.openrewrite.java.recipes.JavaRecipeBestPractices</recipe>
+                <recipe>org.openrewrite.java.recipes.RecipeTestingBestPractices</recipe>
+                <recipe>org.openrewrite.maven.BestPractices</recipe>
+                <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
+                <recipe>org.openrewrite.staticanalysis.JavaApiBestPractices</recipe>
+                <recipe>org.openrewrite.staticanalysis.LowercasePackage</recipe>
+                <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>
+                <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>
+                <recipe>org.openrewrite.staticanalysis.NoFinalizer</recipe>
+                <recipe>org.openrewrite.staticanalysis.RemoveUnusedLocalVariables</recipe>
+                <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateFields</recipe>
+                <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.BigDecimalRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.CharSequenceRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.ClassRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.CollectionRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.ComparatorRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.FileRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.MicrometerRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.PatternRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.PreconditionsRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.PrimitiveRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.StreamRulesRecipes</recipe>
+                <recipe>tech.picnic.errorprone.refasterrules.TimeRulesRecipes</recipe>
+              </activeRecipes>
+              <exclusions>
+                <exclusion>**.ci-temp**</exclusion>
+                <exclusion>**/resources-noncompilable/**</exclusion>
+                <exclusion>**src/it/resources**</exclusion>
+                <exclusion>**src/test/resources**</exclusion>
+                <exclusion>**xdocs-examples**</exclusion>
+              </exclusions>
+              <plainTextMasks>
+                <plainTextMask>**/*.xml</plainTextMask>
+                <plainTextMask>**/*.yml</plainTextMask>
+                <plainTextMask>**/*.groovy</plainTextMask>
+                <plainTextMask>**/resources/**</plainTextMask>
+                <plainTextMask>**/resources-noncompilable/**</plainTextMask>
+              </plainTextMasks>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>com.puppycrawl.tools</groupId>
+                <artifactId>checkstyle-openrewrite-recipes</artifactId>
+                <version>${checkstyle.openrewrite.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-migrate-java</artifactId>
+                <version>${rewrite-migrate-java.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-static-analysis</artifactId>
+                <version>${rewrite-static-analysis.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-rewrite</artifactId>
+                <version>0.13.0</version>
+              </dependency>
+            </dependencies>
           </plugin>
         </plugins>
       </build>

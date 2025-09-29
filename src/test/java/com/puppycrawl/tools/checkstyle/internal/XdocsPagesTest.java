@@ -33,7 +33,6 @@ import java.lang.reflect.ParameterizedType;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -86,6 +85,7 @@ import com.puppycrawl.tools.checkstyle.internal.utils.TestUtil;
 import com.puppycrawl.tools.checkstyle.internal.utils.XdocGenerator;
 import com.puppycrawl.tools.checkstyle.internal.utils.XdocUtil;
 import com.puppycrawl.tools.checkstyle.internal.utils.XmlUtil;
+import com.puppycrawl.tools.checkstyle.site.SiteUtil;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
@@ -289,8 +289,7 @@ public class XdocsPagesTest {
         CheckUtil.getSimpleNames(CheckUtil.getCheckstyleChecks())
             .stream()
             .filter(checkName -> {
-                return !"JavadocMetadataScraper".equals(checkName)
-                    && !"ClassAndPropertiesSettersJavadocScraper".equals(checkName);
+                return !"ClassAndPropertiesSettersJavadocScraper".equals(checkName);
             })
             .forEach(checkName -> {
                 if (!isPresent(availableChecks, checkName)) {
@@ -542,19 +541,19 @@ public class XdocsPagesTest {
 
     @Test
     public void testAlphabetOrderAtIndexPages() throws Exception {
-        final Path allChecks = Paths.get("src/site/xdoc/checks.xml");
+        final Path allChecks = Path.of("src/site/xdoc/checks.xml");
         validateOrder(allChecks, "Check");
 
         final String[] groupNames = {"annotation", "blocks", "design",
             "coding", "header", "imports", "javadoc", "metrics",
             "misc", "modifier", "naming", "regexp", "sizes", "whitespace"};
         for (String name : groupNames) {
-            final Path checks = Paths.get("src/site/xdoc/checks/" + name + "/index.xml");
+            final Path checks = Path.of("src/site/xdoc/checks/" + name + "/index.xml");
             validateOrder(checks, "Check");
         }
         validateOrder(AVAILABLE_FILTERS_PATH, "Filter");
 
-        final Path fileFilters = Paths.get("src/site/xdoc/filefilters/index.xml");
+        final Path fileFilters = Path.of("src/site/xdoc/filefilters/index.xml");
         validateOrder(fileFilters, "File Filter");
     }
 
@@ -1244,6 +1243,7 @@ public class XdocsPagesTest {
         final String expectedTypeName = Optional.ofNullable(field)
                 .map(nonNullField -> nonNullField.getAnnotation(XdocsPropertyType.class))
                 .map(propertyType -> propertyType.value().getDescription())
+                .map(SiteUtil::simplifyTypeName)
                 .orElse(fieldClass.getSimpleName());
         final String expectedValue = getModulePropertyExpectedValue(sectionName, propertyName,
                 field, fieldClass, instance);
@@ -1418,13 +1418,13 @@ public class XdocsPagesTest {
             }
             else if (fieldClass == URI.class || fieldClass == String.class) {
                 if (value != null) {
-                    result = '"' + value.toString() + '"';
+                    result = value.toString();
                 }
             }
             else if (fieldClass == Pattern.class) {
                 if (value != null) {
-                    result = '"' + value.toString().replace("\n", "\\n").replace("\t", "\\t")
-                            .replace("\r", "\\r").replace("\f", "\\f") + '"';
+                    result = value.toString().replace("\n", "\\n").replace("\t", "\\t")
+                            .replace("\r", "\\r").replace("\f", "\\f");
                 }
             }
             else if (fieldClass == Pattern[].class) {
@@ -1542,8 +1542,8 @@ public class XdocsPagesTest {
             stream = collection.stream()
                     .mapToInt(number -> (int) number);
         }
-        else if (value instanceof BitSet) {
-            stream = ((BitSet) value).stream();
+        else if (value instanceof BitSet set) {
+            stream = set.stream();
         }
         else {
             stream = Arrays.stream((int[]) value);
@@ -1660,8 +1660,9 @@ public class XdocsPagesTest {
         }
 
         if (!expectedText.isEmpty()) {
-            expectedText.append("All messages can be customized if the default message doesn't "
-                    + "suit you.\nPlease see the documentation to learn how to.");
+            expectedText.append("""
+                    All messages can be customized if the default message doesn't suit you.
+                    Please see the documentation to learn how to.""");
         }
 
         if (subSection == null) {
@@ -1893,7 +1894,7 @@ public class XdocsPagesTest {
             styleChecks.remove("SuppressWarningsFilter");
             styleChecks.remove("SuppressWarningsHolder");
             styleChecks.remove("SuppressWithNearbyTextFilter");
-
+            styleChecks.remove("SuppressWithPlainTextCommentFilter");
             assertWithMessage(
                     fileName + " requires the following check(s) to appear: " + styleChecks)
                 .that(styleChecks)
@@ -2335,7 +2336,7 @@ public class XdocsPagesTest {
     }
 
     private static List<Path> collectAllXmlTemplatesUnderSrcSite() throws IOException {
-        final Path root = Paths.get("src/site/xdoc");
+        final Path root = Path.of("src/site/xdoc");
         try (Stream<Path> walk = Files.walk(root)) {
             return walk
                     .filter(path -> path.getFileName().toString().endsWith(".xml.template"))

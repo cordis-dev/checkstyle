@@ -33,70 +33,6 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <a href="https://checkstyle.org/checks/whitespace/emptyforiteratorpad.html">
  * EmptyForIteratorPad</a> to validate empty for iterators.
  * </div>
- * <ul>
- * <li>
- * Property {@code tokens} - tokens to check
- * Type is {@code java.lang.String[]}.
- * Validation type is {@code tokenSet}.
- * Default value is:
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMA">
- * COMMA</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">
- * SEMI</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">
- * TYPECAST</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_IF">
- * LITERAL_IF</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_ELSE">
- * LITERAL_ELSE</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHILE">
- * LITERAL_WHILE</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_DO">
- * LITERAL_DO</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FOR">
- * LITERAL_FOR</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FINALLY">
- * LITERAL_FINALLY</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_RETURN">
- * LITERAL_RETURN</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_YIELD">
- * LITERAL_YIELD</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">
- * LITERAL_CATCH</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DO_WHILE">
- * DO_WHILE</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ELLIPSIS">
- * ELLIPSIS</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SWITCH">
- * LITERAL_SWITCH</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SYNCHRONIZED">
- * LITERAL_SYNCHRONIZED</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_TRY">
- * LITERAL_TRY</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CASE">
- * LITERAL_CASE</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
- * LAMBDA</a>,
- * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHEN">
- * LITERAL_WHEN</a>.
- * </li>
- * </ul>
- *
- * <p>
- * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
- * </p>
- *
- * <p>
- * Violation Message Keys:
- * </p>
- * <ul>
- * <li>
- * {@code ws.notFollowed}
- * </li>
- * <li>
- * {@code ws.typeCast}
- * </li>
- * </ul>
  *
  * @since 3.0
  */
@@ -118,11 +54,6 @@ public class WhitespaceAfterCheck
 
     @Override
     public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
-
-    @Override
-    public int[] getAcceptableTokens() {
         return new int[] {
             TokenTypes.COMMA,
             TokenTypes.SEMI,
@@ -148,6 +79,33 @@ public class WhitespaceAfterCheck
     }
 
     @Override
+    public int[] getAcceptableTokens() {
+        return new int[] {
+            TokenTypes.COMMA,
+            TokenTypes.SEMI,
+            TokenTypes.TYPECAST,
+            TokenTypes.LITERAL_IF,
+            TokenTypes.LITERAL_ELSE,
+            TokenTypes.LITERAL_WHILE,
+            TokenTypes.LITERAL_DO,
+            TokenTypes.LITERAL_FOR,
+            TokenTypes.LITERAL_FINALLY,
+            TokenTypes.LITERAL_RETURN,
+            TokenTypes.LITERAL_YIELD,
+            TokenTypes.LITERAL_CATCH,
+            TokenTypes.DO_WHILE,
+            TokenTypes.ELLIPSIS,
+            TokenTypes.LITERAL_SWITCH,
+            TokenTypes.LITERAL_SYNCHRONIZED,
+            TokenTypes.LITERAL_TRY,
+            TokenTypes.LITERAL_CASE,
+            TokenTypes.LAMBDA,
+            TokenTypes.LITERAL_WHEN,
+            TokenTypes.ANNOTATIONS,
+        };
+    }
+
+    @Override
     public int[] getRequiredTokens() {
         return CommonUtil.EMPTY_INT_ARRAY;
     }
@@ -159,6 +117,19 @@ public class WhitespaceAfterCheck
             final int[] line = getLineCodePoints(targetAST.getLineNo() - 1);
             if (!isFollowedByWhitespace(targetAST, line)) {
                 log(targetAST, MSG_WS_TYPECAST);
+            }
+        }
+        else if (ast.getType() == TokenTypes.ANNOTATIONS) {
+            if (ast.getFirstChild() != null) {
+                DetailAST targetAST = ast.getFirstChild().getLastChild();
+                if (targetAST.getType() == TokenTypes.DOT) {
+                    targetAST = targetAST.getLastChild();
+                }
+                final int[] line = getLineCodePoints(targetAST.getLineNo() - 1);
+                if (!isFollowedByWhitespace(targetAST, line)) {
+                    final Object[] message = {targetAST.getText()};
+                    log(targetAST, MSG_WS_NOT_FOLLOWED, message);
+                }
             }
         }
         else {

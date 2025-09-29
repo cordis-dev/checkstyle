@@ -21,16 +21,13 @@ package com.puppycrawl.tools.checkstyle.site;
 
 import java.lang.reflect.Field;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.apache.maven.doxia.macro.AbstractMacro;
 import org.apache.maven.doxia.macro.Macro;
@@ -59,21 +56,8 @@ public class PropertiesMacro extends AbstractMacro {
      */
     public static final String EMPTY = "empty";
 
-    /** Set of properties not inherited from the base token configuration. */
-    public static final Set<String> NON_BASE_TOKEN_PROPERTIES = Collections.unmodifiableSet(
-            Arrays.stream(new String[] {
-                "AtclauseOrder - target",
-                "DescendantToken - limitedTokens",
-                "IllegalType - memberModifiers",
-                "MagicNumber - constantWaiverParentToken",
-                "MultipleStringLiterals - ignoreOccurrenceContext",
-            }).collect(Collectors.toSet()));
-
     /** The precompiled pattern for a comma followed by a space. */
     private static final Pattern COMMA_SPACE_PATTERN = Pattern.compile(", ");
-
-    /** The precompiled pattern for a Check. */
-    private static final Pattern CHECK_PATTERN = Pattern.compile("Check$");
 
     /** The string '{}'. */
     private static final String CURLY_BRACKET = "{}";
@@ -103,7 +87,7 @@ public class PropertiesMacro extends AbstractMacro {
     private static String currentModuleName = "";
 
     /** The file of the current module being processed. */
-    private static Path currentModulePath = Paths.get("");
+    private static Path currentModulePath = Path.of("");
 
     @Override
     public void execute(Sink sink, MacroRequest request) throws MacroExecutionException {
@@ -127,7 +111,7 @@ public class PropertiesMacro extends AbstractMacro {
      */
     private static void configureGlobalProperties(String modulePath)
             throws MacroExecutionException {
-        final Path modulePathObj = Paths.get(modulePath);
+        final Path modulePathObj = Path.of(modulePath);
         currentModulePath = modulePathObj;
         final Path fileNamePath = modulePathObj.getFileName();
 
@@ -208,11 +192,12 @@ public class PropertiesMacro extends AbstractMacro {
 
         final List<String> orderedProperties = orderProperties(properties);
 
+        final DetailNode currentModuleJavadoc = SiteUtil.getModuleJavadoc(
+            currentModuleName, currentModulePath);
+
         for (String property : orderedProperties) {
             try {
                 final DetailNode propertyJavadoc = propertiesJavadocs.get(property);
-                final DetailNode currentModuleJavadoc =
-                    SiteUtil.getModuleJavadoc(currentModuleName, currentModulePath);
                 writePropertyRow(sink, property, propertyJavadoc, instance, currentModuleJavadoc);
             }
             // -@cs[IllegalCatch] we need to get details in wrapping exception
@@ -271,7 +256,7 @@ public class PropertiesMacro extends AbstractMacro {
         writePropertyTypeCell(sink, propertyName, field, instance);
         writePropertyDefaultValueCell(sink, propertyName, field, instance);
         writePropertySinceVersionCell(
-                sink, propertyName, moduleJavadoc, propertyJavadoc);
+                sink, moduleJavadoc, propertyJavadoc);
 
         sink.rawText(ModuleJavadocParsingUtil.INDENT_LEVEL_12);
         sink.tableRow_();
@@ -307,7 +292,7 @@ public class PropertiesMacro extends AbstractMacro {
         sink.rawText(ModuleJavadocParsingUtil.INDENT_LEVEL_14);
         sink.tableCell();
         final String description = SiteUtil
-                .getPropertyDescription(propertyName, propertyJavadoc, currentModuleName);
+                .getPropertyDescriptionForXdoc(propertyName, propertyJavadoc, currentModuleName);
 
         sink.rawText(description);
         sink.tableCell_();
@@ -360,7 +345,17 @@ public class PropertiesMacro extends AbstractMacro {
             writeTokensList(sink, configurableTokens, SiteUtil.PATH_TO_JAVADOC_TOKEN_TYPES, true);
         }
         else {
-            final String type = SiteUtil.getType(field, propertyName, currentModuleName, instance);
+            final String type;
+
+            if (ModuleJavadocParsingUtil.isPropertySpecialTokenProp(field)) {
+                type = "subset of tokens TokenTypes";
+            }
+            else {
+                final String fullTypeName =
+                    SiteUtil.getType(field, propertyName, currentModuleName, instance);
+                type = SiteUtil.simplifyTypeName(fullTypeName);
+            }
+
             if (PropertyType.TOKEN_ARRAY.getDescription().equals(type)) {
                 processLinkForTokenTypes(sink);
             }
@@ -513,13 +508,10 @@ public class PropertiesMacro extends AbstractMacro {
         }
         else {
             final String defaultValue = getDefaultValue(propertyName, field, instance);
-            final String checkName = CHECK_PATTERN
-                    .matcher(instance.getClass().getSimpleName()).replaceAll("");
 
-            final boolean isSpecialTokenProp = NON_BASE_TOKEN_PROPERTIES.stream()
-                    .anyMatch(tokenProp -> tokenProp.equals(checkName + " - " + propertyName));
+            if (ModuleJavadocParsingUtil.isPropertySpecialTokenProp(field)
+                && !CURLY_BRACKET.equals(defaultValue)) {
 
-            if (isSpecialTokenProp && !CURLY_BRACKET.equals(defaultValue)) {
                 final List<String> defaultValuesList =
                         Arrays.asList(COMMA_SPACE_PATTERN.split(defaultValue));
                 writeTokensList(sink, defaultValuesList, SiteUtil.PATH_TO_TOKEN_TYPES, false);
@@ -545,7 +537,7 @@ public class PropertiesMacro extends AbstractMacro {
      */
     private static String getDefaultValue(String propertyName, Field field, Object instance)
             throws MacroExecutionException {
-        final String result;
+        String result;
 
         if (field != null) {
             result = SiteUtil.getDefaultValue(
@@ -561,6 +553,22 @@ public class PropertiesMacro extends AbstractMacro {
                 result = "null";
             }
         }
+
+        final Class<?> fieldClass =
+            SiteUtil.getFieldClass(field, propertyName, currentModuleName, instance);
+        if (result.isEmpty() && fieldClass.isArray()) {
+            result = CURLY_BRACKET;
+
+            if (fieldClass == String[].class && SiteUtil.FILE_EXTENSIONS.equals(propertyName)) {
+                result = "all files";
+            }
+        }
+        else if (SiteUtil.CHARSET.equals(propertyName)) {
+            result = "the charset property of the parent"
+                + " <a href=\"https://checkstyle.org/config.html#Checker\">"
+                + "Checker</a> module";
+        }
+
         return result;
     }
 
@@ -568,19 +576,17 @@ public class PropertiesMacro extends AbstractMacro {
      * Writes a table cell with the property since version.
      *
      * @param sink sink to write to.
-     * @param propertyName the name of the property.
      * @param moduleJavadoc the Javadoc of the module.
      * @param propertyJavadoc the Javadoc of the property containing the since version.
      * @throws MacroExecutionException if an error occurs during retrieval of the since version.
      */
-    private static void writePropertySinceVersionCell(Sink sink, String propertyName,
-                                                      DetailNode moduleJavadoc,
+    private static void writePropertySinceVersionCell(Sink sink, DetailNode moduleJavadoc,
                                                       DetailNode propertyJavadoc)
             throws MacroExecutionException {
         sink.rawText(ModuleJavadocParsingUtil.INDENT_LEVEL_14);
         sink.tableCell();
         final String sinceVersion = SiteUtil.getPropertySinceVersion(
-                currentModuleName, moduleJavadoc, propertyName, propertyJavadoc);
+                currentModuleName, moduleJavadoc, propertyJavadoc);
         sink.text(sinceVersion);
         sink.tableCell_();
     }

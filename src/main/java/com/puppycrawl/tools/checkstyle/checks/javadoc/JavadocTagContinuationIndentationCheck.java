@@ -38,46 +38,12 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
  * </div>
  * <ul>
  * <li>
- * Property {@code offset} - Specify how many spaces to use for new indentation level.
- * Type is {@code int}.
- * Default value is {@code 4}.
- * </li>
- * <li>
- * Property {@code violateExecutionOnNonTightHtml} - Control when to print violations
- * if the Javadoc being examined by this check violates the tight html rules defined at
- * <a href="https://checkstyle.org/writingjavadocchecks.html#Tight-HTML_rules">Tight-HTML Rules</a>.
- * Type is {@code boolean}.
- * Default value is {@code false}.
- * </li>
- * </ul>
- *
- * <p>
- * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
- * </p>
- *
- * <p>
- * Violation Message Keys:
- * </p>
- * <ul>
- * <li>
- * {@code javadoc.missed.html.close}
- * </li>
- * <li>
- * {@code javadoc.parse.rule.error}
- * </li>
- * <li>
- * {@code javadoc.unclosedHtml}
- * </li>
- * <li>
- * {@code javadoc.wrong.singleton.html.tag}
- * </li>
- * <li>
- * {@code tag.continuation.indent}
+ * Notes:
+ * This check does not validate the indentation of lines inside {@code pre} tags.
  * </li>
  * </ul>
  *
  * @since 6.0
- *
  */
 @StatelessCheck
 public class JavadocTagContinuationIndentationCheck extends AbstractJavadocCheck {
@@ -121,13 +87,43 @@ public class JavadocTagContinuationIndentationCheck extends AbstractJavadocCheck
     public void visitJavadocToken(DetailNode ast) {
         if (isBlockDescription(ast) && !isInlineDescription(ast)) {
             final List<DetailNode> textNodes = getAllNewlineNodes(ast);
+            boolean isTextPreTagChildren = false;
             for (DetailNode newlineNode : textNodes) {
                 final DetailNode textNode = JavadocUtil.getNextSibling(newlineNode);
-                if (textNode.getType() != JavadocTokenTypes.NEWLINE && isViolation(textNode)) {
+                if (newlineNode.getType() == JavadocTokenTypes.HTML_ELEMENT_START
+                        || isHtmlTagChildOfPreTag(ast)) {
+                    isTextPreTagChildren = true;
+                }
+                else if (newlineNode.getType() == JavadocTokenTypes.HTML_ELEMENT_END) {
+                    isTextPreTagChildren = false;
+                }
+                else if (!isTextPreTagChildren && textNode.getType() != JavadocTokenTypes.NEWLINE
+                    && isViolation(textNode)) {
                     log(textNode.getLineNumber(), MSG_KEY, offset);
                 }
             }
         }
+    }
+
+    /**
+     * Checks if the given HTML_TAG is contained inside {@code <pre>} tag.
+     * For cases when another HTML tag is placed next to or before {@code <pre>} tag.
+     * For example:
+     * <pre>
+     * {@code
+     * <pre><someOtherTag>
+     *     some thing
+     * </someOtherTag></pre>
+     * }
+     * </pre>
+     *
+     * @param htmlTag HTML_TAG
+     * @return {@code true} if {@code pre} tag is parent of the given tag, else {@code false}.
+     */
+    private static boolean isHtmlTagChildOfPreTag(DetailNode htmlTag) {
+        DetailNode node = htmlTag.getParent().getParent();
+        node = JavadocUtil.getFirstChild(node);
+        return containsPreTag(node);
     }
 
     /**
@@ -146,8 +142,9 @@ public class JavadocTagContinuationIndentationCheck extends AbstractJavadocCheck
         if (text.length() <= offset) {
             if (CommonUtil.isBlank(text)) {
                 final DetailNode nextNode = JavadocUtil.getNextSibling(textNode);
-                if (nextNode != null && nextNode.getType() != JavadocTokenTypes.NEWLINE) {
-                    // text is blank but line hasn't ended yet
+                // text is blank but line hasn't ended yet
+                if (nextNode != null && nextNode.getType() != JavadocTokenTypes.NEWLINE
+                        && !containsPreTag(nextNode)) {
                     result = true;
                 }
             }
@@ -179,6 +176,9 @@ public class JavadocTagContinuationIndentationCheck extends AbstractJavadocCheck
             }
             else if (node.getType() == JavadocTokenTypes.HTML_ELEMENT_START
                 || node.getType() == JavadocTokenTypes.ATTRIBUTE) {
+                if (containsPreTag(node)) {
+                    textNodes.add(node);
+                }
                 textNodes.addAll(getAllNewlineNodes(node));
             }
             if (node.getType() == JavadocTokenTypes.LEADING_ASTERISK) {
@@ -186,7 +186,35 @@ public class JavadocTagContinuationIndentationCheck extends AbstractJavadocCheck
             }
             node = JavadocUtil.getNextSibling(node);
         }
+
+        // Last node does not get checked in the loop
+        if (containsPreTag(node)) {
+            textNodes.add(node);
+        }
         return textNodes;
+    }
+
+    /**
+     * Checks if the given HTML related node contains {@code <pre>} tag.
+     *
+     * @param ast the node to check
+     * @return {@code true} if the {@code <pre>} tag is inside the node, {@code false} otherwise
+     */
+    private static boolean containsPreTag(DetailNode ast) {
+        DetailNode node = ast;
+        if (node.getType() == JavadocTokenTypes.HTML_ELEMENT_START
+                || node.getType() == JavadocTokenTypes.HTML_ELEMENT_END) {
+            node = JavadocUtil.findFirstToken(node, JavadocTokenTypes.HTML_TAG_NAME);
+        }
+        if (node.getType() == JavadocTokenTypes.HTML_ELEMENT) {
+            final DetailNode htmlTag = JavadocUtil.getFirstChild(node);
+            if (htmlTag.getType() == JavadocTokenTypes.HTML_TAG) {
+                final DetailNode htmlElementStart = JavadocUtil.getFirstChild(htmlTag);
+                node = JavadocUtil.findFirstToken(htmlElementStart,
+                    JavadocTokenTypes.HTML_TAG_NAME);
+            }
+        }
+        return "pre".equalsIgnoreCase(node.getText());
     }
 
     /**

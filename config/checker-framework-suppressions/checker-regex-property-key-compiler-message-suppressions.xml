@@ -691,7 +691,7 @@
   </checkerFrameworkError>
 
   <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/meta/JavadocMetadataScraper.java</fileName>
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/meta/JavadocMetadataScraperUtil.java</fileName>
     <specifier>methodref.receiver.bound</specifier>
     <message>Incompatible receiver type</message>
     <lineContent>.map(pattern::matcher)</lineContent>
@@ -710,17 +710,6 @@
     <specifier>argument</specifier>
     <message>incompatible argument for parameter arg0 of String.split.</message>
     <lineContent>.replace(&quot;\r&quot;, &quot;&quot;));</lineContent>
-    <details>
-      found   : String
-      required: @Regex String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/NotesMacro.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter arg0 of Pattern.compile.</message>
-    <lineContent>+ ModuleJavadocParsingUtil.NOTES);</lineContent>
     <details>
       found   : String
       required: @Regex String

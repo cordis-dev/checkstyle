@@ -22,7 +22,6 @@ package com.puppycrawl.tools.checkstyle;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -55,12 +54,10 @@ class IndentationTrailingCommentsVerticalAlignmentTest {
         "InputIndentationInvalidArrayInitIndent1.java",
 
         // reason: checkstyle check: Line gets longer than 100 characters
-        "InputIndentationAnonymousClassInMethodCurlyOnNewLine.java",
         "InputIndentationChainedMethodCalls.java",
         "InputIndentationCustomAnnotation.java",
         "InputIndentationFromGuava1.java",
         "InputIndentationIfAndParameter.java",
-        "InputIndentationInvalidArrayInitIndentWithoutTrailingComments.java",
         "InputIndentationInvalidClassDefIndent.java",
         "InputIndentationInvalidClassDefIndent1.java",
         "InputIndentationInvalidForIndent.java",
@@ -121,7 +118,7 @@ class IndentationTrailingCommentsVerticalAlignmentTest {
     }
 
     private static Stream<Path> indentationTestFiles() {
-        final Path resourcesDir = Paths.get("src", "test", "resources");
+        final Path resourcesDir = Path.of("src", "test", "resources");
         final Path indentationDir = resourcesDir.resolve(INDENTATION_TEST_FILES_PATH);
 
         Stream<Path> testFiles;

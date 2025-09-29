@@ -340,8 +340,8 @@ public class MainTest {
     @Test
     public void testExistingTargetFileButWithoutReadAccess(
             @SysErr Capturable systemErr, @SysOut Capturable systemOut) throws IOException {
-        final File file = File.createTempFile(
-                "testExistingTargetFileButWithoutReadAccess", null, temporaryFolder);
+        final File file = Files.createTempFile(temporaryFolder.toPath(),
+                "testExistingTargetFileButWithoutReadAccess", null).toFile();
         // skip execution if file is still readable, it is possible on some Windows machines
         // see https://github.com/checkstyle/checkstyle/issues/7032 for details
         assumeTrue(file.setReadable(false), "file is still readable");
@@ -688,7 +688,8 @@ public class MainTest {
     public void testExistingTargetFilePlainOutputToFile(@SysErr Capturable systemErr,
             @SysOut Capturable systemOut) throws Exception {
         final String outputFile =
-                File.createTempFile("file", ".output", temporaryFolder).getCanonicalPath();
+                Files.createTempFile(temporaryFolder.toPath(), "file", ".output").toFile()
+                    .getCanonicalPath();
         assertWithMessage("File must exist")
                 .that(new File(outputFile).exists())
                 .isTrue();
@@ -1526,8 +1527,8 @@ public class MainTest {
         final String expected = addEndOfLine(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<!DOCTYPE suppressions PUBLIC",
-                "    \"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\"",
-                "    \"https://checkstyle.org/dtds/configuration_1_3.dtd\">",
+                "    \"-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN\"",
+                "    \"https://checkstyle.org/dtds/suppressions_1_2.dtd\">",
                 "<suppressions>",
                 "  <suppress",
                 "      files=\"InputMainComplexityOverflow.java\"",
@@ -1554,8 +1555,8 @@ public class MainTest {
         final String expected = addEndOfLine(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
             "<!DOCTYPE suppressions PUBLIC",
-            "    \"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\"",
-            "    \"https://checkstyle.org/dtds/configuration_1_3.dtd\">",
+            "    \"-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN\"",
+            "    \"https://checkstyle.org/dtds/suppressions_1_2.dtd\">",
             "<suppressions>",
             "  <suppress",
             "      files=\"InputMainGenerateChecksAndFilesSuppressions.java\"",
@@ -1604,8 +1605,8 @@ public class MainTest {
         final String expected = addEndOfLine(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<!DOCTYPE suppressions PUBLIC",
-                "    \"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\"",
-                "    \"https://checkstyle.org/dtds/configuration_1_3.dtd\">",
+                "    \"-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN\"",
+                "    \"https://checkstyle.org/dtds/suppressions_1_2.dtd\">",
                 "<suppressions>",
                 "  <suppress",
                 "      files=\"InputMainGenerateChecksAndFilesSuppressionsTabWidth.java\"",
@@ -1632,8 +1633,8 @@ public class MainTest {
         final String expected = addEndOfLine(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<!DOCTYPE suppressions PUBLIC",
-                "    \"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\"",
-                "    \"https://checkstyle.org/dtds/configuration_1_3.dtd\">",
+                "    \"-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN\"",
+                "    \"https://checkstyle.org/dtds/suppressions_1_2.dtd\">",
                 "<suppressions>",
                 "  <suppress",
                 "      files=\"InputMainGenerateChecksAndFilesSuppressionsTabWidth.java\"",
@@ -1657,8 +1658,8 @@ public class MainTest {
         final String expected = addEndOfLine(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                 "<!DOCTYPE suppressions PUBLIC",
-                "    \"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\"",
-                "    \"https://checkstyle.org/dtds/configuration_1_3.dtd\">",
+                "    \"-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN\"",
+                "    \"https://checkstyle.org/dtds/suppressions_1_2.dtd\">",
                 "<suppressions>",
                 "  <suppress",
                 "      files=\"InputMainGenerateChecksAndFilesSuppressionsTabWidth.java\"",
