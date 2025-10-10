@@ -252,8 +252,6 @@ public final class InlineConfigParser {
             "com.puppycrawl.tools.checkstyle.checks.coding.SuperFinalizeCheck",
             "com.puppycrawl.tools.checkstyle.checks.coding"
                     + ".UnnecessarySemicolonAfterTypeMemberDeclarationCheck",
-            "com.puppycrawl.tools.checkstyle.checks.coding"
-                    + ".UnusedCatchParameterShouldBeUnnamedCheck",
             "com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck",
             "com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck",
             "com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck",
@@ -301,7 +299,6 @@ public final class InlineConfigParser {
             "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck",
             "com.puppycrawl.tools.checkstyle.checks.sizes.AnonInnerLengthCheck",
             "com.puppycrawl.tools.checkstyle.checks.sizes.ExecutableStatementCountCheck",
-            "com.puppycrawl.tools.checkstyle.checks.sizes.LambdaBodyLengthCheck",
             "com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck",
             "com.puppycrawl.tools.checkstyle.checks.sizes.OuterTypeNumberCheck",
             "com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumberCheck",

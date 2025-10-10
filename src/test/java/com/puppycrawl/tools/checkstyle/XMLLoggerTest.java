@@ -156,15 +156,10 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
     }
 
     @Test
-    public void testFileStarted()
-            throws Exception {
-        final XMLLogger logger = new XMLLogger(outStream, OutputStreamOptions.CLOSE);
-        logger.auditStarted(null);
-        final AuditEvent ev = new AuditEvent(this, "Test.java");
-        logger.fileStarted(ev);
-        logger.fileFinished(ev);
-        logger.auditFinished(null);
-        verifyXml(getPath("ExpectedXMLLogger.xml"), outStream);
+        public void testFileStarted() throws Exception {
+        verifyWithInlineConfigParserAndXmlLogger(
+            "InputXMLLoggerFileStarted.java",
+            "ExpectedXMLLoggerFileStarted.xml");
     }
 
     @Test
@@ -409,7 +404,7 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
     @Test
     public void testCtorWithTwoParametersCloseStreamOptions() {
         final XMLLogger logger = new XMLLogger(outStream, AutomaticBean.OutputStreamOptions.CLOSE);
-        final boolean closeStream = TestUtil.getInternalState(logger, "closeStream");
+        final boolean closeStream = TestUtil.getInternalState(logger, "closeStream", Boolean.class);
 
         assertWithMessage("closeStream should be true")
                 .that(closeStream)
@@ -422,7 +417,7 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
     @Test
     public void testCtorWithTwoParametersNoneStreamOptions() {
         final XMLLogger logger = new XMLLogger(outStream, AutomaticBean.OutputStreamOptions.NONE);
-        final boolean closeStream = TestUtil.getInternalState(logger, "closeStream");
+        final boolean closeStream = TestUtil.getInternalState(logger, "closeStream", Boolean.class);
 
         assertWithMessage("closeStream should be false")
                 .that(closeStream)

@@ -192,14 +192,15 @@ public class WriteTagCheckTest extends AbstractModuleTestSupport {
 
         checker.addFileSetCheck(treeWalker);
 
-        final ByteArrayOutputStream out = TestUtil.getInternalState(this, "stream");
+        final ByteArrayOutputStream out = TestUtil.getInternalState(this, "stream",
+                ByteArrayOutputStream.class);
         final DefaultLogger logger = new DefaultLogger(out,
                 AbstractAutomaticBean.OutputStreamOptions.CLOSE);
         checker.addListener(logger);
 
         execute(checker, getPath("InputWriteTagResetSeverity.java"));
 
-        final String output = out.toString();
+        final String output = out.toString(StandardCharsets.UTF_8);
 
         // logs severity levels are between square brackets []
         final Pattern severityPattern = Pattern.compile("\\[(ERROR|WARN|INFO|IGNORE)]");
