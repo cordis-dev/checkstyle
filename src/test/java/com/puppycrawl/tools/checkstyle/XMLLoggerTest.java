@@ -165,12 +165,9 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
     @Test
     public void testFileFinished()
             throws Exception {
-        final XMLLogger logger = new XMLLogger(outStream, OutputStreamOptions.CLOSE);
-        logger.auditStarted(null);
-        final AuditEvent ev = new AuditEvent(this, "Test.java");
-        logger.fileFinished(ev);
-        logger.auditFinished(null);
-        verifyXml(getPath("ExpectedXMLLogger.xml"), outStream);
+        verifyWithInlineConfigParserAndXmlLogger(
+            "InputXMLLoggerFileFinished.java",
+            "ExpectedXMLLoggerFileFinished.xml");
     }
 
     @Test
@@ -179,6 +176,10 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
                 "ExpectedXMLLoggerAddError.xml");
     }
 
+    /**
+     * This test cannot use the standard input/expected XML approach
+     * because it requires an AuditEvent with a null fileName.
+     */
     @Test
     public void testAddErrorWithNullFileName() throws Exception {
         final XMLLogger logger = new XMLLogger(outStream, OutputStreamOptions.CLOSE);
