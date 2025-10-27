@@ -99,6 +99,26 @@ public final class JavadocCommentsTokenTypes {
 
     /**
      * {@code @deprecated} block tag.
+     *
+     * <p>Such Javadoc tag can have one child:</p>
+     * <ol>
+     *  <li>{@link #DESCRIPTION}</li>
+     * </ol>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * @deprecated deprecated text.}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * JAVADOC_BLOCK_TAG -> JAVADOC_BLOCK_TAG
+     * `--DEPRECATED_BLOCK_TAG -> DEPRECATED_BLOCK_TAG
+     *     |--AT_SIGN -> @
+     *     |--TAG_NAME -> deprecated
+     *     `--DESCRIPTION -> DESCRIPTION
+     *         `--TEXT ->  deprecated text.
+     * }</pre>
+     *
+     * @see #JAVADOC_BLOCK_TAG
      */
     public static final int DEPRECATED_BLOCK_TAG = JavadocCommentsLexer.DEPRECATED_BLOCK_TAG;
 
@@ -254,7 +274,33 @@ public final class JavadocCommentsTokenTypes {
     public static final int VERSION_BLOCK_TAG = JavadocCommentsLexer.VERSION_BLOCK_TAG;
 
     /**
-     * {@code @see} block tag.
+     * {@code @see} Javadoc block tag.
+     *
+     * <p>Such Javadoc tag can have three children:</p>
+     * <ol>
+     *  <li>{@link #REFERENCE}</li>
+     *  <li>{@link #DESCRIPTION}</li>
+     *  <li>{@link #HTML_ELEMENT}</li>
+     * </ol>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * @see SomeClass#Field}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * JAVADOC_BLOCK_TAG -> JAVADOC_BLOCK_TAG
+     * `--SEE_BLOCK_TAG -> SEE_BLOCK_TAG
+     *     |--AT_SIGN -> @
+     *     |--TAG_NAME -> see
+     *     |--TEXT ->
+     *     `--REFERENCE -> REFERENCE
+     *         |--IDENTIFIER -> SomeClass
+     *         |--HASH -> #
+     *         `--MEMBER_REFERENCE -> MEMBER_REFERENCE
+     *             `--IDENTIFIER -> Field
+     * }</pre>
+     *
+     * @see #JAVADOC_BLOCK_TAG
      */
     public static final int SEE_BLOCK_TAG = JavadocCommentsLexer.SEE_BLOCK_TAG;
 
@@ -418,7 +464,25 @@ public final class JavadocCommentsTokenTypes {
     public static final int SERIAL_FIELD_BLOCK_TAG = JavadocCommentsLexer.SERIAL_FIELD_BLOCK_TAG;
 
     /**
-     * Custom or unrecognized block tag.
+     * {@code @customBlock} Javadoc block tag.
+     *
+     * <p>This type represents any block tag that is not explicitly recognized by Checkstyle,
+     * such as a project-specific or malformed tag.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * @mycustomtag This is a custom block tag.}</pre>
+     * <b>Tree:</b>
+     * <pre>{@code
+     * JAVADOC_BLOCK_TAG -> JAVADOC_BLOCK_TAG
+     * `--CUSTOM_BLOCK_TAG -> CUSTOM_BLOCK_TAG
+     *     |--AT_SIGN -> @
+     *     |--TAG_NAME -> customBlock
+     *     |--TEXT ->
+     *     `--DESCRIPTION -> DESCRIPTION
+     *         `--TEXT ->  This is a custom block tag.
+     * }</pre>
+     *
+     * @see #JAVADOC_BLOCK_TAG
      */
     public static final int CUSTOM_BLOCK_TAG = JavadocCommentsLexer.CUSTOM_BLOCK_TAG;
 
@@ -441,22 +505,135 @@ public final class JavadocCommentsTokenTypes {
     public static final int JAVADOC_INLINE_TAG_END = JavadocCommentsLexer.JAVADOC_INLINE_TAG_END;
 
     /**
-     * {@code {@code}} inline tag.
+     * {@code {@code}} Javadoc inline tag.
+     *
+     * <p>Such Javadoc tag can have no children:</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * {@code println("Hello");}}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * `--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     *     |--CODE_INLINE_TAG -> CODE_INLINE_TAG
+     *     |--JAVADOC_INLINE_TAG_START -> { @
+     *     |--TAG_NAME -> code
+     *     |--TEXT ->  println("Hello");
+     *     `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
     public static final int CODE_INLINE_TAG = JavadocCommentsLexer.CODE_INLINE_TAG;
 
     /**
-     * {@code {@link}} inline tag.
+     * {@code {@link}} Javadoc inline tag.
+     *
+     * <p>Such Javadoc tag can have two children:</p>
+     * <ol>
+     *   <li>{@link #REFERENCE}</li>
+     *   <li>{@link #DESCRIPTION}</li>
+     * </ol>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * {@link Math#max(int, int) label}}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * --JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     * `--LINK_INLINE_TAG -> LINK_INLINE_TAG
+     *     |--JAVADOC_INLINE_TAG_START -> { @
+     *     |--TAG_NAME -> link
+     *     |--TEXT ->
+     *     |--REFERENCE -> REFERENCE
+     *     |   |--IDENTIFIER -> Math
+     *     |   |--HASH -> #
+     *     |   `--MEMBER_REFERENCE -> MEMBER_REFERENCE
+     *     |       |--IDENTIFIER -> max
+     *     |       |--LPAREN -> (
+     *     |       |--PARAMETER_TYPE_LIST -> PARAMETER_TYPE_LIST
+     *     |       |   |--PARAMETER_TYPE -> int
+     *     |       |   |--COMMA -> ,
+     *     |       |   |--TEXT ->
+     *     |       |   `--PARAMETER_TYPE -> int
+     *     |       `--RPAREN -> )
+     *     |--DESCRIPTION -> DESCRIPTION
+     *     |   `--TEXT -> label
+     *     `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
     public static final int LINK_INLINE_TAG = JavadocCommentsLexer.LINK_INLINE_TAG;
 
     /**
-     * {@code {@linkplain}} inline tag.
+     * {@code {@linkplain}} Javadoc inline tag.
+     *
+     * <p>Such Javadoc tag can have two children:</p>
+     * <ol>
+     *   <li>{@link #REFERENCE}</li>
+     *   <li>{@link #DESCRIPTION}</li>
+     * </ol>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * {@linkplain String#indexOf(int, int) label}}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * --JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     * `--LINKPLAIN_INLINE_TAG -> LINKPLAIN_INLINE_TAG
+     *     |--JAVADOC_INLINE_TAG_START -> { @
+     *     |--TAG_NAME -> linkplain
+     *     |--TEXT ->
+     *     |--REFERENCE -> REFERENCE
+     *     |   |--IDENTIFIER -> String
+     *     |   |--HASH -> #
+     *     |   `--MEMBER_REFERENCE -> MEMBER_REFERENCE
+     *     |       |--IDENTIFIER -> indexOf
+     *     |       |--LPAREN -> (
+     *     |       |--PARAMETER_TYPE_LIST -> PARAMETER_TYPE_LIST
+     *     |       |   |--PARAMETER_TYPE -> int
+     *     |       |   |--COMMA -> ,
+     *     |       |   |--TEXT ->
+     *     |       |   `--PARAMETER_TYPE -> int
+     *     |       `--RPAREN -> )
+     *     |--DESCRIPTION -> DESCRIPTION
+     *     |   `--TEXT ->  label
+     *     `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
     public static final int LINKPLAIN_INLINE_TAG = JavadocCommentsLexer.LINKPLAIN_INLINE_TAG;
 
     /**
-     * {@code {@value}} inline tag.
+     * {@code {@value}} Javadoc inline tag.
+     *
+     * <p>Such Javadoc tag can have one child:</p>
+     * <ol>
+     *   <li>{@link #REFERENCE}</li>
+     * </ol>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * {@value Integer#MAX_VALUE}}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * --JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     * `--VALUE_INLINE_TAG -> VALUE_INLINE_TAG
+     *     |--JAVADOC_INLINE_TAG_START -> { @
+     *     |--TAG_NAME -> value
+     *     |--TEXT ->
+     *     |--REFERENCE -> REFERENCE
+     *     |   |--IDENTIFIER -> Integer
+     *     |   |--HASH -> #
+     *     |   `--MEMBER_REFERENCE -> MEMBER_REFERENCE
+     *     |       `--IDENTIFIER -> MAX_VALUE
+     *     |--TEXT ->
+     *     `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
     public static final int VALUE_INLINE_TAG = JavadocCommentsLexer.VALUE_INLINE_TAG;
 

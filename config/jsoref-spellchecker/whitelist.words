@@ -306,6 +306,7 @@ Dforbiddenapis
 Dgpg
 Dhttp
 Diachenko
+diffplug
 DIFFTOOL
 dirname
 Djacoco
@@ -892,6 +893,7 @@ Mycheckstyle
 mycompany
 mycompanychecks
 mycustom
+mycustomtag
 myfile
 myname
 myproject
@@ -1563,6 +1565,7 @@ Xpkginfo
 Xplugin
 xright
 xsd
+Xshare
 xsi
 xsl
 xslt
