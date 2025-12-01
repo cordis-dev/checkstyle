@@ -638,8 +638,30 @@ public final class JavadocCommentsTokenTypes {
     public static final int VALUE_INLINE_TAG = JavadocCommentsLexer.VALUE_INLINE_TAG;
 
     /**
-     * {@code {@summary}} inline tag.
+     * Inline {@code {@summary ...}} tag inside Javadoc.
+     *
+     * <p>This node represents an inline {@code {@summary ...}} tag used to provide a
+     * short summary description within a Javadoc sentence.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * Example showing {@summary This is a short summary.}}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * |--TEXT ->  Example showing
+     * `--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     *     `--SUMMARY_INLINE_TAG -> SUMMARY_INLINE_TAG
+     *         |--JAVADOC_INLINE_TAG_START -> { @
+     *         |--TAG_NAME -> summary
+     *         |--DESCRIPTION -> DESCRIPTION
+     *         |   `--TEXT ->  This is a short summary.
+     *         `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
+
     public static final int SUMMARY_INLINE_TAG = JavadocCommentsLexer.SUMMARY_INLINE_TAG;
 
     /**
@@ -659,17 +681,93 @@ public final class JavadocCommentsTokenTypes {
     public static final int LITERAL_INLINE_TAG = JavadocCommentsLexer.LITERAL_INLINE_TAG;
 
     /**
-     * {@code {@return}} inline tag.
+     * Inline {@code return} tag inside Javadoc.
+     *
+     * <p>This node represents an inline {@code {@return ...}} tag used to
+     * describe the returned value directly within a Javadoc sentence.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code Example showing result {@return The computed value.}}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * |--TEXT ->  Example showing result
+     * `--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     *     `--RETURN_INLINE_TAG -> RETURN_INLINE_TAG
+     *         |--JAVADOC_INLINE_TAG_START -> { @
+     *         |--TAG_NAME -> return
+     *         |--DESCRIPTION -> DESCRIPTION
+     *         |   `--TEXT ->  The computed value.
+     *         `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
+
     public static final int RETURN_INLINE_TAG = JavadocCommentsLexer.RETURN_INLINE_TAG;
 
     /**
      * {@code {@index}} inline tag.
+     *
+     * <p>This node represents an inline {@code {@index ...}} tag used to mark an
+     * index term inside a Javadoc sentence.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * Example showing {@index keyword description of the index term}.}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * |--TEXT ->  Example showing
+     * `--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     *     `--INDEX_INLINE_TAG -> INDEX_INLINE_TAG
+     *         |--JAVADOC_INLINE_TAG_START -> { @
+     *         |--TAG_NAME -> index
+     *         |--TEXT ->
+     *         |--INDEX_TERM -> keyword
+     *         |--DESCRIPTION -> DESCRIPTION
+     *         |   `--TEXT ->  description of the index term
+     *         `--JAVADOC_INLINE_TAG_END -> }
+     * |--TEXT -> .
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
+
     public static final int INDEX_INLINE_TAG = JavadocCommentsLexer.INDEX_INLINE_TAG;
 
     /**
      * {@code @snippet} inline tag.
+     *
+     * <p>This node represents an inline { @code { @snippet :}} tag used to embed
+     * code snippets directly inside a Javadoc sentence.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{ @code * Example showing { @snippet :java |
+     * System.out.println("hello");
+     * }}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * |--TEXT -> Example showing
+     * `--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     *     `--SNIPPET_INLINE_TAG -> SNIPPET_INLINE_TAG
+     *         |--JAVADOC_INLINE_TAG_START -> { @
+     *         |--COLON -> :
+     *         |--SNIPPET_BODY -> SNIPPET_BODY
+     *         |   |--TEXT -> java |
+     *         |   |--NEWLINE -> \n
+     *         |   |--LEADING_ASTERISK -> *
+     *         |   |--TEXT -> System.out.println("hello");
+     *         |   |--NEWLINE -> \n
+     *         |   |--LEADING_ASTERISK -> *
+     *         |   `--TEXT ->
+     *         `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
     public static final int SNIPPET_INLINE_TAG = JavadocCommentsLexer.SNIPPET_INLINE_TAG;
 
@@ -726,7 +824,42 @@ public final class JavadocCommentsTokenTypes {
     public static final int GT = JavadocCommentsLexer.GT;
 
     /**
-     * Keyword {@code extends} in type parameters.
+     * {@code extends} keyword inside type arguments of a Javadoc inline tag.
+     *
+     * <p>This node represents the {@code extends} bound used inside a
+     * parameterized type within an inline Javadoc tag.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code
+     * * {@link java.util.List&lt;? extends Number&gt; list of any subtype of Number}
+     * }</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * |--TEXT ->
+     * |--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     *     `--LINK_INLINE_TAG -> LINK_INLINE_TAG
+     *         |--JAVADOC_INLINE_TAG_START -> { @
+     *         |--TAG_NAME -> link
+     *         |--TEXT ->
+     *         |--REFERENCE -> REFERENCE
+     *         |   |--IDENTIFIER -> java.util.List
+     *         |   `--TYPE_ARGUMENTS -> TYPE_ARGUMENTS
+     *         |       |--LT -> <
+     *         |       |--TYPE_ARGUMENT -> TYPE_ARGUMENT
+     *         |       |   |--QUESTION -> ?
+     *         |       |   |--TEXT ->
+     *         |       |   |--EXTENDS -> extends
+     *         |       |   |--TEXT ->
+     *         |       |   `--IDENTIFIER -> Number
+     *         |       `--GT -> >
+     *         |--DESCRIPTION -> DESCRIPTION
+     *         |   `--TEXT ->  list of any subtype of Number
+     *         `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #JAVADOC_INLINE_TAG
      */
     public static final int EXTENDS = JavadocCommentsLexer.EXTENDS;
 
@@ -849,7 +982,39 @@ public final class JavadocCommentsTokenTypes {
 
     /**
      * Content inside an HTML element.
+     *
+     * <p>This node represents the textual content between an HTML start tag and
+     * the corresponding end tag inside a Javadoc comment.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * <a href="https://example.com">link</a>}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * `--HTML_ELEMENT -> HTML_ELEMENT
+     *     |--HTML_TAG_START -> HTML_TAG_START
+     *     |   |--TAG_OPEN -> <
+     *     |   |--TAG_NAME -> a
+     *     |   |--HTML_ATTRIBUTES -> HTML_ATTRIBUTES
+     *     |   |   `--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     *     |   |       |--TEXT ->   (whitespace)
+     *     |   |       |--TAG_ATTR_NAME -> href
+     *     |   |       |--EQUALS -> =
+     *     |   |       `--ATTRIBUTE_VALUE -> "https://example.com"
+     *     |   `--TAG_CLOSE -> >
+     *     |--HTML_CONTENT -> HTML_CONTENT
+     *     |   `--TEXT -> link
+     *     `--HTML_TAG_END -> HTML_TAG_END
+     *         |--TAG_OPEN -> <
+     *         |--TAG_SLASH -> /
+     *         |--TAG_NAME -> a
+     *         `--TAG_CLOSE -> >
+     * }</pre>
+     *
+     * @see #HTML_ELEMENT
      */
+
     public static final int HTML_CONTENT = JavadocCommentsLexer.HTML_CONTENT;
 
     /**
@@ -863,32 +1028,193 @@ public final class JavadocCommentsTokenTypes {
     public static final int HTML_ATTRIBUTES = JavadocCommentsLexer.HTML_ATTRIBUTES;
 
     /**
-     * Start of an HTML tag.
+     * Start of an HTML tag (the opening tag node).
+     *
+     * <p>This node represents the opening part of an HTML element and contains
+     * the opening delimiter, tag name, optional attributes, and the closing
+     * delimiter of the opening tag.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * <a href="https://example.com">link</a>}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * `--HTML_ELEMENT -> HTML_ELEMENT
+     *     `--HTML_TAG_START -> HTML_TAG_START
+     *         |--TAG_OPEN -> <
+     *         |--TAG_NAME -> a
+     *         |--HTML_ATTRIBUTES -> HTML_ATTRIBUTES
+     *         |   `--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     *         |       |--TEXT ->
+     *         |       |--TAG_ATTR_NAME -> href
+     *         |       |--EQUALS -> =
+     *         |       `--ATTRIBUTE_VALUE -> "https://example.com"
+     *         `--TAG_CLOSE -> >
+     * }</pre>
+     *
+     * @see #HTML_ELEMENT
      */
+
     public static final int HTML_TAG_START = JavadocCommentsLexer.HTML_TAG_START;
 
     /**
-     * End of an HTML tag.
+     * End of an HTML tag (the closing tag node).
+     *
+     * <p>This node represents the closing part of an HTML element and contains the
+     * closing delimiter, optional slash, and the tag name.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * <a href="https://example.com">link</a>}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * `--HTML_ELEMENT -> HTML_ELEMENT
+     *     |--HTML_TAG_START -> HTML_TAG_START
+     *     |   |--TAG_OPEN -> <
+     *     |   |--TAG_NAME -> a
+     *     |   |--HTML_ATTRIBUTES -> HTML_ATTRIBUTES
+     *     |   |   `--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     *     |   |       |--TEXT ->   (whitespace)
+     *     |   |       |--TAG_ATTR_NAME -> href
+     *     |   |       |--EQUALS -> =
+     *     |   |       `--ATTRIBUTE_VALUE -> "https://example.com"
+     *     |   `--TAG_CLOSE -> >
+     *     |--HTML_CONTENT -> HTML_CONTENT
+     *     |   `--TEXT -> link
+     *     `--HTML_TAG_END -> HTML_TAG_END
+     *         |--TAG_OPEN -> <
+     *         |--TAG_SLASH -> /
+     *         |--TAG_NAME -> a
+     *         `--TAG_CLOSE -> >
+     * }</pre>
+     *
+     * @see #HTML_ELEMENT
      */
+
     public static final int HTML_TAG_END = JavadocCommentsLexer.HTML_TAG_END;
 
     /**
-     * Opening tag delimiter {@code < }.
+     * Represents the opening {@literal "<"} symbol of an HTML start tag.
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code
+     * <div class="container" lang="en"></div>
+     * }</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * HTML_ELEMENT -> HTML_ELEMENT
+     * |--HTML_TAG_START -> HTML_TAG_START
+     * |   |--TAG_OPEN -> <
+     * |   |--TAG_NAME -> div
+     * |   |--HTML_ATTRIBUTES -> HTML_ATTRIBUTES
+     * |   |   |--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     * |   |   |   |--TAG_ATTR_NAME -> class
+     * |   |   |   |--EQUALS -> =
+     * |   |   |   `--ATTRIBUTE_VALUE -> "container"
+     * |   |   `--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     * |   |       |--TAG_ATTR_NAME -> lang
+     * |   |       |--EQUALS -> =
+     * |   |       `--ATTRIBUTE_VALUE -> "en"
+     * |   `--TAG_CLOSE -> >
+     * `--HTML_TAG_END -> HTML_TAG_END
+     *     |--TAG_OPEN -> <
+     *     |--TAG_SLASH -> /
+     *     |--TAG_NAME -> div
+     *     `--TAG_CLOSE -> >
+     * }</pre>
+     *
+     * @see #HTML_TAG_START
      */
     public static final int TAG_OPEN = JavadocCommentsLexer.TAG_OPEN;
 
     /**
-     * HTML tag name.
+     * {@code TAG_NAME} Name of an HTML element.
+     *
+     * <p>Appears inside an HTML tag within Javadoc comments.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code
+     * <div class="container">
+     *     Content
+     * </div>
+     * }</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * HTML_ELEMENT -> HTML_ELEMENT
+     * |--HTML_TAG_START -> HTML_TAG_START
+     * |   |--TAG_OPEN -> <
+     * |   |--TAG_NAME -> div
+     * |   |--HTML_ATTRIBUTES -> HTML_ATTRIBUTES
+     * |   |   `--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     * |   |       |--TAG_ATTR_NAME -> class
+     * |   |       |--EQUALS -> =
+     * |   |       `--ATTRIBUTE_VALUE -> "container"
+     * |   `--TAG_CLOSE -> >
+     * |--HTML_CONTENT -> HTML_CONTENT
+     * |   `--TEXT ->      Content
+     * `--HTML_TAG_END -> HTML_TAG_END
+     *     |--TAG_OPEN -> <
+     *     |--TAG_SLASH -> /
+     *     |--TAG_NAME -> div
+     *     `--TAG_CLOSE -> >
+     * }</pre>
+     *
+     * <p>Here {@code TAG_NAME} corresponds to {@code "div"}.</p>
      */
     public static final int TAG_NAME = JavadocCommentsLexer.TAG_NAME;
 
     /**
-     * Closing tag delimiter {@code > }.
+     * {@code TAG_CLOSE} represents the closing {@literal ">"} symbol
+     * of an HTML tag.
+     *
+     * <p>Appears in Javadoc comments when documenting HTML elements.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code
+     * <p>Some text</p>
+     * }</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * HTML_ELEMENT -> HTML_ELEMENT
+     * |--HTML_TAG_START -> HTML_TAG_START
+     * |   |--TAG_OPEN -> <
+     * |   |--TAG_NAME -> p
+     * |   `--TAG_CLOSE -> >
+     * |--HTML_CONTENT -> HTML_CONTENT
+     * |   `--TEXT -> Some text
+     * `--HTML_TAG_END -> HTML_TAG_END
+     *     |--TAG_OPEN -> <
+     *     |--TAG_SLASH -> /
+     *     |--TAG_NAME -> p
+     *     `--TAG_CLOSE -> >
+     * }</pre>
+     *
+     * @see #HTML_TAG_START
      */
     public static final int TAG_CLOSE = JavadocCommentsLexer.TAG_CLOSE;
 
     /**
-     * Self-closing tag delimiter {@code /> }.
+     * {@code />} Self-closing tag delimiter.
+     *
+     * <p>Used for void HTML elements.</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * <br />}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * VOID_ELEMENT -> VOID_ELEMENT
+     * |--TAG_OPEN -> <
+     * |--TAG_NAME -> br
+     * `--TAG_SLASH_CLOSE -> />
+     * }</pre>
+     *
+     * @see #HTML_ELEMENT
      */
     public static final int TAG_SLASH_CLOSE = JavadocCommentsLexer.TAG_SLASH_CLOSE;
 
@@ -898,12 +1224,72 @@ public final class JavadocCommentsTokenTypes {
     public static final int TAG_SLASH = JavadocCommentsLexer.TAG_SLASH;
 
     /**
-     * Attribute name inside an HTML tag.
+     * {@code TAG_ATTR_NAME} represents the name of an attribute inside an
+     * HTML element within a Javadoc comment.
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code
+     * <img src="logo.png" alt="Site logo">
+     * }</pre>
+     *
+     * <p><b>Tree:</b></p>
+     * <pre>{@code
+     * HTML_ELEMENT -> HTML_ELEMENT
+     * `--VOID_ELEMENT -> VOID_ELEMENT
+     *     `--HTML_TAG_START -> HTML_TAG_START
+     *         |--TAG_OPEN -> <
+     *         |--TAG_NAME -> img
+     *         |--HTML_ATTRIBUTES -> HTML_ATTRIBUTES
+     *         |   |--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     *         |   |   |--TEXT ->
+     *         |   |   |--TAG_ATTR_NAME -> src
+     *         |   |   |--EQUALS -> =
+     *         |   |   `--ATTRIBUTE_VALUE -> "logo.png"
+     *         |   `--HTML_ATTRIBUTE -> HTML_ATTRIBUTE
+     *         |       |--TEXT ->
+     *         |       |--TAG_ATTR_NAME -> alt
+     *         |       |--EQUALS -> =
+     *         |       `--ATTRIBUTE_VALUE -> "Site logo"
+     *         `--TAG_CLOSE -> >
+     * }</pre>
+     *
+     * @see #HTML_ATTRIBUTES
      */
     public static final int TAG_ATTR_NAME = JavadocCommentsLexer.TAG_ATTR_NAME;
 
     /**
-     * Full HTML comment.
+     * Start of an HTML comment node.
+     *
+     * <p>This node represents a full HTML comment inside Javadoc.</p>
+     *
+     * <p>This node has three children:</p>
+     * <ol>
+     *   <li>{@link #HTML_COMMENT_START}</li>
+     *   <li>{@link #HTML_COMMENT_CONTENT}</li>
+     *   <li>{@link #HTML_COMMENT_END}</li>
+     * </ol>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * <!-- Hello World! -->}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * JAVADOC_CONTENT -> JAVADOC_CONTENT
+     * |--TEXT -> /**
+     * |--NEWLINE -> \r\n
+     * |--LEADING_ASTERISK ->  *
+     * |--TEXT ->
+     * |--HTML_COMMENT -> HTML_COMMENT
+     *     |--HTML_COMMENT_START -> <!--
+     *     |--HTML_COMMENT_CONTENT -> HTML_COMMENT_CONTENT
+     *     |   `--TEXT ->  Hello World!
+     *     `--HTML_COMMENT_END -> -->
+     * |--NEWLINE -> \r\n
+     * |--LEADING_ASTERISK ->  *
+     * |--TEXT -> /
+     * }</pre>
+     *
+     * @see #HTML_COMMENT
      */
     public static final int HTML_COMMENT = JavadocCommentsLexer.HTML_COMMENT;
 
@@ -914,7 +1300,27 @@ public final class JavadocCommentsTokenTypes {
 
     /**
      * Closing part of an HTML comment.
+     *
+     * <p>This node represents the closing delimiter of an HTML comment in
+     * Javadoc (for example {@code -->}).</p>
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * <!-- hidden comment -->}</pre>
+     *
+     * <b>Tree:</b>
+     * <pre>{@code
+     * |--LEADING_ASTERISK -> *
+     * |--TEXT ->
+     * |--HTML_COMMENT -> HTML_COMMENT
+     * |   |--HTML_COMMENT_START -> <!--
+     * |   |--HTML_COMMENT_CONTENT -> HTML_COMMENT_CONTENT
+     * |   |   `--TEXT ->  hidden comment
+     * |   `--HTML_COMMENT_END -> -->
+     * }</pre>
+     *
+     * @see #HTML_COMMENT
      */
+
     public static final int HTML_COMMENT_END = JavadocCommentsLexer.HTML_COMMENT_END;
 
     /**

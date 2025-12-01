@@ -126,6 +126,10 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
         outStream.close();
     }
 
+    /**
+     * Cannot use verifyWithInlineConfigParserAndXmlLogger because this test
+     * relies on a custom OutputStream to assert close() call behavior.
+     */
     @Test
     public void testCloseStream()
             throws Exception {
@@ -140,6 +144,12 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
         verifyXml(getPath("ExpectedXMLLoggerEmpty.xml"), outStream);
     }
 
+    /**
+     * Cannot use verifyWithInlineConfigParserAndXmlLogger because it requires
+     * a custom stream to count close() calls.
+     *
+     * @throws Exception throws exception
+     */
     @Test
     public void testNoCloseStream()
             throws Exception {
@@ -203,6 +213,20 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
     }
 
     @Test
+    public void testAddErrorEmptyModuleId() throws Exception {
+        final String inputFile = "InputXMLLoggerErrorEmptyModuleId.java";
+        final String expectedXmlReport = "ExpectedXMLLoggerErrorEmptyModuleId.xml";
+        verifyWithInlineConfigParserAndXmlLogger(inputFile, expectedXmlReport);
+    }
+
+    @Test
+    public void testAddErrorWithAndWithoutModuleId() throws Exception {
+        final String inputFile = "InputXMLLoggerErrorWithAndWithoutModuleId.java";
+        final String expectedXmlReport = "ExpectedXMLLoggerErrorWithAndWithoutModuleId.xml";
+        verifyWithInlineConfigParserAndXmlLogger(inputFile, expectedXmlReport);
+    }
+
+    @Test
     public void testAddErrorWithEncodedMessage() throws Exception {
         final String inputFileWithConfig = "InputXMLLoggerEncodedMessage.java";
         final String expectedXmlReport = "ExpectedXMLLoggerEncodedMessage.xml";
@@ -239,6 +263,11 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
             .isEqualTo(1);
     }
 
+    /**
+     * Cannot use verifyWithInlineConfigParserAndXmlLogger because this test
+     * requires an AuditEvent with a null file name and a custom OutputStream
+     * to verify close() behavior.
+     */
     @Test
     public void testAddExceptionWithNullFileName()
             throws Exception {
@@ -370,6 +399,11 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
                 List.of(inputFileWithConfig, inputFileWithConfig));
     }
 
+    /**
+     * Cannot use verifyWithInlineConfigParserAndXmlLogger because this is a
+     * pure unit test that validates constructor error handling and exception
+     * messaging, which cannot be exercised through Checker execution.
+     */
     @Test
     public void testNullOutputStreamOptions() {
         try {
@@ -388,6 +422,11 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
         }
     }
 
+    /**
+     * Cannot use verifyWithInlineConfigParserAndXmlLogger because this test
+     * directly exercises XMLLogger lifecycle behavior (finishLocalSetup) and
+     * does not depend on Checker execution or XML output.
+     */
     @Test
     public void testFinishLocalSetup() {
         final XMLLogger logger = new XMLLogger(outStream, OutputStreamOptions.CLOSE);
@@ -400,6 +439,9 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
     }
 
     /**
+     * Cannot use verifyWithInlineConfigParserAndXmlLogger because this test
+     * verifies constructor wiring and internal state (closeStream flag),
+     * which are not exposed through the inline verifier.
      * We keep this test for 100% coverage. Until #12873.
      */
     @Test
@@ -413,6 +455,9 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
     }
 
     /**
+     * Cannot use verifyWithInlineConfigParserAndXmlLogger because this test
+     * verifies constructor wiring and internal state (closeStream flag),
+     * which are not exposed through the inline verifier.
      * We keep this test for 100% coverage. Until #12873.
      */
     @Test

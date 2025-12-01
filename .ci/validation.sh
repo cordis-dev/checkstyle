@@ -450,17 +450,51 @@ assembly-run-all-jar)
   mkdir -p .ci-temp
   FOLDER=src/it/resources/com/google/checkstyle/test/chapter7javadoc/rule73wherejavadocrequired
   FILE=InputMissingJavadocTypeCorrect.java
+  echo "Execution with plain text report"
   java -jar target/checkstyle-"$CS_POM_VERSION"-all.jar -c /google_checks.xml \
         $FOLDER/$FILE > .ci-temp/output.log
   fail=0
   if grep -vE '(Starting audit)|(warning)|(Audit done.)' .ci-temp/output.log ; then
     fail=1;
+    exit $fail;
   elif grep 'warning' .ci-temp/output.log ; then
     fail=1;
+    exit $fail;
   fi
   rm .ci-temp/output.log
-  sleep 5
-  exit $fail
+  echo "Execution with xml report"
+  java -jar target/checkstyle-"$CS_POM_VERSION"-all.jar -f xml -c /google_checks.xml \
+        $FOLDER/$FILE -o .ci-temp/output.xml
+  fail=0
+  echo "Content of report:"
+  cat .ci-temp/output.xml
+  echo "Validation of report"
+  if ! grep '</checkstyle>' .ci-temp/output.xml ; then
+    fail=1;
+    echo "no closed tag"
+    exit $fail;
+  elif ! grep 'file name' .ci-temp/output.xml ; then
+    fail=1;
+    echo "no file tag"
+    exit $fail;
+  fi
+  rm .ci-temp/output.xml
+  echo "Execution with sarif report"
+  java -jar target/checkstyle-"$CS_POM_VERSION"-all.jar -f sarif -c /google_checks.xml \
+        $FOLDER/$FILE -o .ci-temp/output.json
+  fail=0
+  echo "Content of report:"
+  cat .ci-temp/output.json
+  echo "Validation of report"
+  if ! grep 'downloadUri' .ci-temp/output.json ; then
+    fail=1;
+    exit $fail;
+  elif ! grep 'results' .ci-temp/output.json ; then
+    fail=1;
+    exit $fail;
+  fi
+  rm .ci-temp/output.json
+
   ;;
 
 check-since-version)
@@ -519,7 +553,7 @@ javac17_standard)
   # InputCustomImportOrderNoPackage2 - nothing is required in front of first import
   # InputIllegalTypePackageClassName - bad import for testing
   # InputVisibilityModifierPackageClassName - bad import for testing
-  files=($(grep -REL --include='*.java' \
+  files=($(grep -RELi --include='*.java' \
         --exclude='InputCustomImportOrderNoPackage2.java' \
         --exclude='InputIllegalTypePackageClassName.java' \
         --exclude='InputVisibilityModifierPackageClassName.java' \
@@ -536,7 +570,7 @@ javac17_standard)
   ;;
 
 javac17)
-  files=($(grep -Rl --include='*.java' ': Compilable with Java17' \
+  files=($(grep -Rli --include='*.java' ': Compilable with Java17' \
         src/test/resources-noncompilable \
         src/it/resources-noncompilable \
         src/xdocs-examples/resources-noncompilable \
@@ -553,7 +587,7 @@ javac17)
   ;;
 
 javac19)
-  files=($(grep -Rl --include='*.java' ': Compilable with Java19' \
+  files=($(grep -Rli --include='*.java' ': Compilable with Java19' \
         src/test/resources-noncompilable \
         src/it/resources-noncompilable \
         src/xdocs-examples/resources-noncompilable || true))
@@ -569,7 +603,7 @@ javac19)
   ;;
 
 javac20)
-  files=($(grep -Rl --include='*.java' ': Compilable with Java20' \
+  files=($(grep -Rli --include='*.java' ': Compilable with Java20' \
         src/test/resources-noncompilable \
         src/it/resources-noncompilable \
         src/xdocs-examples/resources-noncompilable || true))
@@ -585,7 +619,7 @@ javac20)
   ;;
 
 javac21)
-  files=($(grep -Rl --include='*.java' ': Compilable with Java21' \
+  files=($(grep -Rli --include='*.java' ': Compilable with Java21' \
         src/test/resources-noncompilable \
         src/it/resources-noncompilable \
         src/xdocs-examples/resources-noncompilable || true))
@@ -601,7 +635,7 @@ javac21)
   ;;
 
 javac22)
-  files=($(grep -Rl --include='*.java' ': Compilable with Java22' \
+  files=($(grep -Rli --include='*.java' ': Compilable with Java22' \
         src/test/resources-noncompilable \
         src/it/resources-noncompilable \
         src/xdocs-examples/resources-noncompilable || true))
@@ -612,6 +646,22 @@ javac22)
     for file in "${files[@]}"
     do
       javac --release 22 --enable-preview -d target "${file}"
+    done
+  fi
+  ;;
+
+javac25)
+  files=($(grep -Rli --include='*.java' ': Compilable with Java25' \
+        src/test/resources-noncompilable \
+        src/it/resources-noncompilable \
+        src/xdocs-examples/resources-noncompilable || true))
+  if [[  ${#files[@]} -eq 0 ]]; then
+    echo "No Java25 files to process"
+  else
+    mkdir -p target
+    for file in "${files[@]}"
+    do
+      javac --release 25 --enable-preview -d target "${file}"
     done
   fi
   ;;
@@ -1273,7 +1323,7 @@ openrewrite-recipes)
   set -e
   echo "Running OpenRewrite recipes..."
   ./mvnw -e --no-transfer-progress -Drewrite.recipeChangeLogLevel=INFO \
-  rewrite:run -P checkstyle-autofix
+    rewrite:run -P checkstyle-autofix
 
   echo "Checking for uncommitted changes..."
   ./.ci/print-diff-as-patch.sh target/rewrite.patch

@@ -228,3 +228,21 @@ AST because it provides a more structured representation of the source code that
 analyze. The AST is designed specifically for static analysis and provides a more convenient
 interface for writing checks; it abstracts away the details of the parse tree and provides a
 simplified view of the source code.
+
+### Performance Regressions
+
+When updating the grammar, we should be mindful of the performance impact of our changes. For that,
+we have a CI job that compares the performance of the changes against a baseline. Make sure to
+check the results of the performance regression tests after making changes to the grammar. You can
+find the tests
+[here](https://github.com/checkstyle/checkstyle/blob/master/.ci/check-performance-regression.sh) and
+the CI job
+[here](https://github.com/checkstyle/checkstyle/blob/master/.github/workflows/check-performance-regression.yml).
+
+### ANTLR Regression Report
+
+Whenever making changes to the grammar, you must also generate an ANTLR Regression Report using the
+tool described [here](https://github.com/checkstyle/contribution/tree/master/checkstyle-tester#antlr-regression-report).
+This report compares the behavior of the updated grammar against the current baseline (the `master`
+branch) and helps us detect unintended parsing regressions. Please include the generated report in
+your pull request description for review.

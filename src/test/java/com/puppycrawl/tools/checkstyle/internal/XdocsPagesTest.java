@@ -97,6 +97,8 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  */
 public class XdocsPagesTest {
     private static final Path SITE_PATH = Path.of("src/site/site.xml");
+    private static final Path CHECKSTYLE_JS_PATH = Path.of(
+        "src/site/resources/js/checkstyle.js");
 
     private static final Path AVAILABLE_CHECKS_PATH = Path.of("src/site/xdoc/checks.xml");
     private static final Path AVAILABLE_FILE_FILTERS_PATH = Path.of(
@@ -260,7 +262,8 @@ public class XdocsPagesTest {
         "beginning_development.xml",
         "writingchecks.xml",
         "config.xml",
-        "report_issue.xml"
+        "report_issue.xml",
+        "result_reports.xml"
     );
 
     private static final String NAMES_MUST_BE_IN_ALPHABETICAL_ORDER_SITE_PATH =
@@ -2376,6 +2379,28 @@ public class XdocsPagesTest {
             result = id.substring(0, dash);
         }
         return result;
+    }
+
+    @Test
+    public void testAllOldReleaseNotesHaveRedirectInCheckstyleJs() throws Exception {
+        final String checkstyleJsContent = Files.readString(CHECKSTYLE_JS_PATH);
+        for (Path path : XdocUtil.getXdocsFilePaths()) {
+            if (!path.toString().contains("releasenotes_old_")) {
+                continue;
+            }
+            final String fileNameWithoutExtension =
+                    path.getFileName().toString().replace(".xml", "");
+            final String expectedRedirect = String.format(Locale.ROOT,
+                    "window.location.replace(`./%s.html", fileNameWithoutExtension);
+            assertWithMessage(String.format(
+                        Locale.ROOT,
+                        "Missing redirect for %s: expected '%s...' in %s",
+                        fileNameWithoutExtension,
+                        expectedRedirect,
+                        CHECKSTYLE_JS_PATH))
+                    .that(checkstyleJsContent)
+                    .contains(expectedRedirect);
+        }
     }
 
     @FunctionalInterface
