@@ -210,6 +210,27 @@ markdownlint)
   mdl -g . && echo "All .md files verified"
   ;;
 
+no-error-kafka)
+  CS_POM_VERSION="$(getCheckstylePomVersion)"
+  echo "CS_version: ${CS_POM_VERSION}"
+  ./mvnw -e --no-transfer-progress clean install -Pno-validations
+  echo "Checkout target sources ..."
+  checkout_from "https://github.com/apache/kafka.git"
+  cd .ci-temp/kafka/
+  cat >> customConfig.gradle<< EOF
+allprojects {
+    repositories {
+        mavenLocal()
+    }
+}
+EOF
+  ./gradlew checkstyleMain checkstyleTest \
+    -I customConfig.gradle \
+    -PcheckstyleVersion="${CS_POM_VERSION}"
+  cd ..
+  removeFolderWithProtectedFiles kafka
+  ;;
+
 no-error-pmd)
   CS_POM_VERSION="$(getCheckstylePomVersion)"
   echo "CS_version: ${CS_POM_VERSION}"
@@ -325,6 +346,9 @@ no-error-test-sbe)
   ;;
 
 verify-no-exception-configs)
+  checkForVariable "GITHUB_TOKEN"
+  checkForVariable "PR_NUMBER"
+
   mkdir -p .ci-temp/verify-no-exception-configs
   working_dir=.ci-temp/verify-no-exception-configs
   wget -q \
@@ -356,13 +380,13 @@ verify-no-exception-configs)
 
   if [[ $DIFF_TEXT != "" ]]; then
     echo "Diff is detected."
-    if [[ $PULL_REQUEST =~ ^([0-9]+)$ ]]; then
-      LINK_PR=https://api.github.com/repos/checkstyle/checkstyle/pulls/$PULL_REQUEST
-      REGEXP="https://github.com/checkstyle/contribution/pull/"
-      PR_DESC=$(curl -s -H "Authorization: token $READ_ONLY_TOKEN" "$LINK_PR" \
-                  | jq '.body' | grep $REGEXP | cat )
-      echo 'PR Description grepped:'"${PR_DESC:0:180}"
-      if [[ -z $PR_DESC ]]; then
+    if [[ $PR_NUMBER =~ ^([0-9]+)$ ]]; then
+      LINK_PR=https://api.github.com/repos/checkstyle/checkstyle/pulls/$PR_NUMBER
+      REGEXP="https://github.com/checkstyle/contribution/pull/[0-9]+"
+      CONTRIBUTION_PR_LINK=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$LINK_PR" \
+                  | jq -r '.body' | grep -Eo "$REGEXP" | head -1 | cat )
+      echo "Link to contribution PR: ${CONTRIBUTION_PR_LINK}"
+      if [[ -z $CONTRIBUTION_PR_LINK ]]; then
         echo 'You introduce new Check'
         diff -u $working_dir/web.txt $working_dir/file.txt | cat
         echo 'Please create PR to repository https://github.com/checkstyle/contribution'
@@ -372,6 +396,34 @@ verify-no-exception-configs)
         echo 'Place the contribution repository PR link in the description of this PR.'
         echo 'PR for contribution repository will be merged right after this PR.'
         fail=1;
+      else
+        CONTRIBUTION_PR_NUMBER="$(echo "$CONTRIBUTION_PR_LINK" | grep -oP '(?<=pull/)[0-9]+')"
+        LINK_FILES="https://api.github.com/repos/checkstyle/contribution/pulls/$CONTRIBUTION_PR_NUMBER/files"
+        FILES="$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$LINK_FILES" | jq -r '
+          .[]
+          | select(.filename == "checkstyle-tester/checks-only-javadoc-error.xml"
+                or .filename == "checkstyle-tester/checks-nonjavadoc-error.xml")
+          | { filename, patch }
+        ')"
+        FILE_COUNT="$(echo "$FILES" | jq -s 'length')"
+        if [ "$FILE_COUNT" -ne 1 ]; then
+          echo "Expected only 1 of checkstyle-tester/checks-only-javadoc-error.xml or"
+          echo "checkstyle-tester/checks-nonjavadoc-error.xml to be changed in"
+          echo "$CONTRIBUTION_PR_LINK. Found $FILE_COUNT files changed."
+          fail=1;
+        else
+          PATCH="$(echo "$FILES" | jq -r '.patch')"
+          MODULE_NAME="$(echo "$DIFF_TEXT" | grep -E "^[+-][^+-]" | sed 's/^.//')"
+          if echo "$PATCH" | grep -qE "\+\s*<module name=\"$MODULE_NAME\""; then
+            echo "Module $MODULE_NAME found in contribution PR patch."
+          else
+            echo "Module $MODULE_NAME not found in contribution PR patch."
+            echo "Please add $MODULE_NAME to only one of the following files:"
+            echo '   checkstyle-tester/checks-nonjavadoc-error.xml'
+            echo 'or checkstyle-tester/checks-only-javadoc-error.xml'
+            fail=1;
+          fi
+        fi
       fi
     else
       diff -u $working_dir/web.txt $working_dir/file.txt | cat
@@ -724,6 +776,7 @@ no-error-orekit)
   cd .ci-temp/hipparchus
   # checkout to version that Orekit expects
   SHA_HIPPARCHUS="1492f06848f57e46bef911a""ad16203a242080028"
+  git fetch --depth 1 origin "$SHA_HIPPARCHUS"
   git checkout $SHA_HIPPARCHUS
   mvn -e --no-transfer-progress install -DskipTests
   cd -
@@ -732,6 +785,7 @@ no-error-orekit)
   # no CI is enforced in project, so to make our build stable we should
   # checkout to latest release/development (annotated tag or hash) or sha that have fix we need
   # git checkout $(git describe --abbrev=0 --tags)
+  git fetch --depth 1 origin "9b121e504771f3ddd303ab""cc""c74ac9db64541ea1"
   git checkout "9b121e504771f3ddd303ab""cc""c74ac9db64541ea1"
   mvn -e --no-transfer-progress compile checkstyle:check \
     -Dorekit.checkstyle.version="${CS_POM_VERSION}"

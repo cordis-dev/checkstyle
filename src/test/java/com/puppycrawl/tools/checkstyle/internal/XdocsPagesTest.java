@@ -1676,9 +1676,11 @@ public class XdocsPagesTest {
         }
 
         if (!expectedText.isEmpty()) {
-            expectedText.append("""
-                    All messages can be customized if the default message doesn't suit you.
-                    Please see the documentation to learn how to.""");
+            expectedText.append(
+                """
+                All messages can be customized if the default message doesn't suit you.
+                Please see the documentation to learn how to.
+                """);
         }
 
         if (subSection == null) {
@@ -2400,6 +2402,31 @@ public class XdocsPagesTest {
                         CHECKSTYLE_JS_PATH))
                     .that(checkstyleJsContent)
                     .contains(expectedRedirect);
+        }
+    }
+
+    @Test
+    public void testAllXdocsModulesTemplatesHaveSinceMacroAtTheBeginning() throws Exception {
+        for (Path path : XdocUtil.getXdocsTemplatesFilePaths()) {
+            final String fileName = path.getFileName().toString();
+
+            if (isNonModulePage(fileName.replace(".template", ""))) {
+                continue;
+            }
+
+            final NodeList sources = getTagSourcesNode(path, "section");
+            final Node section = sources.item(0);
+            final String sectionName = section.getNodeName();
+            final Node firstChild = XmlUtil.getFirstChildElement(section);
+            assertWithMessage(
+                fileName + " first child of section " + sectionName + " should be a <macro> tag")
+                .that(firstChild.getNodeName())
+                .isEqualTo("macro");
+            assertWithMessage(
+                fileName + " first child of section " + sectionName
+                        + " should be a <macro> tag with name 'since'")
+                .that(firstChild.getAttributes().getNamedItem("name").getTextContent())
+                .isEqualTo("since");
         }
     }
 
