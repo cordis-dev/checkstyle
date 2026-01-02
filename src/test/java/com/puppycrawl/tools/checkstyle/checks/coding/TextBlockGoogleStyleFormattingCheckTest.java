@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // checkstyle: Checks Java source code and other text files for adherence to a set of rules.
-// Copyright (C) 2001-2025 the original author or authors.
+// Copyright (C) 2001-2026 the original author or authors.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -32,7 +32,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 public class TextBlockGoogleStyleFormattingCheckTest extends AbstractModuleTestSupport {
 
     @Override
-    protected String getPackageLocation() {
+    public String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/checks/coding/textblockgooglestyleformatting";
     }
 
@@ -371,5 +371,16 @@ public class TextBlockGoogleStyleFormattingCheckTest extends AbstractModuleTestS
         };
         verifyWithInlineConfigParser(
                 getPath("InputTextBlockGoogleStyleFormatting10.java"), expected);
+    }
+
+    @Test
+    public void testDefaultTextBlockFormatAnnotations() throws Exception {
+        final String[] expected = {
+            "59:27: " + getCheckMessage(MSG_OPEN_QUOTES_ERROR),
+            "66:19: " + getCheckMessage(MSG_OPEN_QUOTES_ERROR),
+            "68:1: " + getCheckMessage(MSG_VERTICALLY_UNALIGNED),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputTextBlockGoogleStyleFormattingAnnotations.java"), expected);
     }
 }

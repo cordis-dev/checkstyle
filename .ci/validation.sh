@@ -54,8 +54,13 @@ check-missing-pitests)
   #  https://github.com/checkstyle/checkstyle/issues/8761
   #  Coverage for site package is skipped
   #  until https://github.com/checkstyle/checkstyle/issues/13393
+  #  JavadocCommentsLexerUtil, JavadocCommentsParserUtil, and SimpleToken
+  #  are excluded from Pitest (aligned with JaCoCo exclusion)
   list=("com.puppycrawl.tools.checkstyle.meta.*"
-    "com.puppycrawl.tools.checkstyle.site.*" "${list[@]}")
+    "com.puppycrawl.tools.checkstyle.site.*"
+    "com.puppycrawl.tools.checkstyle.grammar.JavadocCommentsLexerUtil"
+    "com.puppycrawl.tools.checkstyle.grammar.JavadocCommentsParserUtil"
+    "com.puppycrawl.tools.checkstyle.grammar.SimpleToken" "${list[@]}")
 
   CMD="find src/main/java -type f ! -name 'package-info.java'"
 
@@ -267,16 +272,17 @@ no-error-hazelcast)
   removeFolderWithProtectedFiles hazelcast
   ;;
 
-no-violation-test-configurate)
+no-error-configurate)
   CS_POM_VERSION="$(getCheckstylePomVersion)"
   echo "CS_version: ${CS_POM_VERSION}"
   ./mvnw -e --no-transfer-progress clean install -Pno-validations
   echo "Checkout target sources ..."
-  mkdir -p .ci-temp
-  cd .ci-temp
-  git clone https://github.com/SpongePowered/Configurate.git
-  cd Configurate
-  ./gradlew -PcheckstyleVersion="${CS_POM_VERSION}" -x test check
+  # until https://github.com/checkstyle/checkstyle/issues/18327
+  checkout_from "https://github.com/stoyanK7/Configurate.git"
+  cd .ci-temp/Configurate
+  git fetch --depth 1 origin major-checkstyle-12:major-checkstyle-12
+  git checkout major-checkstyle-12
+  ./gradlew -PcheckstyleVersion="${CS_POM_VERSION}" checkstyleMain checkstyleTest
   cd ..
   removeFolderWithProtectedFiles Configurate
   ;;
@@ -1356,7 +1362,7 @@ sevntu)
   ;;
 
 spotless)
-  ./mvnw -e --no-transfer-progress clean spotless:check -P spotless-autofix
+  ./mvnw -e --no-transfer-progress spotless:check
   ;;
 
 openrewrite-recipes)
@@ -1376,8 +1382,7 @@ openrewrite-recipes)
   ./mvnw -e --no-transfer-progress clean compile antrun:run@ant-phase-verify
   set -e
   echo "Running OpenRewrite recipes..."
-  ./mvnw -e --no-transfer-progress -Drewrite.recipeChangeLogLevel=INFO \
-    rewrite:run -P checkstyle-autofix
+  ./mvnw -e --no-transfer-progress rewrite:run -Drewrite.recipeChangeLogLevel=INFO
 
   echo "Checking for uncommitted changes..."
   ./.ci/print-diff-as-patch.sh target/rewrite.patch

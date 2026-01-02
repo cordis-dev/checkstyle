@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // checkstyle: Checks Java source code and other text files for adherence to a set of rules.
-// Copyright (C) 2001-2025 the original author or authors.
+// Copyright (C) 2001-2026 the original author or authors.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -150,7 +150,8 @@ public class TextBlockGoogleStyleFormattingCheck extends AbstractCheck {
                     TokenTypes.VARIABLE_DEF,
                     TokenTypes.METHOD_DEF,
                     TokenTypes.CTOR_DEF,
-                    TokenTypes.ENUM_DEF)) {
+                    TokenTypes.ENUM_DEF,
+                    TokenTypes.CLASS_DEF)) {
                 break;
             }
         }

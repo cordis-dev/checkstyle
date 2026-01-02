@@ -1310,6 +1310,7 @@ stemp
 stext
 sthref
 stmt
+stoyan
 streamapi
 strictfp
 stringliteralequality
@@ -1441,6 +1442,7 @@ unnecessarysemicolonafteroutertypedeclaration
 unnecessarysemicolonaftertypememberdeclaration
 unnecessarysemicoloninenumeration
 unnecessarysemicolonintrywithresources
+unparseable
 Unproxyable
 unregister
 unstale

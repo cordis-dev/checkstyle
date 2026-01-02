@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // checkstyle: Checks Java source code and other text files for adherence to a set of rules.
-// Copyright (C) 2001-2025 the original author or authors.
+// Copyright (C) 2001-2026 the original author or authors.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -65,7 +65,7 @@ public class DetailAstImplTest extends AbstractModuleTestSupport {
     public File temporaryFolder;
 
     @Override
-    protected String getPackageLocation() {
+    public String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/api/detailast";
     }
 
@@ -710,7 +710,7 @@ public class DetailAstImplTest extends AbstractModuleTestSupport {
             final DetailAST rootAST = JavaParser.parseFile(new File(fileName),
                     JavaParser.Options.WITHOUT_COMMENTS);
 
-            assertWithMessage("file must return a root node: " + fileName)
+            assertWithMessage("file must return a root node: %s", fileName)
                 .that(rootAST)
                 .isNotNull();
 
