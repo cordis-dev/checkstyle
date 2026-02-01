@@ -19,8 +19,8 @@
 
 package com.puppycrawl.tools.checkstyle.checks.coding;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
 
 import com.puppycrawl.tools.checkstyle.FileStatefulCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
@@ -45,7 +45,7 @@ public abstract class AbstractSuperCheck
     public static final String MSG_KEY = "missing.super.call";
 
     /** Stack of methods. */
-    private final Deque<MethodNode> methodStack = new LinkedList<>();
+    private final Deque<MethodNode> methodStack = new ArrayDeque<>();
 
     /**
      * Returns the name of the overriding method.
@@ -219,7 +219,7 @@ public abstract class AbstractSuperCheck
         /**
          * Records that the overriding method has a call to the super method.
          */
-        public void setCallingSuper() {
+        /* package */ void setCallingSuper() {
             callingSuper = true;
         }
 
@@ -229,7 +229,7 @@ public abstract class AbstractSuperCheck
          *
          * @return true if the overriding method has a call to the super method.
          */
-        public boolean isCallingSuper() {
+        /* package */ boolean isCallingSuper() {
             return callingSuper;
         }
 
@@ -238,7 +238,7 @@ public abstract class AbstractSuperCheck
          *
          * @return the overriding method definition AST.
          */
-        public DetailAST getMethod() {
+        /* package */ DetailAST getMethod() {
             return method;
         }
 

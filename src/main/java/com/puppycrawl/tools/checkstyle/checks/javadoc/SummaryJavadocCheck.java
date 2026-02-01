@@ -80,7 +80,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * This regexp is used to convert multiline javadoc to single-line without stars.
      */
     private static final Pattern JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN =
-            Pattern.compile("\n +(\\*)|^ +(\\*)");
+            Pattern.compile("\n[ \\t]+(\\*)|^[ \\t]+(\\*)");
 
     /**
      * This regexp is used to remove html tags, whitespace, and asterisks from a string.
@@ -209,19 +209,15 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
         DetailNode currentAst = inlineTagNode.getPreviousSibling();
         while (currentAst != null && isDefinedFirst) {
             switch (currentAst.getType()) {
-                case JavadocCommentsTokenTypes.TEXT:
+                case JavadocCommentsTokenTypes.TEXT ->
                     isDefinedFirst = currentAst.getText().isBlank();
-                    break;
-                case JavadocCommentsTokenTypes.HTML_ELEMENT:
+                case JavadocCommentsTokenTypes.HTML_ELEMENT ->
                     isDefinedFirst = isHtmlTagWithoutText(currentAst);
-                    break;
-                case JavadocCommentsTokenTypes.LEADING_ASTERISK:
-                case JavadocCommentsTokenTypes.NEWLINE:
+                case JavadocCommentsTokenTypes.LEADING_ASTERISK,
+                     JavadocCommentsTokenTypes.NEWLINE -> {
                     // Ignore formatting tokens
-                    break;
-                default:
-                    isDefinedFirst = false;
-                    break;
+                }
+                default -> isDefinedFirst = false;
             }
             currentAst = currentAst.getPreviousSibling();
         }
@@ -371,7 +367,8 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
         final StringBuilder result = new StringBuilder(256);
         boolean previousWhitespace = true;
 
-        for (char letter : text.toCharArray()) {
+        for (int index = 0; index < text.length(); index++) {
+            final char letter = text.charAt(index);
             final char print;
             if (Character.isWhitespace(letter)) {
                 if (previousWhitespace) {

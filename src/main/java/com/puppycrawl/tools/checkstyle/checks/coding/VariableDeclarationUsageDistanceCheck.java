@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,6 +62,19 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      * usage.
      */
     private static final int DEFAULT_DISTANCE = 3;
+
+    /** Tokens that should be ignored when calculating usage distance. */
+    private static final Set<Integer> ZERO_DISTANCE_TOKENS = Set.of(
+            TokenTypes.VARIABLE_DEF,
+            TokenTypes.TYPE,
+            TokenTypes.MODIFIERS,
+            TokenTypes.RESOURCE,
+            TokenTypes.EXTENDS_CLAUSE,
+            TokenTypes.IMPLEMENTS_CLAUSE,
+            TokenTypes.TYPE_PARAMETERS,
+            TokenTypes.PARAMETERS,
+            TokenTypes.LITERAL_THROWS
+    );
 
     /**
      * Specify the maximum distance between a variable's declaration and its first usage.
@@ -334,7 +348,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
             // If variable usage exists in a single scope, then look into
             // this scope and count distance until variable usage.
             if (variableUsageExpressions.size() == 1) {
-                final DetailAST blockWithVariableUsage = variableUsageExpressions.get(0);
+                final DetailAST blockWithVariableUsage = variableUsageExpressions.getFirst();
                 currentScopeAst = switch (blockWithVariableUsage.getType()) {
                     case TokenTypes.VARIABLE_DEF, TokenTypes.EXPR -> {
                         dist++;
@@ -361,7 +375,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
             // distance until variable first usage.
             else {
                 dist++;
-                variableUsageAst = variableUsageExpressions.get(0);
+                variableUsageAst = variableUsageExpressions.getFirst();
             }
         }
         return new SimpleEntry<>(variableUsageAst, dist);
@@ -480,7 +494,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
             // only inside one block, then get node from
             // variableUsageExpressions.
             if (variableUsageExpressions.size() == 1) {
-                firstNodeInsideBlock = variableUsageExpressions.get(0);
+                firstNodeInsideBlock = variableUsageExpressions.getFirst();
             }
         }
 
@@ -510,7 +524,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
         // variableUsageExpressions.
         DetailAST firstNodeInsideBlock = null;
         if (variableUsageExpressions.size() == 1) {
-            firstNodeInsideBlock = variableUsageExpressions.get(0);
+            firstNodeInsideBlock = variableUsageExpressions.getFirst();
         }
 
         return firstNodeInsideBlock;
@@ -598,7 +612,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
         // only inside one block, then get node from
         // variableUsageExpressions.
         if (variableUsageExpressions.size() == 1) {
-            variableUsageNode = variableUsageExpressions.get(0).getFirstChild();
+            variableUsageNode = variableUsageExpressions.getFirst().getFirstChild();
         }
 
         return variableUsageNode;
@@ -710,12 +724,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      * @return true if it should be ignored for distance counting, otherwise false.
      */
     private static boolean isZeroDistanceToken(int type) {
-        return type == TokenTypes.VARIABLE_DEF
-                || type == TokenTypes.TYPE
-                || type == TokenTypes.MODIFIERS
-                || type == TokenTypes.RESOURCE
-                || type == TokenTypes.EXTENDS_CLAUSE
-                || type == TokenTypes.IMPLEMENTS_CLAUSE;
+        return ZERO_DISTANCE_TOKENS.contains(type);
     }
 
 }

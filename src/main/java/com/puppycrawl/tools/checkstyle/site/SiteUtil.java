@@ -770,7 +770,6 @@ public final class SiteUtil {
      * @param propertyJavadoc the property Javadoc to extract the since version from.
      * @return the Optional of property version specified in its javadoc.
      */
-    @Nullable
     private static Optional<String> getPropertyVersionFromItsJavadoc(DetailNode propertyJavadoc) {
         final Optional<DetailNode> propertyJavadocTag =
             getPropertySinceJavadocTag(propertyJavadoc);
@@ -1188,7 +1187,7 @@ public final class SiteUtil {
             result = descriptor.getPropertyType();
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exc) {
-            throw new MacroExecutionException(exc.getMessage(), exc);
+            throw new MacroExecutionException("Failed to retrieve property type", exc);
         }
         return result;
     }
@@ -1334,8 +1333,8 @@ public final class SiteUtil {
         boolean isInHrefAttribute = false;
         final StringBuilder description = new StringBuilder(128);
         final List<DetailNode> descriptionNodes = getFirstJavadocParagraphNodes(javadoc);
-        DetailNode node = descriptionNodes.get(0);
-        final DetailNode endNode = descriptionNodes.get(descriptionNodes.size() - 1);
+        DetailNode node = descriptionNodes.getFirst();
+        final DetailNode endNode = descriptionNodes.getLast();
 
         while (node != null) {
             if (node.getType() == JavadocCommentsTokenTypes.TAG_ATTR_NAME
@@ -1414,8 +1413,8 @@ public final class SiteUtil {
             result = "";
         }
         else {
-            final DetailNode startNode = firstParagraphNodes.get(0);
-            final DetailNode endNode = firstParagraphNodes.get(firstParagraphNodes.size() - 1);
+            final DetailNode startNode = firstParagraphNodes.getFirst();
+            final DetailNode endNode = firstParagraphNodes.getLast();
             result = JavadocMetadataScraperUtil.constructSubTreeText(startNode, endNode);
         }
         return result;

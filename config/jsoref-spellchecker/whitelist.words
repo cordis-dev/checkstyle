@@ -183,6 +183,7 @@ circleci
 cirrusci
 classannotations
 classdataabstractioncoupling
+classdeclarations
 classfanoutcomplexity
 classloader
 classmemberimpliedmodifier
@@ -325,7 +326,6 @@ doclint
 doctype
 documentationcomments
 donotignoreexceptions
-Dorekit
 Dorg
 DOTALL
 doubletag
@@ -443,6 +443,7 @@ filebasic
 filechooser
 filefilter
 filelength
+fileorganization
 filepath
 fileset
 filesetcheck
@@ -471,6 +472,7 @@ Fmetrics
 Fmodifier
 FModule
 Fnaming
+Fopenjdk
 forbiddenapis
 Foreach
 Fpuppycrawl
@@ -742,6 +744,7 @@ jsni
 json
 jsoref
 jsp
+jspecify
 JSplit
 jsr
 JTable
@@ -759,6 +762,7 @@ kazgroup
 kbd
 kclee
 KDoc
+keyframes
 keyname
 keyscan
 konstantinos
@@ -851,6 +855,7 @@ missingjavadocpackage
 missingjavadoctype
 missingnullcaseinswitch
 missingoverride
+missingoverrideonrecordaccessor
 missingperiod
 missingswitchdefault
 missingtag
@@ -1123,7 +1128,6 @@ protonpack
 Psevntu
 PSHOME
 PSMODULEP
-Pstatic
 pubconstr
 pubifc
 PUBLI
@@ -1151,6 +1155,7 @@ rcurly
 rdiachenko
 RDz
 reactivex
+readarray
 README
 Readonly
 rebased
@@ -1162,6 +1167,7 @@ redundantimport
 redundantmodifier
 refactor
 refactoring
+refaster
 refasterrules
 refid
 refreshenv
@@ -1248,6 +1254,7 @@ shellcheck
 shengchen
 Shiell
 sickboy
+simplestatements
 Simplifiable
 simplifybooleanexpression
 simplifybooleanreturn
@@ -1348,6 +1355,7 @@ suppresswithnearbytextfilter
 suppresswithplaintextcommentfilter
 suse
 svg
+switchstatements
 sxpath
 syntastic
 Sys
@@ -1523,6 +1531,7 @@ wontfix
 workaround
 workflow
 wq
+wrappinglines
 writetag
 writingchecks
 writingfilefilters
@@ -1536,6 +1545,7 @@ xa
 xabc
 xar
 xargs
+XDadd
 XDcompile
 xdeadbeef
 xdoc

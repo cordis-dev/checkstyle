@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -44,6 +45,7 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
+import com.puppycrawl.tools.checkstyle.internal.utils.TestUtil;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 /**
@@ -347,6 +349,7 @@ public class IndentationCheckTest extends AbstractModuleTestSupport {
             "53:19: " + getCheckMessage(MSG_CHILD_ERROR, "method call", 18, 20),
             "54:15: " + getCheckMessage(MSG_ERROR, "method call rparen", 14, 16),
             "75:13: " + getCheckMessage(MSG_ERROR, "lambda arguments", 12, 16),
+            "81:16: " + getCheckMessage(MSG_ERROR, "method call rparen", 15, 8),
         };
         verifyWarns(checkConfig, getPath("InputIndentationMethodCallLineWrap.java"), expected);
     }
@@ -1599,10 +1602,10 @@ public class IndentationCheckTest extends AbstractModuleTestSupport {
         checkConfig.addProperty("throwsIndent", "4");
         final String fileName = getPath("InputIndentationChainedMethodCalls.java");
         final String[] expected = {
-            "33:5: " + getCheckMessage(MSG_CHILD_ERROR, "method call", 4, 8),
-            "38:5: " + getCheckMessage(MSG_ERROR, ".", 4, 8),
-            "39:5: " + getCheckMessage(MSG_ERROR, ".", 4, 8),
-            "42:5: " + getCheckMessage(MSG_ERROR, "new", 4, 8),
+            "36:5: " + getCheckMessage(MSG_CHILD_ERROR, "method call", 4, 8),
+            "41:5: " + getCheckMessage(MSG_ERROR, ".", 4, 8),
+            "42:5: " + getCheckMessage(MSG_ERROR, ".", 4, 8),
+            "45:5: " + getCheckMessage(MSG_ERROR, "new", 4, 8),
         };
         verifyWarns(checkConfig, fileName, expected);
     }
@@ -4166,6 +4169,89 @@ public class IndentationCheckTest extends AbstractModuleTestSupport {
         checkConfig.addProperty("tabWidth", "4");
         checkConfig.addProperty("throwsIndent", "4");
         final String fileName = getPath("InputIndentationInvalidArrayIndexIndent.java");
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+        verifyWarns(checkConfig, fileName, expected);
+    }
+
+    @Test
+    public void testFirstTokenSelection() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(IndentationCheck.class);
+        checkConfig.addProperty("basicOffset", "4");
+        checkConfig.addProperty("tabWidth", "4");
+
+        final String[] expected = {
+            "15:1: " + getCheckMessage(MSG_ERROR, "member def type", 0, 8),
+            "16:1: " + getCheckMessage(MSG_ERROR, "Integer", 0, 12),
+            "17:1: " + getCheckMessage(MSG_ERROR, ">", 0, 12),
+        };
+        verifyWarns(checkConfig,
+            getPath("InputIndentationFirstTokenSelection.java"), expected);
+    }
+
+    /**
+     * Test to kill Pitest mutation by verifying internal state is cleared.
+     *
+     * <p>This reflection-based test was chosen because:
+     * 1. clearState() exists purely for memory management, prevents OutOfMemoryError when
+     *    processing thousands of files
+     * 2. Removing clear() has no observable effect in normal tests since each file creates
+     *    new DetailAST objects (no collision possible)
+     * 3. Pitest's excludedMethods only protects method bodies, not call-sites
+     * 4. Creating a utility class with avoidCallsTo was overkill for one mutation
+     *
+     * @see <a href="https://github.com/hcoles/pitest/issues/404">Pitest Issue #404</a>
+     */
+    @Test
+    public void testClearStateForMemoryManagement() {
+        final IndentationCheck check = new IndentationCheck();
+        @SuppressWarnings("unchecked")
+        final Deque<PrimordialHandler> handlers = TestUtil.getInternalState(check,
+                "handlers", Deque.class);
+
+        handlers.push(new PrimordialHandler(check));
+        handlers.push(new PrimordialHandler(check));
+
+        assertWithMessage("handlers should have 2 elements before beginTree")
+                .that(handlers)
+                .hasSize(2);
+
+        check.beginTree(null);
+
+        assertWithMessage("handlers should be reset to 1 element after beginTree")
+                .that(handlers)
+                .hasSize(1);
+    }
+
+    @Test
+    public void testLambdaInEnumConstant() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(IndentationCheck.class);
+        checkConfig.addProperty("basicOffset", "4");
+        checkConfig.addProperty("braceAdjustment", "0");
+        checkConfig.addProperty("caseIndent", "4");
+        checkConfig.addProperty("throwsIndent", "4");
+        checkConfig.addProperty("arrayInitIndent", "4");
+        checkConfig.addProperty("lineWrappingIndentation", "4");
+        checkConfig.addProperty("forceStrictCondition", "false");
+        checkConfig.addProperty("tabWidth", "8");
+
+        final String fileName = getPath("InputIndentationLambdaInEnum.java");
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+        verifyWarns(checkConfig, fileName, expected);
+    }
+
+    @Test
+    public void testLambdaInEnumConstantWithMultipleArgs() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(IndentationCheck.class);
+        checkConfig.addProperty("basicOffset", "4");
+        checkConfig.addProperty("braceAdjustment", "0");
+        checkConfig.addProperty("caseIndent", "4");
+        checkConfig.addProperty("throwsIndent", "4");
+        checkConfig.addProperty("arrayInitIndent", "4");
+        checkConfig.addProperty("lineWrappingIndentation", "4");
+        checkConfig.addProperty("forceStrictCondition", "false");
+        checkConfig.addProperty("tabWidth", "8");
+
+        final String fileName = getPath("InputIndentationLambdaInEnumMultipleArgs.java");
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
         verifyWarns(checkConfig, fileName, expected);
     }

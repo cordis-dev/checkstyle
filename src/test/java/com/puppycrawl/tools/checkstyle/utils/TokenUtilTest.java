@@ -291,7 +291,7 @@ public class TokenUtilTest {
             ast -> "second".equals(ast.getText()));
 
         assertWithMessage("Invalid second sibling")
-            .that(result.orElse(null))
+            .that(result.orElseThrow())
             .isEqualTo(secondSibling);
     }
 
@@ -311,7 +311,7 @@ public class TokenUtilTest {
         astForTest.setFirstChild(child);
         final List<DetailAST> children = new ArrayList<>();
         TokenUtil.forEachChild(astForTest, TokenTypes.CLASS_DEF, children::add);
-        final DetailAST firstChild = children.get(0);
+        final DetailAST firstChild = children.getFirst();
 
         assertWithMessage("Must be one match")
             .that(children)
