@@ -27,6 +27,8 @@ import com.puppycrawl.tools.checkstyle.grammar.javadoc.JavadocCommentsLexer;
  *
  * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html">
  *     javadoc - The Java API Documentation Generator</a>
+ * @noinspection JavadocDeclaration
+ * @noinspectionreason JavadocDeclaration - Javadoc is intentional
  */
 @SuppressWarnings({"InvalidInlineTag", "UnrecognisedJavadocTag"})
 public final class JavadocCommentsTokenTypes {
@@ -669,7 +671,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * /**
      * * {@code code}
-     * &#42;/
+     * * /
      * }</pre>
      *
      * <b>Tree:</b>
@@ -707,7 +709,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * /**
      * * {@code code}
-     * &#42;/
+     * * /
      * }</pre>
      *
      * <b>Tree:</b>
@@ -746,7 +748,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * /**
      * * {@code code}
-     * &#42;/
+     * * /
      * }</pre>
      *
      * <b>Tree:</b>
@@ -1180,7 +1182,7 @@ public final class JavadocCommentsTokenTypes {
      *
      * <p><b>Example:</b></p>
      * <pre>{@code
-     * * &#123;@link String#length()}
+     * * {@link String#length()}
      * }</pre>
      *
      * <b>Tree:</b>
@@ -1189,7 +1191,7 @@ public final class JavadocCommentsTokenTypes {
      * |--TEXT ->
      * |--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      *     `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *         |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *         |--JAVADOC_INLINE_TAG_START -> {@
      *         |--TAG_NAME -> link
      *         |--TEXT ->
      *         |--REFERENCE -> REFERENCE
@@ -1211,7 +1213,7 @@ public final class JavadocCommentsTokenTypes {
      *
      * <p><b>Example:</b></p>
      * <pre>{@code
-     * * &#123;@link String#length()}
+     * * {@link String#length()}
      * }</pre>
      *
      * <b>Tree:</b>
@@ -1220,7 +1222,7 @@ public final class JavadocCommentsTokenTypes {
      * |--TEXT ->
      * |--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      *     `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *         |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *         |--JAVADOC_INLINE_TAG_START -> {@
      *         |--TAG_NAME -> link
      *         |--TEXT ->
      *         |--REFERENCE -> REFERENCE
@@ -1272,14 +1274,14 @@ public final class JavadocCommentsTokenTypes {
      *
      * <p><b>Example:</b></p>
      * <pre>{@code
-     * &#123;@link java.base/java.lang.String&#125;
+     * {@link String};
      * }</pre>
      *
      * <b>Tree:</b>
      * <pre>{@code
      * |--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      *     `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *         |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *         |--JAVADOC_INLINE_TAG_START -> {@
      *         |--TAG_NAME -> link
      *         |--TEXT ->
      *         |--REFERENCE -> REFERENCE
@@ -1301,14 +1303,14 @@ public final class JavadocCommentsTokenTypes {
      *
      * <p><b>Example:</b></p>
      * <pre>{@code
-     * &#123;@link java.util.List&lt;? extends Number&gt;&#125;
+     * {@link java.util.List<? extends Number>};
      * }</pre>
      *
      * <b>Tree:</b>
      * <pre>{@code
      * |--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      *     `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *         |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *         |--JAVADOC_INLINE_TAG_START -> {@
      *         |--TAG_NAME -> link
      *         |--TEXT ->
      *         |--REFERENCE -> REFERENCE
@@ -1393,7 +1395,7 @@ public final class JavadocCommentsTokenTypes {
      *
      * <p><b>Example:</b></p>
      * <pre>{@code
-     * * {@link java.util.List&lt;? extends Number&gt; list of any subtype of Number}
+     * * {@link java.util.List<? extends Number> list of any subtype of Number}
      * }</pre>
      *
      * <b>Tree:</b>
@@ -1471,7 +1473,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      * `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *     |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *     |--JAVADOC_INLINE_TAG_START -> {@
      *     |--TAG_NAME -> link
      *     |--REFERENCE -> REFERENCE
      *     |   |--IDENTIFIER -> List
@@ -1504,9 +1506,10 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      * |--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     * |   |--JAVADOC_INLINE_TAG_START -> &#123;@
+     * |   |--JAVADOC_INLINE_TAG_START -> {@
      * |   |--TAG_NAME -> link
-     * |   `--REFERENCE -> String#length()
+     * |   |--REFERENCE -> String#length()
+     *     `--JAVADOC_INLINE_TAG_END -> }
      * }</pre>
      *
      * @see #JAVADOC_INLINE_TAG
@@ -1527,7 +1530,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      * `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *     |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *     |--JAVADOC_INLINE_TAG_START -> {@
      *     |--TAG_NAME -> link
      *     |--TEXT ->
      *     |--REFERENCE -> REFERENCE
@@ -1591,7 +1594,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      * `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *     |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *     |--JAVADOC_INLINE_TAG_START -> {@
      *     |--TAG_NAME -> link
      *     |--TEXT ->
      *     |--REFERENCE -> REFERENCE
@@ -1623,7 +1626,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      * `--LINK_INLINE_TAG -> LINK_INLINE_TAG
-     *     |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *     |--JAVADOC_INLINE_TAG_START -> {@
      *     |--TAG_NAME -> link
      *     |--TEXT ->
      *     |--REFERENCE -> REFERENCE
@@ -1642,11 +1645,53 @@ public final class JavadocCommentsTokenTypes {
 
     /**
      * Description part of a Javadoc tag.
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * @param value The parameter description goes here.}</pre>
+     *
+     * <p><b>Tree:</b></p>
+     * <pre>{@code
+     * `--PARAM_BLOCK_TAG -> PARAM_BLOCK_TAG
+     *     |--AT_SIGN -> @
+     *     |--TAG_NAME -> param
+     *     |--TEXT ->
+     *     |--PARAMETER_NAME -> value
+     *     `--DESCRIPTION -> DESCRIPTION
+     *         `--TEXT ->  The parameter description goes here.
+     * }</pre>
      */
     public static final int DESCRIPTION = JavadocCommentsLexer.DESCRIPTION;
 
     /**
-     * Format specifier inside Javadoc content.
+     * Format specifier inside a {@code {@value}} inline tag.
+     * The {@value} tag is used to display the value of a constant directly
+     * within the Javadoc documentation. In newer Java versions (20+), there
+     * is ability include a format string inside the tag.
+     *
+     * <p>In this example, the format specifier {@code 0x%04x} is used to format the integer
+     * {@code Modifier#MANDATED} as a hexadecimal value, padded with zeros to a width of four characters.</p>
+     * <pre>{@code
+     * {@value %04x Modifier#MANDATED}
+     * }</pre>
+     *
+     * <p><b>Tree:</b></p>
+     * <pre>{@code
+     * JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     * `--VALUE_INLINE_TAG -> VALUE_INLINE_TAG
+     *     |--JAVADOC_INLINE_TAG_START -> {@
+     *     |--TAG_NAME -> value
+     *     |--TEXT ->
+     *     |--FORMAT_SPECIFIER -> %04x
+     *     |--TEXT ->
+     *     |--REFERENCE -> REFERENCE
+     *     |   |--IDENTIFIER -> Modifier
+     *     |   |--HASH -> #
+     *     |   `--MEMBER_REFERENCE -> MEMBER_REFERENCE
+     *     |       `--IDENTIFIER -> MANDATED
+     *     `--JAVADOC_INLINE_TAG_END -> }
+     * }</pre>
+     *
+     * @see #VALUE_INLINE_TAG
      */
     public static final int FORMAT_SPECIFIER = JavadocCommentsLexer.FORMAT_SPECIFIER;
 
@@ -1690,7 +1735,7 @@ public final class JavadocCommentsTokenTypes {
      *
      * <p><b>Example:</b></p>
      * <pre>{@code
-     * &#123;@snippet lang="java" :
+     * { @snippet lang="java" :
      *   int x = 1;
      * }
      * }</pre>
@@ -1699,7 +1744,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
      * `--SNIPPET_INLINE_TAG -> SNIPPET_INLINE_TAG
-     *     |--JAVADOC_INLINE_TAG_START -> &#123;@
+     *     |--JAVADOC_INLINE_TAG_START -> {@
      *     |--SNIPPET_ATTRIBUTES -> SNIPPET_ATTRIBUTES
      *     |   `--SNIPPET_ATTRIBUTE -> SNIPPET_ATTRIBUTE
      *     |       |--TEXT ->
@@ -1754,6 +1799,32 @@ public final class JavadocCommentsTokenTypes {
 
     /**
      * Colon symbol {@code : }.
+     *
+     * <p><b>Example:</b></p>
+     * <pre>{@code * {@snippet :config}}</pre>
+     *
+     * <p><b>Tree:</b></p>
+     * <pre>{@code
+     * JAVADOC_CONTENT -> JAVADOC_CONTENT
+     * |--TEXT -> /**
+     * |--NEWLINE -> \n
+     * |--LEADING_ASTERISK ->  *
+     * |--TEXT ->
+     * |--JAVADOC_INLINE_TAG -> JAVADOC_INLINE_TAG
+     * |   `--SNIPPET_INLINE_TAG -> SNIPPET_INLINE_TAG
+     * |       |--JAVADOC_INLINE_TAG_START -> {@
+     * |       |--COLON -> :
+     * |       |--SNIPPET_BODY -> SNIPPET_BODY
+     * |       |   `--TEXT -> config
+     * |       `--JAVADOC_INLINE_TAG_END -> }
+     * |--NEWLINE -> \n
+     * |--LEADING_ASTERISK ->  *
+     * |--TEXT -> /
+     * |--NEWLINE -> \n
+     * `--TEXT -> class Test {}
+     * }</pre>
+     *
+     * @see #SNIPPET_INLINE_TAG
      */
     public static final int COLON = JavadocCommentsLexer.COLON;
 
@@ -1963,7 +2034,7 @@ public final class JavadocCommentsTokenTypes {
      * <pre>{@code
      * /**
      *  * <p>Hello</p>
-     *  &#42;/
+     *  * /
      * }</pre>
      *
      * <b>Tree:</b>

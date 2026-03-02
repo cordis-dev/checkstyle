@@ -236,16 +236,10 @@ public final class InlineConfigParser {
      *  Until <a href="https://github.com/checkstyle/checkstyle/issues/15456">#15456</a>.
      */
     private static final Set<String> SUPPRESSED_CHECKS = Set.of(
-            "com.puppycrawl.tools.checkstyle.checks.coding.ModifiedControlVariableCheck",
             "com.puppycrawl.tools.checkstyle.checks.coding.MultipleStringLiteralsCheck",
-            "com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck",
-            "com.puppycrawl.tools.checkstyle.checks.coding.SuperFinalizeCheck",
-            "com.puppycrawl.tools.checkstyle.checks.coding"
-                    + ".UnnecessarySemicolonAfterTypeMemberDeclarationCheck",
             "com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck",
             "com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck",
             "com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck",
-            "com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck",
             "com.puppycrawl.tools.checkstyle.checks.design.OneTopLevelClassCheck",
             "com.puppycrawl.tools.checkstyle.checks.javadoc."
                     + "AbstractJavadocCheckTest$TokenIsNotInAcceptablesCheck",
@@ -316,7 +310,6 @@ public final class InlineConfigParser {
             "com.puppycrawl.tools.checkstyle.checks.coding.IllegalTypeCheck",
             "com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck",
             "com.puppycrawl.tools.checkstyle.checks.coding.MatchXpathCheck",
-            "com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck",
             "com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck",
             "com.puppycrawl.tools.checkstyle.checks.coding.UnusedLocalVariableCheck",
             "com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck",
@@ -324,7 +317,6 @@ public final class InlineConfigParser {
             "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
             "com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck",
             "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocContentLocationCheck",
-            "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
             "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck",
             "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck",
             "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck",
@@ -334,7 +326,6 @@ public final class InlineConfigParser {
             "com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocTypeCheck",
             "com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck",
             "com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheck",
-            "com.puppycrawl.tools.checkstyle.checks.metrics.BooleanExpressionComplexityCheck",
             "com.puppycrawl.tools.checkstyle.checks.metrics.ClassFanOutComplexityCheck",
             "com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck",
             "com.puppycrawl.tools.checkstyle.checks.modifier.RedundantModifierCheck",
@@ -379,6 +370,8 @@ public final class InlineConfigParser {
                 "com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck");
         MODULE_MAPPINGS.put("MemberName",
                 "com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck");
+        MODULE_MAPPINGS.put("GoogleNonConstantFieldName",
+                "com.puppycrawl.tools.checkstyle.checks.naming.GoogleNonConstantFieldNameCheck");
         MODULE_MAPPINGS.put("MethodName",
                 "com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck");
         MODULE_MAPPINGS.put("ParameterName",

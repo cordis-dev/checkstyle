@@ -1088,6 +1088,9 @@
     <option name="m_includeLibraryClasses" value="false"/>
     <option name="m_limit" value="15"/>
   </inspection_tool>
+  <!-- temporary disabled until https://github.com/checkstyle/checkstyle/issues/18926 -->
+  <inspection_tool class="ClassEscapesItsScope" enabled="false" level="WARNING"
+                   enabled_by_default="false" />
   <!-- we do not need that -->
   <inspection_tool class="ClassHasNoToStringMethod" enabled="false" level="ERROR"
                    enabled_by_default="false">
@@ -1679,7 +1682,8 @@
   </inspection_tool>
   <inspection_tool class="EmptyCatchBlockJS" enabled="true" level="ERROR"
                    enabled_by_default="true"/>
-  <inspection_tool class="EmptyClass" enabled="true" level="WARNING" enabled_by_default="true">
+  <!-- temporary disabled until https://github.com/checkstyle/checkstyle/issues/18926 -->
+  <inspection_tool class="EmptyClass" enabled="false" level="WARNING" enabled_by_default="false">
     <option name="ignorableAnnotations">
       <value/>
     </option>
@@ -1803,6 +1807,9 @@
                    enabled_by_default="true"/>
   <inspection_tool class="ExternalizableWithoutPublicNoArgConstructor" enabled="true"
                    level="ERROR" enabled_by_default="true"/>
+  <!-- temporary disabled until https://github.com/checkstyle/checkstyle/issues/18926 -->
+  <inspection_tool class="ExtractMethodRecommender" enabled="false" level="WARNING"
+                   enabled_by_default="false" />
   <inspection_tool class="FacesModelInspection" enabled="false" level="WARNING"
                    enabled_by_default="false"/>
   <inspection_tool class="FakeJvmFieldConstant" enabled="false" level="WARNING"
@@ -1840,8 +1847,9 @@
   </inspection_tool>
   <inspection_tool class="FieldMayBeFinal" enabled="true" level="ERROR"
                    enabled_by_default="true"/>
-  <inspection_tool class="FieldMayBeStatic" enabled="true" level="WARNING"
-                   enabled_by_default="true"/>
+  <!-- temporary disabled until https://github.com/checkstyle/checkstyle/issues/18926 -->
+  <inspection_tool class="FieldMayBeStatic" enabled="false" level="WARNING"
+                   enabled_by_default="false"/>
   <inspection_tool class="FieldNotUsedInToString" enabled="true" level="ERROR"
                    enabled_by_default="true"/>
   <inspection_tool class="FieldRepeatedlyAccessed" enabled="true" level="ERROR"
@@ -2777,6 +2785,9 @@
          When this problem is resolved we could reconsider disablement. -->
   <inspection_tool class="Java8MapApi" enabled="false" level="WARNING"
                    enabled_by_default="false"/>
+  <!-- temporary disabled until https://github.com/checkstyle/checkstyle/issues/18926 -->
+  <inspection_tool class="Java9ReflectionClassVisibility" enabled="false" level="WARNING"
+                   enabled_by_default="false" />
   <inspection_tool class="JavaCollectionsStaticMethod" enabled="false" level="WEAK WARNING"
                    enabled_by_default="false"/>
   <inspection_tool class="JavaDoc" enabled="true" level="ERROR" enabled_by_default="true">
@@ -3052,6 +3063,8 @@
                    enabled_by_default="true"/>
   <inspection_tool class="ManualArrayToCollectionCopy" enabled="true" level="ERROR"
                    enabled_by_default="true"/>
+  <inspection_tool class="MappingBeforeCount" enabled="true" level="WARNING"
+                   enabled_by_default="true" />
   <inspection_tool class="MapReplaceableByEnumMap" enabled="true" level="WARNING"
                    enabled_by_default="true"/>
   <inspection_tool class="MarkerInterface" enabled="true" level="WARNING"
@@ -3501,8 +3514,9 @@
                    enabled_by_default="true"/>
   <inspection_tool class="PackageName" enabled="false" level="WEAK WARNING"
                    enabled_by_default="false"/>
-  <inspection_tool class="PackageNamingConvention" enabled="true" level="WARNING"
-                   enabled_by_default="true">
+  <!-- Non-standard package names in IT folder are by design -->
+  <inspection_tool class="PackageNamingConvention" enabled="false" level="WARNING"
+                   enabled_by_default="false">
     <option name="m_regex" value="[a-z0-9\.]*"/>
     <option name="m_minLength" value="3"/>
     <option name="m_maxLength" value="100"/>
@@ -3794,9 +3808,8 @@
     <option name="ignoreEmptySuperMethods" value="false"/>
     <option name="onlyReportWhenAnnotated" value="true"/>
   </inspection_tool>
-  <!-- temporal suppression until #11590 -->
-  <inspection_tool class="RegExpDuplicateCharacterInClass" enabled="false" level="WARNING"
-                   enabled_by_default="false" />
+  <inspection_tool class="RegExpDuplicateCharacterInClass" enabled="true" level="ERROR"
+                   enabled_by_default="true" />
   <inspection_tool class="RemoveCurlyBracesFromTemplate" enabled="false" level="WEAK WARNING"
                    enabled_by_default="false"/>
   <inspection_tool class="RemoveEmptyClassBody" enabled="false" level="INFO"
@@ -4601,6 +4614,9 @@
   </inspection_tool>
   <inspection_tool class="SystemExit" enabled="true" level="ERROR" enabled_by_default="true"/>
   <inspection_tool class="SystemGC" enabled="true" level="WARNING" enabled_by_default="true"/>
+  <!-- temporary disabled until https://github.com/checkstyle/checkstyle/issues/18926 -->
+  <inspection_tool class="SystemGetProperty" enabled="false" level="WARNING"
+                   enabled_by_default="false" />
   <inspection_tool class="SystemGetenv" enabled="true" level="ERROR" enabled_by_default="true"/>
   <inspection_tool class="SystemOutErr" enabled="true" level="ERROR" enabled_by_default="true"/>
   <!-- we do not use system variables for any security relates reasons
@@ -4973,7 +4989,7 @@
          it is checked by RequireThisCheck -->
   <inspection_tool class="UnqualifiedFieldAccess" enabled="false" level="ERROR"
                    enabled_by_default="false"/>
-  <!-- it is ok to skip name of outter class for inner class
+  <!-- it is ok to skip name of outer class for inner class
          in filed/variable declaration to keep type short -->
   <inspection_tool class="UnqualifiedInnerClassAccess" enabled="false" level="ERROR"
                    enabled_by_default="false"/>
@@ -5201,6 +5217,8 @@
   <inspection_tool class="Weblogic" enabled="false" level="ERROR" enabled_by_default="false"/>
   <inspection_tool class="WhenWithOnlyElse" enabled="false" level="WEAK WARNING"
                    enabled_by_default="false"/>
+  <inspection_tool class="WhileCanBeDoWhile" enabled="true" level="WARNING"
+                   enabled_by_default="true" />
   <inspection_tool class="WhileCanBeForeach" enabled="true" level="ERROR"
                    enabled_by_default="true"/>
   <inspection_tool class="WhileLoopSpinsOnField" enabled="true" level="WARNING"
@@ -5278,8 +5296,9 @@
     <option name="ADD_SERVLET_TO_ENTRIES" value="true"/>
     <option name="ADD_NONJAVA_TO_ENTRIES" value="true"/>
   </inspection_tool>
-  <inspection_tool class="ClassCanBeRecord" enabled="true"
-                   level="WEAK WARNING" enabled_by_default="true" />
+  <!-- temporary disabled until https://github.com/checkstyle/checkstyle/issues/18926 -->
+  <inspection_tool class="ClassCanBeRecord" enabled="false"
+                   level="WEAK WARNING" enabled_by_default="false" />
   <inspection_tool class="EnhancedSwitchMigration" enabled="true"
                    level="WARNING" enabled_by_default="true" />
 </profile>
