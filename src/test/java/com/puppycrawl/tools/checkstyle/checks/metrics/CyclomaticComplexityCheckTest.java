@@ -19,9 +19,14 @@
 
 package com.puppycrawl.tools.checkstyle.checks.metrics;
 
+import static com.google.common.truth.Truth.assertWithMessage;
 import static com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck.MSG_KEY;
+
 import org.junit.jupiter.api.Test;
+
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 public class CyclomaticComplexityCheckTest
     extends AbstractModuleTestSupport {
@@ -32,28 +37,192 @@ public class CyclomaticComplexityCheckTest
     }
 
     @Test
-    public void test() throws Exception {
+    public void testSwitchBlockAsSingleDecisionPointSetToTrue() throws Exception {
 
         final String[] expected = {
-            "15:5: " + getCheckMessage(MSG_KEY, "basic", 0),
-            "19:5: " + getCheckMessage(MSG_KEY, "oneIf", 1),
-            "24:5: " + getCheckMessage(MSG_KEY, "oneIfElse", 2),
-            "30:5: " + getCheckMessage(MSG_KEY, "oneIfElseIf", 2),
-            "36:5: " + getCheckMessage(MSG_KEY, "ternary", 1),
-            "42:5: " + getCheckMessage(MSG_KEY, "tryCatch", 1),
-            "51:5: " + getCheckMessage(MSG_KEY, "switchWithCases", 1),
-            "61:5: " + getCheckMessage(MSG_KEY, "switchWithCasesAndDefault", 1),
-            "73:5: " + getCheckMessage(MSG_KEY, "sameLogicalAndSequence", 2),
-            "79:5: " + getCheckMessage(MSG_KEY, "sameLogicalOrSequence", 2),
-            "85:5: " + getCheckMessage(MSG_KEY, "twoRepeatingLogicalSequences", 3),
-            "91:5: " + getCheckMessage(MSG_KEY, "twoMixedLogicalSequences", 4),
-            "97:5: " + getCheckMessage(MSG_KEY, "recursionSample", 2),
-            "103:5: " + getCheckMessage(MSG_KEY, "multipleRecursions", 3),
-            "111:5: " + getCheckMessage(MSG_KEY, "noRecursion", 0),
-            "116:5: " + getCheckMessage(MSG_KEY, "InputCyclomaticComplexity.INSTANCE_INIT", 0),
+            "14:5: " + getCheckMessage(MSG_KEY, 2, 0),
         };
 
         verifyWithInlineConfigParser(
-                getPath("InputCyclomaticComplexity.java"), expected);
+                getPath("InputCyclomaticComplexitySwitchBlocks.java"), expected);
     }
+
+    @Test
+    public void testSwitchBlockAsSingleDecisionPointSetToFalse() throws Exception {
+
+        final String[] expected = {
+            "14:5: " + getCheckMessage(MSG_KEY, 5, 0),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexitySwitchBlocks2.java"), expected);
+    }
+
+    @Test
+    public void testEqualsMaxComplexity() throws Exception {
+
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexitySwitchBlocks3.java"), expected);
+    }
+
+    @Test
+    public void test1() throws Exception {
+
+        final String[] expected = {
+            "15:5: " + getCheckMessage(MSG_KEY, 2, 0),
+            "20:17: " + getCheckMessage(MSG_KEY, 2, 0),
+            "32:5: " + getCheckMessage(MSG_KEY, 6, 0),
+            "45:5: " + getCheckMessage(MSG_KEY, 3, 0),
+            "55:5: " + getCheckMessage(MSG_KEY, 5, 0),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexity1.java"), expected);
+    }
+
+    @Test
+    public void test2() throws Exception {
+
+        final String[] expected = {
+            "16:5: " + getCheckMessage(MSG_KEY, 3, 0),
+            "29:5: " + getCheckMessage(MSG_KEY, 3, 0),
+            "41:5: " + getCheckMessage(MSG_KEY, 3, 0),
+            "54:5: " + getCheckMessage(MSG_KEY, 1, 0),
+            "58:13: " + getCheckMessage(MSG_KEY, 2, 0),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexity2.java"), expected);
+    }
+
+    @Test
+    public void testCyclomaticComplexityRecords1() throws Exception {
+
+        final int max = 0;
+
+        final String[] expected = {
+            "18:9: " + getCheckMessage(MSG_KEY, 11, max),
+            "49:9: " + getCheckMessage(MSG_KEY, 11, max),
+            "81:9: " + getCheckMessage(MSG_KEY, 11, max),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexityRecords1.java"), expected);
+    }
+
+    @Test
+    public void testCyclomaticComplexityRecords2() throws Exception {
+
+        final int max = 0;
+
+        final String[] expected = {
+            "17:9: " + getCheckMessage(MSG_KEY, 11, max),
+            "49:9: " + getCheckMessage(MSG_KEY, 11, max),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexityRecords2.java"), expected);
+    }
+
+    @Test
+    public void testGetAcceptableTokens() {
+        final CyclomaticComplexityCheck cyclomaticComplexityCheckObj =
+            new CyclomaticComplexityCheck();
+        final int[] actual = cyclomaticComplexityCheckObj.getAcceptableTokens();
+        final int[] expected = {
+            TokenTypes.CTOR_DEF,
+            TokenTypes.METHOD_DEF,
+            TokenTypes.INSTANCE_INIT,
+            TokenTypes.STATIC_INIT,
+            TokenTypes.LITERAL_WHILE,
+            TokenTypes.LITERAL_DO,
+            TokenTypes.LITERAL_FOR,
+            TokenTypes.LITERAL_IF,
+            TokenTypes.LITERAL_SWITCH,
+            TokenTypes.LITERAL_CASE,
+            TokenTypes.LITERAL_CATCH,
+            TokenTypes.QUESTION,
+            TokenTypes.LAND,
+            TokenTypes.LOR,
+            TokenTypes.COMPACT_CTOR_DEF,
+            TokenTypes.LITERAL_WHEN,
+        };
+        assertWithMessage("Invalid acceptable tokens")
+            .that(actual)
+            .isEqualTo(expected);
+    }
+
+    @Test
+    public void testGetRequiredTokens() {
+        final CyclomaticComplexityCheck cyclomaticComplexityCheckObj =
+            new CyclomaticComplexityCheck();
+        final int[] actual = cyclomaticComplexityCheckObj.getRequiredTokens();
+        final int[] expected = {
+            TokenTypes.CTOR_DEF,
+            TokenTypes.METHOD_DEF,
+            TokenTypes.INSTANCE_INIT,
+            TokenTypes.STATIC_INIT,
+            TokenTypes.COMPACT_CTOR_DEF,
+        };
+        assertWithMessage("Invalid required tokens")
+            .that(actual)
+            .isEqualTo(expected);
+    }
+
+    @Test
+    public void testHighMax() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexitySwitchBlocks4.java"), expected);
+    }
+
+    @Test
+    public void testDefaultMax() throws Exception {
+        final String[] expected = {
+            "14:5: " + getCheckMessage(MSG_KEY, 12, 10),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexitySwitchBlocks5.java"), expected);
+    }
+
+    @Test
+    public void testWhenExpression() throws Exception {
+        final String[] expected = {
+            "16:4: " + getCheckMessage(MSG_KEY, 5, 0),
+            "22:4: " + getCheckMessage(MSG_KEY, 5, 0),
+            "31:4: " + getCheckMessage(MSG_KEY, 7, 0),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputCyclomaticComplexityWhenExpression.java"), expected);
+    }
+
+    @Test
+    public void testWhenExpressionSwitchAsSinglePoint() throws Exception {
+        final String[] expected = {
+            "16:5: " + getCheckMessage(MSG_KEY, 5, 0),
+            "22:5: " + getCheckMessage(MSG_KEY, 2, 0),
+            "31:5: " + getCheckMessage(MSG_KEY, 2, 0),
+            "41:5: " + getCheckMessage(MSG_KEY, 2, 0),
+        };
+        verifyWithInlineConfigParser(
+                getPath(
+                        "InputCyclomaticComplexityWhenSwitchAsSinglePoint.java"), expected);
+    }
+
+    @Test
+    public void testSwitchBlockAsSingleDecisionPointWithNestedSwitch() throws Exception {
+        final String[] expected = {
+            "17:5: " + getCheckMessage(MSG_KEY, 2, 0),
+            "26:5: " + getCheckMessage(MSG_KEY, 2, 0),
+            "41:5: " + getCheckMessage(MSG_KEY, 2, 0),
+        };
+        verifyWithInlineConfigParser(
+                getPath(
+                        "InputCyclomaticComplexitySwitchBlocks6.java"), expected);
+    }
+
 }
