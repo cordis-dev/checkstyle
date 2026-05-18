@@ -60,8 +60,7 @@
             </tr>
             <tr>
               <td><a id="violateExecutionOnNonTightHtml"/><a href="#violateExecutionOnNonTightHtml">violateExecutionOnNonTightHtml</a></td>
-              <td>Control when to print violations if the Javadoc being examined by this check violates the tight html rules defined at <a href="../../writingjavadocchecks.html#Tight-HTML_rules">
-     Tight-HTML Rules</a>.</td>
+              <td>Control when to print violations if the Javadoc being examined by this check violates the tight html rules defined at <a href="https://checkstyle.org/writingjavadocchecks.html#Tight-HTML_rules">Tight-HTML Rules</a>.</td>
               <td><a href="../../property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>8.24</td>
@@ -87,7 +86,8 @@ class Example1 {
   public static final int MY_CONST = 13; // ok
 
   /** This javadoc is missing deprecated tag. */
-  // violation below '@deprecated Javadoc tag with description.'
+  // violation 2 lines below """Must include both @java.lang.Deprecated annotation
+  //  and @deprecated Javadoc tag with description."""
   @Deprecated
   public static final int COUNTER = 10;
 
@@ -126,7 +126,8 @@ class Example2 {
   public static final int MY_CONST = 13; // ok
 
   /** This javadoc is missing deprecated tag. */
-  // violation below '@deprecated Javadoc tag with description.'
+  // violation 2 lines below """Must include both @java.lang.Deprecated annotation
+  //  and @deprecated Javadoc tag with description."""
   @Deprecated
   public static final int COUNTER = 10;
 
@@ -186,7 +187,7 @@ class Example2 {
         </p>
       </subsection>
 
-      <subsection name="Fully Qualified Name" id="Fully_Qualified_Name">
+      <subsection name="Fully Qualified Name" id="MissingDeprecated_Fully_Qualified_Name">
         <p> com.puppycrawl.tools.checkstyle.checks.annotation.MissingDeprecatedCheck</p>
         <p>
           Use this fully qualified class name in configuration when an exact class reference is

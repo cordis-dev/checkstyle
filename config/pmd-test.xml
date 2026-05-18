@@ -76,7 +76,8 @@
                        //MethodDeclaration[@Name='testTokenNumbering']    
                    | //ClassDeclaration[@SimpleName='GeneratedJavadocCommentsTokenTypesTest']
                        //MethodDeclaration[@Name='testTokenNumbers']
-                   | //ClassDeclaration[@SimpleName='IndentationCheckTest']"/>
+                   | //ClassDeclaration[@SimpleName='IndentationCheckTest']
+                   | //ClassDeclaration[@SimpleName='XdocsPagesTest']"/>
     </properties>
   </rule>
 
@@ -146,13 +147,6 @@
     </properties>
   </rule>
 
-  <rule ref="category/java/bestpractices.xml/UnitTestShouldUseBeforeAnnotation">
-    <properties>
-      <!-- A false positive. -->
-      <property name="violationSuppressXPath"
-               value="//ClassDeclaration[@SimpleName='CommitValidationTest']"/>
-    </properties>
-  </rule>
   <rule ref="category/java/bestpractices.xml/UnitTestContainsTooManyAsserts">
     <properties>
       <property name="maximumAsserts" value="11"/>

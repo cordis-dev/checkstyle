@@ -49,11 +49,11 @@ appveyor
 APRV
 Aqj
 archunit
-args
 Arial
 arity
 Arquillian
 arraycopy
+arraysquarebracketsattype
 arraytrailingcomma
 arraytypestyle
 ASF
@@ -136,6 +136,7 @@ buildkite
 Bunsubscribe
 bw
 BXOR
+bytebuddy
 bytecode
 Cacheable
 cachefile
@@ -258,8 +259,11 @@ Dcheckstyle
 dcm
 Dconfig
 Dconnection
+Dcpd
+Dcyclonedx
 ddd
 DDDL
+Ddokka
 Ddry
 DEADBEEF
 DECCHARS
@@ -271,6 +275,7 @@ defaultcomeslast
 defaultlabelpresence
 defaultlogger
 delims
+Denforcer
 DENORMALIZER
 Depedency
 dependabot
@@ -297,14 +302,15 @@ diffplug
 DIFFTOOL
 dirname
 Djacoco
+Djapicmp
 Djdepend
 Dlinkcheck
 DMail
 Dmaven
-DMC
 dnd
 Dnew
 doccheck
+doccomments
 Dockter
 doclet
 doclint
@@ -406,6 +412,7 @@ fd
 FDCF
 Fdesign
 FDF
+Fdoc
 FEF
 fenum
 ffc
@@ -588,6 +595,7 @@ importcontrolloader
 importcontroltest
 importorder
 importrule
+importstatements
 imprt
 Incompatabilities
 indentcontinuationlines
@@ -659,6 +667,7 @@ javaparser
 javarevisited
 javascript
 javase
+javasourcefiles
 javax
 Jax
 jb
@@ -747,6 +756,7 @@ Kordas
 Kotlin
 Kp
 lambdabodylength
+lambdaexpressions
 lambdaparametername
 LBRACE
 LBRACK
@@ -980,6 +990,7 @@ ogg
 OI
 olddomain
 olympe
+ond
 onestatement
 onestatementperline
 onetoplevel
@@ -998,6 +1009,7 @@ optionalbracesusage
 OQ
 orderedproperties
 orderingandspacing
+orderoftags
 orekit
 ORELSEGET
 orm
@@ -1060,6 +1072,7 @@ php
 picocli
 pid
 pinentry
+pipefail
 PIPESTATUS
 pitest
 pkgextra
@@ -1147,6 +1160,7 @@ requireemptylinebeforeblocktaggroup
 requirethis
 resourceleak
 Rethrown
+Rethrows
 returncount
 returnsreceiver
 reviewdog
@@ -1199,7 +1213,6 @@ selfexplanatory
 Selkin
 semaphoreci
 semver
-SEO
 separatorwrap
 SERIALVERSIONUID
 servlet
@@ -1226,7 +1239,6 @@ SLo
 Slurper
 slurpersupport
 Sms
-Smth
 snyk
 socio
 Sohjiro
@@ -1242,6 +1254,7 @@ sourceforge
 sourcepath
 sourcesets
 spacebar
+specialcharacters
 specialescape
 spellchecker
 spliterator
@@ -1429,6 +1442,7 @@ uxxxx
 validator
 VALUELONG
 vararg
+variabledeclarations
 variabledeclarationusagedistance
 Veach
 Verdana
@@ -1461,7 +1475,6 @@ Webp
 website
 webtoolkit
 Wellformedness
-wget
 whenshouldbeused
 wherejavadocrequired
 wheretobreak
@@ -1486,6 +1499,7 @@ wq
 wrappinglines
 writetag
 writingchecks
+writingdoccomments
 writingfilefilters
 writingfilters
 writingjavadocchecks

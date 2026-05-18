@@ -139,8 +139,6 @@
   <suppress id="noUsageOfGetFileContentsMethod" files="JavadocVariableCheck.java"/>
   <!-- until #19148 -->
   <suppress id="noUsageOfGetFileContentsMethod" files="MissingJavadocMethodCheck.java"/>
-  <!-- until #19149 -->
-  <suppress id="noUsageOfGetFileContentsMethod" files="MissingJavadocTypeCheck.java"/>
   <!-- permanent suppression to allow regexp on content of the line -->
   <suppress id="noUsageOfGetFileContentsMethod" files="RegexpCheck.java"/>
   <suppress id="noUsageOfGetFileContentsMethod" files="RegexpSinglelineJavaCheck.java"/>
@@ -194,4 +192,7 @@
             id="MatchXpathForbidTryCatchFail"
             files=".*[\\/]src[\\/]test[\\/]java[\\/]com[\\/]puppycrawl[\\/]tools[\\/]checkstyle[\\/](?!utils|xpath|checks[\\/]coding|checks[\\/]design|checks[\\/]modifier|checks[\\/]naming|checks[\\/]annotation|checks[\\/]indentation|checks[\\/]metrics|checks[\\/]whitespace|checks[\\/]javadoc|checks[\\/]NewlineAtEndOfFileCheckTest|checks[\\/]SuppressWarningsHolderTest|checks[\\/]UncommentedMainCheckTest|CheckerTest|ConfigurationLoaderTest|DetailNodeTreeStringPrinterTest|JavadocPropertiesGeneratorTest|MainTest|PackageNamesLoaderTest|SarifLoggerTest|SuppressionsStringPrinterTest|ThreadModeSettingsTest|TreeWalkerTest).*"/>
 
+  <!-- JavadocStyle incorrectly parses HTML tags inside {@literal}, {@code} blocks as real HTML,
+          until #19145 -->
+  <suppress checks="JavadocStyle" files="JavadocParagraphCheck\.java"/>
 </suppressions>

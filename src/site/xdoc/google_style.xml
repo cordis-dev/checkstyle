@@ -732,12 +732,10 @@
                   <br/>
                   <br/>
                   There are some false-negatives regarding <code>ELSE</code>
-                  and <code>DEFAULT</code> blocks, they will be addressed at:
+                  blocks, they will be addressed at:
                   <a href="https://github.com/checkstyle/checkstyle/issues/15791">
                     #15791
                   </a>
-                  and
-                  <a href="https://github.com/checkstyle/checkstyle/issues/14782">#14782</a>
                 </td>
                 <td>
                   <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/google/checkstyle/test/chapter4formatting/rule412nonemptyblocks">
@@ -911,7 +909,7 @@
                   <br />
                   <br />
                   <span class="wrapper inline">
-                    <img src="images/ok_blue.png" alt="" />
+                    <img src="images/ok_green.png" alt="" />
                   </span>
                   <a href="checks/whitespace/separatorwrap.html#SeparatorWrap">SeparatorWrap</a>
                   (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fgoogle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+SeparatorWrap">
@@ -924,13 +922,6 @@
                   <a href="checks/whitespace/methodparampad.html#MethodParamPad">MethodParamPad</a>
                   (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fgoogle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MethodParamPad">
                   config</a>)
-                  <br />
-                  <br />
-                  Line break before and after the lambda(<code>-></code>) is not covered.
-                  It will be addressed at:
-                  <a href="https://github.com/checkstyle/checkstyle/issues/17253">
-                    #17253
-                  </a>
                 </td>
                 <td>
                   <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/google/checkstyle/test/chapter4formatting/rule451wheretobreak">

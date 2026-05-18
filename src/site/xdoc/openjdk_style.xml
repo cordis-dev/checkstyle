@@ -19,6 +19,12 @@
           Draft v6, December 2015.
         </p>
         <p>
+          The OpenJDK style guide says that, apart from <code>LF</code>, the only allowed
+          whitespace character is Space, and that <code>\'</code>, <code>\"</code>, <code>\\</code>,
+          <code>\t</code>, <code>\b</code>, <code>\r</code>, <code>\f</code>, and <code>\n</code>
+          should be preferred over corresponding octal or Unicode escaped characters.
+        </p>
+        <p>
           <a href="https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/openjdk_checks.xml">
             Incomplete Checkstyle configuration for 'OpenJDK Java Style'</a>
         </p>
@@ -134,8 +140,38 @@
                     <strong>2 - Java Source Files</strong>
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt=""/>
+                  </span>
+                  <a href="https://checkstyle.org/config.html#Checker">charset=US-ASCII</a>,
+                  <a href="checks/misc/lineending.html#LineEnding">LineEnding</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+LineEnding">
+                  config</a>)
+                  <br/>
+                  <br/>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt=""/>
+                  </span>
+                  <a href="checks/regexp/regexpsingleline.html#RegexpSingleline">
+                    RegexpSingleline</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+RegexpSingleline">
+                  config</a>)
+                  <br/>
+                  <br/>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt=""/>
+                  </span>
+                  <a href="checks/misc/outertypefilename.html#OuterTypeFilename">
+                    OuterTypeFilename</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+OuterTypeFilename">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter2javasourcefiles/rule2javasourcefiles">
+                    samples
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -151,8 +187,24 @@
                     2.1 Special Characters
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt=""/>
+                  </span>
+                  <a href="checks/coding/illegaltokentext.html#IllegalTokenText">
+                    IllegalTokenText</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+IllegalTokenText">
+                  config</a>),
+                  <a href="checks/misc/avoidescapedunicodecharacters.html#AvoidEscapedUnicodeCharacters">
+                    AvoidEscapedUnicodeCharacters</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+AvoidEscapedUnicodeCharacters">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter2javasourcefiles/rule21specialcharacters">
+                    samples
+                  </a>
+                </td>
               </tr>
               <!-- 3 Formatting -->
               <tr>
@@ -203,8 +255,20 @@
                     3.2 Package declaration
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt=""/>
+                  </span>
+                  <a href="checks/whitespace/nolinewrap.html#NoLineWrap">
+                    NoLineWrap</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+NoLineWrap">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter3formatting/rule32packagedeclaration">
+                    samples
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -220,8 +284,19 @@
                     3.3 Import statements
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_blue.png" alt=""/>
+                  </span>
+                  <a href="checks/imports/importorder.html#ImportOrder">ImportOrder</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+ImportOrder">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter3formatting/rule33importstatements">
+                    samples
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -339,8 +414,28 @@
                     3.7 Indentation
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt=""/>
+                  </span>
+                  <a href="checks/whitespace/filetabcharacter.html#FileTabCharacter">
+                    FileTabCharacter</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+FileTabCharacter">
+                  config</a>)
+                  <br/>
+                  <br/>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt=""/>
+                  </span>
+                  <a href="checks/misc/indentation.html#Indentation">Indentation</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+Indentation">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter3formatting/rule37indentation">
+                    samples
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -362,14 +457,12 @@
                   </span>
                   <a href="checks/coding/onestatementperline.html#OneStatementPerLine">
                     OneStatementPerLine</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+OneStatementPerLine">
+                  config</a>)
                 </td>
                 <td>
-                  <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+OneStatementPerLine">
-                    config
-                  </a>
-                  <br/>
-                  <a href="https://github.com/checkstyle/checkstyle/blob/master/src/it/java/com/openjdk/checkstyle/test/chapter3formatting/rule38wrappinglines/OneStatementPerLineTest.java">
-                    test
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter3formatting/rule38wrappinglines">
+                    samples
                   </a>
                 </td>
               </tr>
@@ -489,8 +582,28 @@
                     3.10 Variable Declarations
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt="" />
+                  </span>
+                  <a href="checks/coding/multiplevariabledeclarations.html#MultipleVariableDeclarations">
+                    MultipleVariableDeclarations</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MultipleVariableDeclarations">
+                  config</a>)
+                  <br />
+                  <br />
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt="" />
+                  </span>
+                  <a href="checks/misc/arraytypestyle.html#ArrayTypeStyle">
+                    ArrayTypeStyle</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+ArrayTypeStyle">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter3formatting/rule310variabledeclarations">
+                    samples</a>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -523,8 +636,20 @@
                     3.12 Lambda Expressions
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt="" />
+                  </span>
+                  <a href="checks/sizes/lambdabodylength.html#LambdaBodyLength">
+                    LambdaBodyLength</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+LambdaBodyLength">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter3formatting/rule312lambdaexpressions">
+                    samples
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -557,8 +682,36 @@
                     3.14 Literals
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt="" />
+                  </span>
+                  <a href="checks/misc/upperell.html#UpperEll">UpperEll</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+UpperEll">
+                  config</a>)
+                  <br />
+                  <br />
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt="" />
+                  </span>
+                  <a href="checks/misc/hexliteralcase.html#HexLiteralCase">
+                    HexLiteralCase</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+HexLiteralCase">
+                  config</a>)
+                  <br />
+                  <br />
+                  <span class="wrapper inline">
+                    <img src="images/ok_green.png" alt="" />
+                  </span>
+                  <a href="checks/misc/numericalprefixesinfixessuffixescharactercase.html#NumericalPrefixesInfixesSuffixesCharacterCase">
+                    NumericalPrefixesInfixesSuffixesCharacterCase</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+NumericalPrefixesInfixesSuffixesCharacterCase">
+                  config</a>)
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter3formatting/rule314literals">
+                    samples</a>
+                </td>
               </tr>
               <tr>
                 <td>
@@ -609,7 +762,23 @@
                     4.1 Package Names
                   </a>
                 </td>
-                <td>???</td>
+                <td>
+                    <p>
+                        Note: Detection of plural forms or
+                      semantic word variations is not supported,
+                        as there is no valid method to do it.
+                    </p>
+                    <span class="wrapper inline">
+                        <img src="images/ok_blue.png" alt=""/>
+                    </span>
+                    <a href="checks/naming/packagename.html#PackageName">PackageName</a>
+                    (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+PackageName">config</a>)
+                </td>
+                <td>
+                    <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter4naming/rule41packagenames">
+                       samples
+                    </a>
+                </td>
                 <td/>
               </tr>
               <tr>
@@ -643,8 +812,22 @@
                     4.3 Method Names
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_blue.png" alt="" />
+                  </span>
+                  <a href="checks/naming/methodname.html#MethodName">MethodName</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fopenjdk_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MethodName">
+                  config</a>)
+                  <br />
+                  Method names should typically be verbs or other descriptions of actions.
+                  This cannot be fully covered because Checkstyle does not have English vocabulary
+                  to determine whether a method name is a verb or action description.
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/openjdk/checkstyle/test/chapter4naming/rule43methodnames">
+                    samples</a>
+                </td>
               </tr>
               <tr>
                 <td>

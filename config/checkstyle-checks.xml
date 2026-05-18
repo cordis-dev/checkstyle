@@ -309,7 +309,7 @@
     <module name="MissingOverrideOnRecordAccessor"/>
     <module name="PackageAnnotation"/>
     <module name="SuppressWarnings">
-      <property name="format" value="^((?!unchecked|deprecation|rawtypes|resource|InvalidInlineTag|UnrecognisedJavadocTag|InlineMeSuggester|OverlyComplexBooleanExpression).)*$"/>
+      <property name="format" value="^((?!unchecked|deprecation|rawtypes|resource|InvalidInlineTag|UnrecognisedJavadocTag|InlineMeSuggester|OverlyComplexBooleanExpression|ReferenceEquality).)*$"/>
       <message key="suppressed.warning.not.allowed"
            value="The warning ''{0}'' cannot be suppressed at this location.
            Only few javac warnings are allowed to suppress.
@@ -371,6 +371,7 @@
       <property name="tokens" value="RECORD_DEF"/>
       <property name="tokens" value="COMPACT_CTOR_DEF"/>
       <property name="tokens" value="LITERAL_CASE"/>
+      <property name="tokens" value="LITERAL_DEFAULT"/>
       <property name="option" value="alone"/>
     </module>
     <module name="RightCurly">
@@ -879,26 +880,26 @@
     <module name="InterfaceTypeParameterName"/>
     <module name="LocalFinalVariableName"/>
     <module name="LocalVariableName">
-      <property name="format" value="^(id)|([a-z][a-z0-9][a-zA-Z0-9]+)$"/>
+      <property name="format" value="^(?:id|[a-z][a-z0-9][a-zA-Z0-9]+)$"/>
     </module>
     <module name="MemberName">
-      <property name="format" value="^(id)|([a-z][a-z0-9][a-zA-Z0-9]+)$"/>
+      <property name="format" value="^(?:id|[a-z][a-z0-9][a-zA-Z0-9]+)$"/>
     </module>
     <module name="MethodName"/>
     <module name="MethodTypeParameterName"/>
     <module name="PackageName"/>
     <module name="ParameterName">
-      <property name="format" value="^(id)|([a-z][a-z0-9][a-zA-Z0-9]+)$"/>
+      <property name="format" value="^(?:id|[a-z][a-z0-9][a-zA-Z0-9]+)$"/>
       <property name="ignoreOverridden" value="true"/>
     </module>
     <module name="LambdaParameterName">
-      <property name="format" value="^(id)|([a-z][a-z0-9][a-zA-Z0-9]+)$"/>
+      <property name="format" value="^(?:id|[a-z][a-z0-9][a-zA-Z0-9]+)$"/>
     </module>
     <module name="CatchParameterName">
       <property name="format" value="^[a-z][a-z][a-zA-Z]+$"/>
     </module>
     <module name="StaticVariableName">
-      <property name="format" value="^(id)|([a-z][a-z0-9][a-zA-Z0-9]+)$"/>
+      <property name="format" value="^(?:id|[a-z][a-z0-9][a-zA-Z0-9]+)$"/>
     </module>
     <module name="TypeName"/>
     <module name="PatternVariableName"/>
@@ -1002,6 +1003,7 @@
       <property name="tokens" value="BXOR_ASSIGN"/>
       <property name="tokens" value="BOR_ASSIGN"/>
       <property name="tokens" value="BAND_ASSIGN"/>
+      <property name="tokens" value="LAMBDA"/>
       <property name="option" value="eol"/>
     </module>
     <module name="ParenPad"/>

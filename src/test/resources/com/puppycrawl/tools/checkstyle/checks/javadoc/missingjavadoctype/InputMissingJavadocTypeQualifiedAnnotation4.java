@@ -1,9 +1,10 @@
 /*
 MissingJavadocType
-scope = (default)public
 excludeScope = (default)null
+scope = (default)public
 skipAnnotations = com.puppycrawl.tools.checkstyle.checks.javadoc.missingjavadoctype.\
     InputMissingJavadocTypeQualifiedAnnotation4.SomeAnnotation
+violateExecutionOnNonTightHtml = (default)false
 tokens = INTERFACE_DEF
 
 

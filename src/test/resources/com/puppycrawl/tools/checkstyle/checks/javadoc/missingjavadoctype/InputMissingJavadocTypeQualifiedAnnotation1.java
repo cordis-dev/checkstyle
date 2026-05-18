@@ -1,8 +1,9 @@
 /*
 MissingJavadocType
-scope = (default)public
 excludeScope = (default)null
+scope = (default)public
 skipAnnotations = (default)Generated
+violateExecutionOnNonTightHtml = (default)false
 tokens = INTERFACE_DEF
 
 

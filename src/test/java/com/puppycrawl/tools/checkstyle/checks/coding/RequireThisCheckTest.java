@@ -577,4 +577,93 @@ public class RequireThisCheckTest extends AbstractModuleTestSupport {
                 .isTrue();
     }
 
+    @Test
+    public void testLocalTypeDefsInsideLambdasTwo() throws Exception {
+        final String[] expected = {
+            "89:9: " + getCheckMessage(MSG_VARIABLE, "index", ""),
+            "98:21: " + getCheckMessage(MSG_VARIABLE, "index", ""),
+            "112:29: " + getCheckMessage(MSG_VARIABLE, "index", ""),
+        };
+        verifyWithInlineConfigParser(
+            getPath("InputRequireThisLocalTypeDefsInsideLambdas.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationFieldDoesNotRequireThis() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationField.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationDefaultValueIsIgnored() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationDefault.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationUsageIsIgnored() throws Exception {
+        final String[] expected = {
+            "45:9: " + getCheckMessage(MSG_VARIABLE, "value", ""),
+            "46:9: " + getCheckMessage(MSG_VARIABLE, "name", ""),
+            "47:9: " + getCheckMessage(MSG_VARIABLE, "outer", ""),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationMutation.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationConstantOverlappingTrue() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationConstantOverlappingTrue.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationConstantOverlappingFalse() throws Exception {
+        final String[] expected = {
+            "19:18: " + getCheckMessage(MSG_VARIABLE, "CONTAINER", ""),
+            "26:31: " + getCheckMessage(MSG_VARIABLE, "warningsType", ""),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationConstantOverlappingFalse.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationQualified() throws Exception {
+        final String[] expected = {
+            "19:19: " + getCheckMessage(MSG_VARIABLE, "CONTAINER", ""),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationQualified.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationQualifiedDot() throws Exception {
+        final String[] expected = {
+            "31:22: " + getCheckMessage(MSG_VARIABLE, "value", ""),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationQualifiedDot.java"), expected);
+    }
+
+    @Test
+    public void testAnnotationOverlappingTrue() throws Exception {
+        final String[] expected = {
+            "31:9: " + getCheckMessage(MSG_VARIABLE, "value", ""),
+            "39:9: " + getCheckMessage(MSG_VARIABLE, "Outer", ""),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputRequireThisAnnotationOverlappingTrue.java"), expected);
+    }
+
 }
