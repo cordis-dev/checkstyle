@@ -12,7 +12,7 @@
 
   <groupId>com.puppycrawl.tools</groupId>
   <artifactId>checkstyle</artifactId>
-  <version>13.5.1-SNAPSHOT</version>
+  <version>13.6.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>checkstyle</name>
@@ -202,11 +202,11 @@
     <surefire.options />
     <projectVersion>${project.version}</projectVersion>
     <antlr4.version>4.13.2</antlr4.version>
-    <site.plugin.version>3.21.0</site.plugin.version>
-    <spotbugs.plugin.version>4.9.8.3</spotbugs.plugin.version>
+    <site.plugin.version>3.22.0</site.plugin.version>
+    <spotbugs.plugin.version>4.9.8.5</spotbugs.plugin.version>
     <pmd.plugin.version>3.28.0</pmd.plugin.version>
-    <pmd.version>7.24.0</pmd.version>
-    <jacoco.plugin.version>0.8.14</jacoco.plugin.version>
+    <pmd.version>7.25.0</pmd.version>
+    <jacoco.plugin.version>0.8.15</jacoco.plugin.version>
     <mockito.version>5.2.0</mockito.version>
     <slf4j.version>2.0.18</slf4j.version>
     <saxon.version>12.9</saxon.version>
@@ -221,7 +221,7 @@
     <checkstyle.openrewrite.version>1.0.0-SNAPSHOT</checkstyle.openrewrite.version>
     <java.version>21</java.version>
     <maven.compiler.release>${java.version}</maven.compiler.release>
-    <pitest.plugin.version>1.25.3</pitest.plugin.version>
+    <pitest.plugin.version>1.25.4</pitest.plugin.version>
     <pitest.plugin.timeout.factor>10</pitest.plugin.timeout.factor>
     <pitest.plugin.output.formats>HTML,XML</pitest.plugin.output.formats>
     <pitest.plugin.timeout.constant>50000</pitest.plugin.timeout.constant>
@@ -325,13 +325,13 @@
       <dependency>
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy</artifactId>
-        <version>1.18.8</version>
+        <version>1.18.10</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy-agent</artifactId>
-        <version>1.18.8</version>
+        <version>1.18.10</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -437,7 +437,7 @@
     <dependency>
       <groupId>org.eclipse.jgit</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
-      <version>7.6.0.202603022253-r</version>
+      <version>7.7.0.202606012155-r</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -1993,6 +1993,7 @@
                 <exclude>java-regexp.header</exclude>
                 <exclude>java.header</exclude>
                 <exclude>jsoref-spellchecker/**</exclude>
+                <exclude>list-of-projects.yml</exclude>
                 <exclude>markdownlint.rb</exclude>
                 <exclude>openrewrite-recipes-checkstyle.properties</exclude>
                 <exclude>org.eclipse.jdt.core.prefs</exclude>
@@ -2495,6 +2496,9 @@
             <!-- 404 Not Found,
              from broken link check to avoid false positives due to old certificate issues -->
             <excludedLink>https://bugs.eclipse.org/</excludedLink>
+            <!-- permanent 404 -->
+            <excludedLink>https://bytebuddy.net/byte-buddy</excludedLink>
+            <excludedLink>https://bytebuddy.net/byte-buddy-agent</excludedLink>
           </excludedLinks>
         </configuration>
       </plugin>
@@ -5359,6 +5363,9 @@
                 </param>
                 <param>
                   com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheckTest
+                </param>
+                <param>
+                  com.puppycrawl.tools.checkstyle.checks.modifier.RedundantModifierCheckTest
                 </param>
                 <param>
                   com.puppycrawl.tools.checkstyle.checks.javadoc.InvalidJavadocPositionCheckTest

@@ -157,6 +157,9 @@ Cfml
 cfz
 cgi
 chainedpropertyutil
+chapterformatting
+chapterjavasourcefiles
+chapternaming
 charset
 CHDBEFIF
 checkchmod
@@ -195,6 +198,7 @@ CNAME
 Cnt
 cobertura
 codacy
+codebases
 codeclimate
 codeconventions
 codecov
@@ -273,6 +277,7 @@ declaredwhenneeded
 Deconstruction
 defau
 defaultcomeslast
+defaultconstructors
 defaultlabelpresence
 defaultlogger
 delims
@@ -312,6 +317,7 @@ dnd
 Dnew
 doccheck
 doccomments
+docdefaultconstr
 Dockter
 doclet
 doclint
@@ -595,15 +601,16 @@ impl
 importcontrol
 importcontrolloader
 importcontroltest
+importnolinewrap
 importorder
 importrule
-importstatements
 imprt
 Incompatabilities
 indentcontinuationlines
 Inet
 infinispan
 initializedfields
+inlineconfigparser
 Inlined
 inlinetags
 innerassignment
@@ -669,7 +676,6 @@ javaparser
 javarevisited
 javascript
 javase
-javasourcefiles
 javax
 Jax
 jb
@@ -758,7 +764,6 @@ Kordas
 Kotlin
 Kp
 lambdabodylength
-lambdaexpressions
 lambdaparametername
 LBRACE
 LBRACK
@@ -1188,8 +1193,20 @@ Rsa
 RSPEC
 Rtl
 ru
+ruleimportstatements
+ruleindentation
+rulejavasourcefiles
+rulelambdaexpressions
+ruleliterals
+rulemethodnames
+rulepackagedeclaration
+rulepackagenames
 ruleset
 rulesetfiles
+rulespecialcharacters
+rulevariabledeclarations
+rulewildcardimports
+rulewrappinglines
 Ruslan
 rw
 rx
@@ -1256,7 +1273,6 @@ sourceforge
 sourcepath
 sourcesets
 spacebar
-specialcharacters
 specialescape
 spellchecker
 spliterator
@@ -1446,7 +1462,6 @@ uxxxx
 validator
 VALUELONG
 vararg
-variabledeclarations
 variabledeclarationusagedistance
 Veach
 Verdana
@@ -1500,7 +1515,6 @@ wontfix
 workaround
 workflow
 wq
-wrappinglines
 writetag
 writingchecks
 writingdoccomments
@@ -1572,6 +1586,7 @@ youtrack
 youtu
 youtube
 Yoyodyne
+yq
 yyyy
 Zbbh
 zf

@@ -77,12 +77,13 @@
             </thead>
             <tbody>
 
-              <!-- 1 INTRODUCTION -->
+              <!-- INTRODUCTION -->
               <tr>
-                <td><a name="a1"/><a href="#1"><span class="wrapper inline">
+                <td><a name="introduction"/>
+                  <a href="#introduction"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#introduction">
                     <strong>Introduction</strong>
                   </a>
                 </td>
@@ -91,10 +92,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1"/><a href="#1.1"><span class="wrapper inline">
+                <td><a name="principles"/>
+                  <a href="#principles"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#principles">
                     <strong><em>Principles</em></strong>
                   </a>
                 </td>
@@ -103,10 +105,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.1"/><a href="#1.1.1"><span class="wrapper inline">
+                <td><a name="writing-api-specs"/>
+                  <a href="#writing-api-specs"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#writing-api-specs">
                     Writing API Specifications
                   </a>
                 </td>
@@ -115,10 +118,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.1.1"/><a href="#1.1.1.1"><span class="wrapper inline">
+                <td><a name="api-spec-doc-comments"/>
+                  <a href="#api-spec-doc-comments"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.1.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#api-spec-doc-comments">
                     Java Platform API Specification is defined
                       by the documentation comments in the source code
                   </a>
@@ -128,10 +132,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.1.2"/><a href="#1.1.1.2"><span class="wrapper inline">
+                <td><a name="api-spec-contract"/>
+                  <a href="#api-spec-contract"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.1.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#api-spec-contract">
                     Java Platform API Specification is a contract
                       between callers and implementations
                   </a>
@@ -141,10 +146,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.1.3"/><a href="#1.1.1.3"><span class="wrapper inline">
+                <td><a name="api-spec-implementation-independent"/>
+                  <a href="#api-spec-implementation-independent"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.1.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#api-spec-implementation-independent">
                     Java API Specification assertions need to be implementation-independent
                   </a>
                 </td>
@@ -153,10 +159,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.1.4"/><a href="#1.1.1.4"><span class="wrapper inline">
+                <td><a name="api-spec-assertions"/>
+                  <a href="#api-spec-assertions"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.1.4">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#api-spec-assertions">
                     Java API Specification should contain assertions
                       sufficient to enable Software Quality Assurance
                   </a>
@@ -166,10 +173,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.2"/><a href="#1.1.2"><span class="wrapper inline">
+                <td><a name="writing-programming-guide-docs"/>
+                  <a href="#writing-programming-guide-docs"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#writing-programming-guide-docs">
                     Writing Programming Guide Documentation
                   </a>
                 </td>
@@ -178,10 +186,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.2.1"/><a href="#1.1.2.1"><span class="wrapper inline">
+                <td><a name="api-spec-bugs"/>
+                  <a href="#api-spec-bugs"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.2.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#api-spec-bugs">
                     API spec bugs
                   </a>
                 </td>
@@ -190,10 +199,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.2.2"/><a href="#1.1.2.2"><span class="wrapper inline">
+                <td><a name="code-bugs"/>
+                  <a href="#code-bugs"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.2.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#code-bugs">
                     Code bugs
                   </a>
                 </td>
@@ -202,10 +212,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.1.3"/><a href="#1.1.3"><span class="wrapper inline">
+                <td><a name="doc-comment-ownership"/>
+                  <a href="#doc-comment-ownership"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.1.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#doc-comment-ownership">
                     Who Owns and Edits the Doc Comments
                   </a>
                 </td>
@@ -214,10 +225,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.2"/><a href="#1.2"><span class="wrapper inline">
+                <td><a name="terminology"/>
+                  <a href="#terminology"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#terminology">
                     <strong><em>Terminology</em></strong>
                   </a>
                 </td>
@@ -226,10 +238,11 @@
               </tr>
 
               <tr>
-                <td><a name="a1.3"/><a href="#1.3"><span class="wrapper inline">
+                <td><a name="source-files"/>
+                  <a href="#source-files"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s1.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#source-files">
                     <strong><em>Source Files</em></strong>
                   </a>
                 </td>
@@ -237,12 +250,13 @@
                 <td/>
               </tr>
 
-              <!-- 2 WRITING DOC COMMENTS -->
+              <!-- WRITING DOC COMMENTS -->
               <tr>
-                <td><a name="a2"/><a href="#2"><span class="wrapper inline">
+                <td><a name="writing-doc-comments"/>
+                  <a href="#writing-doc-comments"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#writing-doc-comments">
                     <strong>Writing Doc Comments</strong>
                   </a>
                 </td>
@@ -252,10 +266,11 @@
 
               <!-- FORMAT -->
               <tr>
-                <td><a name="a2.1"/><a href="#2.1"><span class="wrapper inline">
+                <td><a name="format-doc-comment"/>
+                  <a href="#format-doc-comment"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#format-doc-comment">
                     <strong><em>Format of a Doc Comment</em></strong>
                   </a>
                 </td>
@@ -264,10 +279,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.1.1"/><a href="#2.1.1"><span class="wrapper inline">
+                <td><a name="notes"/>
+                  <a href="#notes"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.1.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#notes">
                     Notes
                   </a>
                 </td>
@@ -276,10 +292,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.1.2"/><a href="#2.1.2"><span class="wrapper inline">
+                <td><a name="get-image"/>
+                  <a href="#get-image"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.1.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#get-image">
                     getImage
                   </a>
                 </td>
@@ -289,10 +306,11 @@
 
               <!-- DOC TOOL -->
               <tr>
-                <td><a name="a2.2"/><a href="#2.2"><span class="wrapper inline">
+                <td><a name="doc-comment-checking-tool"/>
+                  <a href="#doc-comment-checking-tool"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#doc-comment-checking-tool">
                     <strong><em>Doc Comment Checking Tool</em></strong>
                   </a>
                 </td>
@@ -302,10 +320,11 @@
 
               <!-- DESCRIPTIONS -->
               <tr>
-                <td><a name="a2.3"/><a href="#2.3"><span class="wrapper inline">
+                <td><a name="descriptions"/>
+                  <a href="#descriptions"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#descriptions">
                     <strong><em>Descriptions</em></strong>
                   </a>
                 </td>
@@ -314,10 +333,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.3.1"/><a href="#2.3.1"><span class="wrapper inline">
+                <td><a name="first-sentence"/>
+                  <a href="#first-sentence"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.3.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#first-sentence">
                     First Sentence
                   </a>
                 </td>
@@ -326,35 +346,47 @@
               </tr>
 
               <tr>
-                <td><a name="a2.3.2"/><a href="#2.3.2"><span class="wrapper inline">
+                <td><a name="implementation-independence"/>
+                  <a href="#implementation-independence"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.3.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#implementation-independence">
                     Implementation-Independence
                   </a>
                 </td>
-                <td>???</td>
+                <td>--</td>
                 <td/>
               </tr>
 
               <tr>
-                <td><a name="a2.3.3"/><a href="#2.3.3"><span class="wrapper inline">
+                <td><a name="automatic-reuse-method-comments"/>
+                  <a href="#automatic-reuse-method-comments"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.3.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#automatic-reuse-method-comments">
                     Automatic re-use of method comments
                   </a>
                 </td>
-                <td>???</td>
+                <td>
+                  <span class="wrapper inline">
+                    <img
+                        src="images/ban_red.png"
+                        alt="" />
+                  </span>
+                  Violations of this guideline cannot be detected by Checkstyle due to its
+                  <a href="writingchecks.html#Limitations">
+                    limitation</a>, multiple file checking is not supported.
+                </td>
                 <td/>
               </tr>
 
               <!-- STYLE GUIDE -->
               <tr>
-                <td><a name="a2.4"/><a href="#2.4"><span class="wrapper inline">
+                <td><a name="style-guide"/>
+                  <a href="#style-guide"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#style-guide">
                     <strong><em>A Style Guide</em></strong>
                   </a>
                 </td>
@@ -363,10 +395,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.4.1"/><a href="#2.4.1"><span class="wrapper inline">
+                <td><a name="code-style-keywords-names"/>
+                  <a href="#code-style-keywords-names"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#code-style-keywords-names">
                     Use &lt;code&gt; style for keywords and names
                   </a>
                 </td>
@@ -375,10 +408,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.4.2"/><a href="#2.4.2"><span class="wrapper inline">
+                <td><a name="inline-links-economically"/>
+                  <a href="#inline-links-economically"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#inline-links-economically">
                     Use in-line links economically
                   </a>
                 </td>
@@ -386,10 +420,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.3"/><a href="#2.4.3"><span class="wrapper inline">
+                <td><a name="omit-parentheses-general-methods"/>
+                  <a href="#omit-parentheses-general-methods"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#omit-parentheses-general-methods">
                     Omit parentheses for the general form of methods and constructors
                   </a>
                 </td>
@@ -397,10 +432,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.4"/><a href="#2.4.4"><span class="wrapper inline">
+                <td><a name="phrases-instead-complete-sentences"/>
+                  <a href="#phrases-instead-complete-sentences"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.4">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#phrases-instead-complete-sentences">
                     OK to use phrases instead of complete sentences
                   </a>
                 </td>
@@ -408,10 +444,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.5"/><a href="#2.4.5"><span class="wrapper inline">
+                <td><a name="third-person-descriptive"/>
+                  <a href="#third-person-descriptive"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.5">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#third-person-descriptive">
                     Use 3rd person descriptive
                   </a>
                 </td>
@@ -419,10 +456,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.6"/><a href="#2.4.6"><span class="wrapper inline">
+                <td><a name="method-descriptions-verb-phrase"/>
+                  <a href="#method-descriptions-verb-phrase"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.6">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#method-descriptions-verb-phrase">
                     Method descriptions begin with a verb phrase
                   </a>
                 </td>
@@ -430,10 +468,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.7"/><a href="#2.4.7"><span class="wrapper inline">
+                <td><a name="class-interface-field-descriptions"/>
+                  <a href="#class-interface-field-descriptions"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.7">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#class-interface-field-descriptions">
                     Class/interface/field descriptions can omit
                       the subject and simply state the object
                   </a>
@@ -442,10 +481,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.8"/><a href="#2.4.8"><span class="wrapper inline">
+                <td><a name="use-this-instead-of-the"/>
+                  <a href="#use-this-instead-of-the"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.8">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#use-this-instead-of-the">
                     Use "this" instead of "the" when referring to an
                       object created from the current class
                   </a>
@@ -454,10 +494,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.9"/><a href="#2.4.9"><span class="wrapper inline">
+                <td><a name="add-description-beyond-api-name"/>
+                  <a href="#add-description-beyond-api-name"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.9">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#add-description-beyond-api-name">
                     Add description beyond the API name
                   </a>
                 </td>
@@ -465,10 +506,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.10"/><a href="#2.4.10"><span class="wrapper inline">
+                <td><a name="term-field"/>
+                  <a href="#term-field"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.10">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#term-field">
                     Be clear when using the term "field"
                   </a>
                 </td>
@@ -476,10 +518,11 @@
                 <td/>
               </tr>
               <tr>
-                <td><a name="a2.4.11"/><a href="#2.4.11"><span class="wrapper inline">
+                <td><a name="avoid-latin"/>
+                  <a href="#avoid-latin"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.4.11">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#avoid-latin">
                     Avoid Latin
                   </a>
                 </td>
@@ -489,10 +532,11 @@
 
               <!-- TAGS -->
               <tr>
-                <td><a name="a2.5"/><a href="#2.5"><span class="wrapper inline">
+                <td><a name="tag-conventions"/>
+                  <a href="#tag-conventions"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#tag-conventions">
                     <strong><em>Tag Conventions</em></strong>
                   </a>
                 </td>
@@ -502,11 +546,12 @@
 
               <tr>
                 <td>
-                  <a name="a2.5.1"/><a href="#2.5.1"><span class="wrapper inline">
+                  <a name="order-of-tags"/>
+                  <a href="#order-of-tags"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a>
                 </td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#order-of-tags">
                     Order of Tags
                   </a>
                 </td>
@@ -516,8 +561,9 @@
                   </span>
                   <a href="checks/javadoc/atclauseorder.html#AtclauseOrder">
                     AtclauseOrder</a>
-                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fdoc_comments_checks.xml+repo%3Acheckstyle%2Fcheckstyle+AtclauseOrder">
-                  config</a>)
+                  (
+                  <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fdoc_comments_checks.xml+repo%3Acheckstyle%2Fcheckstyle+AtclauseOrder">
+                    config</a>)
                 </td>
                 <td>
                   <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/doccomments/checkstyle/test/writingdoccomments/tagconventions/orderoftags">
@@ -527,10 +573,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.2"/><a href="#2.5.2"><span class="wrapper inline">
+                <td><a name="ordering-multiple-tags"/>
+                  <a href="#ordering-multiple-tags"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#ordering-multiple-tags">
                     Ordering Multiple Tags
                   </a>
                 </td>
@@ -539,10 +586,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.3"/><a href="#2.5.3"><span class="wrapper inline">
+                <td><a name="required-tags"/>
+                  <a href="#required-tags"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#required-tags">
                     Required Tags
                   </a>
                 </td>
@@ -551,10 +599,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4"/><a href="#2.5.4"><span class="wrapper inline">
+                <td><a name="tag-comments"/>
+                  <a href="#tag-comments"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#tag-comments">
                     Tag Comments
                   </a>
                 </td>
@@ -563,10 +612,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.1"/><a href="#2.5.4.1"><span class="wrapper inline">
+                <td><a name="author-tag"/>
+                  <a href="#author-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#author-tag">
                     @author
                   </a>
                 </td>
@@ -575,10 +625,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.2"/><a href="#2.5.4.2"><span class="wrapper inline">
+                <td><a name="version-tag"/>
+                  <a href="#version-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#version-tag">
                     @version
                   </a>
                 </td>
@@ -587,10 +638,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.3"/><a href="#2.5.4.3"><span class="wrapper inline">
+                <td><a name="param-tag"/>
+                  <a href="#param-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#param-tag">
                     @param
                   </a>
                 </td>
@@ -599,10 +651,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.4"/><a href="#2.5.4.4"><span class="wrapper inline">
+                <td><a name="return-tag"/>
+                  <a href="#return-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.4">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#return-tag">
                     @return
                   </a>
                 </td>
@@ -611,10 +664,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.5"/><a href="#2.5.4.5"><span class="wrapper inline">
+                <td><a name="deprecated-tag"/>
+                  <a href="#deprecated-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.5">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#deprecated-tag">
                     @deprecated
                   </a>
                 </td>
@@ -623,10 +677,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.6"/><a href="#2.5.4.6"><span class="wrapper inline">
+                <td><a name="since-tag"/>
+                  <a href="#since-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.6">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#since-tag">
                     @since
                   </a>
                 </td>
@@ -635,10 +690,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.7"/><a href="#2.5.4.7"><span class="wrapper inline">
+                <td><a name="throws-tag"/>
+                  <a href="#throws-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.7">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#throws-tag">
                     @throws
                   </a>
                 </td>
@@ -647,10 +703,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.8"/><a href="#2.5.4.8"><span class="wrapper inline">
+                <td><a name="see-tag"/>
+                  <a href="#see-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.8">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#see-tag">
                     @see
                   </a>
                 </td>
@@ -659,10 +716,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.9"/><a href="#2.5.4.9"><span class="wrapper inline">
+                <td><a name="serial-tag"/>
+                  <a href="#serial-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.9">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#serial-tag">
                     @serial
                   </a>
                 </td>
@@ -671,10 +729,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.10"/><a href="#2.5.4.10"><span class="wrapper inline">
+                <td><a name="serial-field-tag"/>
+                  <a href="#serial-field-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.10">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#serial-field-tag">
                     @serialField
                   </a>
                 </td>
@@ -683,10 +742,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.11"/><a href="#2.5.4.11"><span class="wrapper inline">
+                <td><a name="serial-data-tag"/>
+                  <a href="#serial-data-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.11">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#serial-data-tag">
                     @serialData
                   </a>
                 </td>
@@ -695,10 +755,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.4.12"/><a href="#2.5.4.12"><span class="wrapper inline">
+                <td><a name="link-tag"/>
+                  <a href="#link-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.4.12">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#link-tag">
                     {@link}
                   </a>
                 </td>
@@ -707,10 +768,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.5.5"/><a href="#2.5.5"><span class="wrapper inline">
+                <td><a name="custom-tags-annotations"/>
+                  <a href="#custom-tags-annotations"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.5.5">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#custom-tags-annotations">
                     Custom Tags and Annotations
                   </a>
                 </td>
@@ -720,23 +782,47 @@
 
               <!-- DEFAULT CONSTRUCTORS -->
               <tr>
-                <td><a name="a2.6"/><a href="#2.6"><span class="wrapper inline">
+                <td><a name="documenting-default-constructors"/>
+                  <a href="#documenting-default-constructors"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.6">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#documenting-default-constructors">
                     <strong><em>Documenting Default Constructors</em></strong>
                   </a>
                 </td>
-                <td>???</td>
-                <td/>
+                <td>
+                  <span class="wrapper inline">
+                    <img src="images/ok_blue.png" alt=""/>
+                  </span>
+                  <a href="checks/coding/missingctor.html#MissingCtor">
+                    MissingCtor</a>
+                  (<a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%20path%3A**%2Fdoc_comments_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MissingCtor">
+                  config</a>)
+                  <br/>
+                  <br/>
+                  <span class="wrapper inline">
+                    <img
+                        src="images/ban_red.png"
+                        alt="" />
+                  </span>
+                  Cannot cover compatibility rule for replacing an implicit default constructor,
+                    as Checkstyle analyzes only the current source snapshot and cannot know whether
+                    the constructor was part of a previously released API.
+                </td>
+                <td>
+                  <a href="https://github.com/checkstyle/checkstyle/tree/master/src/it/resources/com/doccomments/checkstyle/test/writingdoccomments/docdefaultconstr">
+                    samples
+                  </a>
+                </td>
               </tr>
 
               <!-- EXCEPTIONS -->
               <tr>
-                <td><a name="a2.7"/><a href="#2.7"><span class="wrapper inline">
+                <td><a name="documenting-exceptions-throws-tag"/>
+                  <a href="#documenting-exceptions-throws-tag"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.7">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#documenting-exceptions-throws-tag">
                     <strong><em>Documenting Exceptions with @throws Tag</em></strong>
                   </a>
                 </td>
@@ -745,10 +831,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.7.1"/><a href="#2.7.1"><span class="wrapper inline">
+                <td><a name="documenting-exceptions-api-specs"/>
+                  <a href="#documenting-exceptions-api-specs"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.7.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#documenting-exceptions-api-specs">
                     Documenting Exceptions in API Specs
                   </a>
                 </td>
@@ -757,10 +844,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.7.2"/><a href="#2.7.2"><span class="wrapper inline">
+                <td><a name="throws-tag-purpose"/>
+                  <a href="#throws-tag-purpose"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.7.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#throws-tag-purpose">
                     Throws Tag
                   </a>
                 </td>
@@ -769,10 +857,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.7.3"/><a href="#2.7.3"><span class="wrapper inline">
+                <td><a name="exceptions-to-document"/>
+                  <a href="#exceptions-to-document"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.7.3">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#exceptions-to-document">
                     Guidelines - Which Exceptions to Document
                   </a>
                 </td>
@@ -781,10 +870,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.7.4"/><a href="#2.7.4"><span class="wrapper inline">
+                <td><a name="documenting-unchecked-exceptions"/>
+                  <a href="#documenting-unchecked-exceptions"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.7.4">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#documenting-unchecked-exceptions">
                     Documenting Unchecked Exceptions
                   </a>
                 </td>
@@ -793,10 +883,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.7.5"/><a href="#2.7.5"><span class="wrapper inline">
+                <td><a name="checked-unchecked-exceptions-background"/>
+                  <a href="#checked-unchecked-exceptions-background"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.7.5">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#checked-unchecked-exceptions-background">
                     Background on Checked and Unchecked Exceptions
                   </a>
                 </td>
@@ -805,10 +896,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.7.6"/><a href="#2.7.6"><span class="wrapper inline">
+                <td><a name="throws-clause-background"/>
+                  <a href="#throws-clause-background"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.7.6">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#throws-clause-background">
                     Background on the Throws Clause
                   </a>
                 </td>
@@ -818,10 +910,11 @@
 
               <!-- PACKAGE -->
               <tr>
-                <td><a name="a2.8"/><a href="#2.8"><span class="wrapper inline">
+                <td><a name="package-level-comments"/>
+                  <a href="#package-level-comments"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.8">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#package-level-comments">
                     <strong><em>Package-Level Comments</em></strong>
                   </a>
                 </td>
@@ -830,10 +923,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.8.1"/><a href="#2.8.1"><span class="wrapper inline">
+                <td><a name="package-html-template"/>
+                  <a href="#package-html-template"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.8.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#package-html-template">
                     Template for package.html source file
                   </a>
                 </td>
@@ -842,10 +936,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.8.2"/><a href="#2.8.2"><span class="wrapper inline">
+                <td><a name="package-html-contents"/>
+                  <a href="#package-html-contents"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.8.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#package-html-contents">
                     Contents of package.html source file
                   </a>
                 </td>
@@ -855,10 +950,11 @@
 
               <!-- ANONYMOUS INNER CLASSES -->
               <tr>
-                <td><a name="a2.9"/><a href="#2.9"><span class="wrapper inline">
+                <td><a name="documenting-anonymous-inner-classes"/>
+                  <a href="#documenting-anonymous-inner-classes"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.9">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#documenting-anonymous-inner-classes">
                     <strong><em>Documenting Anonymous Inner Classes</em></strong>
                   </a>
                 </td>
@@ -868,10 +964,11 @@
 
               <!-- IMAGES -->
               <tr>
-                <td><a name="a2.10"/><a href="#2.10"><span class="wrapper inline">
+                <td><a name="including-images"/>
+                  <a href="#including-images"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.10">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#including-images">
                     <strong><em>Including Images</em></strong>
                   </a>
                 </td>
@@ -880,10 +977,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.10.1"/><a href="#2.10.1"><span class="wrapper inline">
+                <td><a name="images-source-tree"/>
+                  <a href="#images-source-tree"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.10.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#images-source-tree">
                     Images in Source Tree
                   </a>
                 </td>
@@ -892,10 +990,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.10.1.1"/><a href="#2.10.1.1"><span class="wrapper inline">
+                <td><a name="naming-doc-images-source-tree"/>
+                  <a href="#naming-doc-images-source-tree"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.10.1.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#naming-doc-images-source-tree">
                     Naming of doc images in source tree
                   </a>
                 </td>
@@ -904,22 +1003,24 @@
               </tr>
 
               <tr>
-                <td><a name="a2.10.1.2"/><a href="#2.10.1.2"><span class="wrapper inline">
+                <td><a name="location-doc-images-source-tree"/>
+                  <a href="#location-doc-images-source-tree"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.10.1.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#location-doc-images-source-tree">
                     Location of doc images in source tree
                   </a>
                 </td>
-                <td>???</td>
+                <td>--</td>
                 <td/>
               </tr>
 
               <tr>
-                <td><a name="a2.10.2"/><a href="#2.10.2"><span class="wrapper inline">
+                <td><a name="images-html-destination"/>
+                  <a href="#images-html-destination"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.10.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#images-html-destination">
                     Images in HTML Destination
                   </a>
                 </td>
@@ -928,10 +1029,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.10.2.1"/><a href="#2.10.2.1"><span class="wrapper inline">
+                <td><a name="naming-doc-images-html-destination"/>
+                  <a href="#naming-doc-images-html-destination"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.10.2.1">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#naming-doc-images-html-destination">
                     Naming of doc images in HTML destination
                   </a>
                 </td>
@@ -940,10 +1042,11 @@
               </tr>
 
               <tr>
-                <td><a name="a2.10.2.2"/><a href="#2.10.2.2"><span class="wrapper inline">
+                <td><a name="location-doc-images-html-destination"/>
+                  <a href="#location-doc-images-html-destination"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.10.2.2">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#location-doc-images-html-destination">
                     Location of doc images in HTML destination
                   </a>
                 </td>
@@ -953,10 +1056,11 @@
 
               <!-- EXAMPLES -->
               <tr>
-                <td><a name="a2.11"/><a href="#2.11"><span class="wrapper inline">
+                <td><a name="examples-doc-comments"/>
+                  <a href="#examples-doc-comments"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.11">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#examples-doc-comments">
                     <strong><em>Examples of Doc Comments</em></strong>
                   </a>
                 </td>
@@ -966,10 +1070,11 @@
 
               <!-- MICROSOFT WORD -->
               <tr>
-                <td><a name="a2.12"/><a href="#2.12"><span class="wrapper inline">
+                <td><a name="troubleshooting-curly-quotes"/>
+                  <a href="#troubleshooting-curly-quotes"><span class="wrapper inline">
                   <img src="images/anchor.png" alt=""/></span></a></td>
                 <td>
-                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#s2.12">
+                  <a href="styleguides/doc-comments-style/doc-comments-styleguide.html#troubleshooting-curly-quotes">
                     <strong><em>Troubleshooting Curly Quotes (Microsoft Word)</em></strong>
                   </a>
                 </td>

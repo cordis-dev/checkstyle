@@ -123,6 +123,40 @@ public class EmptyLineSeparatorCheckTest
             expected);
     }
 
+    @Test
+    public void testCompactSourceFile() throws Exception {
+        final String[] expected = {
+            "16:1: " + getCheckMessage(MSG_SHOULD_BE_SEPARATED, "VARIABLE_DEF"),
+            "17:1: " + getCheckMessage(MSG_SHOULD_BE_SEPARATED, "VARIABLE_DEF"),
+            "23:1: " + getCheckMessage(MSG_SHOULD_BE_SEPARATED, "METHOD_DEF"),
+        };
+
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("InputEmptyLineSeparatorCompactSourceFile.java"), expected);
+    }
+
+    @Test
+    public void testCompactSourceFileMultipleEmptyLines() throws Exception {
+        final String[] expected = {
+            "18:1: " + getCheckMessage(MSG_SHOULD_BE_SEPARATED, "METHOD_DEF"),
+            "22:1: " + getCheckMessage(MSG_MULTIPLE_LINES, "METHOD_DEF"),
+        };
+
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                    "InputEmptyLineSeparatorCompactSourceFileMultipleEmptyLines.java"), expected);
+    }
+
+    @Test
+    public void testMethodInAnonymousClass() throws Exception {
+        final String[] expected = {
+            "21:9: " + getCheckMessage(MSG_MULTIPLE_LINES, "METHOD_DEF"),
+        };
+
+        verifyWithInlineConfigParser(
+                getPath("InputEmptyLineSeparatorMethodInAnonymousClass.java"), expected);
+    }
+
     /**
      * Config is defined in the method because strictly the file with one line
      * is required to be tested.
@@ -244,6 +278,35 @@ public class EmptyLineSeparatorCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputEmptyLineSeparatorStaticImport.java"),
+            expected);
+    }
+
+    @Test
+    public void testModuleImport() throws Exception {
+        final String[] expected = {
+            "19:1: " + getCheckMessage(MSG_SHOULD_BE_SEPARATED, "CLASS_DEF"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("InputEmptyLineSeparatorModuleImport.java"),
+            expected);
+    }
+
+    @Test
+    public void testModuleImportSeparated() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("InputEmptyLineSeparatorModuleImportSeparated.java"),
+            expected);
+    }
+
+    @Test
+    public void testModuleImportMultipleEmptyLines() throws Exception {
+        final String[] expected = {
+            "20:1: " + getCheckMessage(MSG_MULTIPLE_LINES, "import"),
+            "21:1: " + getCheckMessage(MSG_SHOULD_BE_SEPARATED, "CLASS_DEF"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("InputEmptyLineSeparatorModuleImportMultipleEmptyLines.java"),
             expected);
     }
 
@@ -392,6 +455,7 @@ public class EmptyLineSeparatorCheckTest
             TokenTypes.PACKAGE_DEF,
             TokenTypes.IMPORT,
             TokenTypes.STATIC_IMPORT,
+            TokenTypes.MODULE_IMPORT,
             TokenTypes.CLASS_DEF,
             TokenTypes.INTERFACE_DEF,
             TokenTypes.ENUM_DEF,

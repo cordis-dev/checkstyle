@@ -22,6 +22,7 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
@@ -90,6 +91,14 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
     public static final String MSG_MULTIPLE_LINES_INSIDE =
             "empty.line.separator.multiple.lines.inside";
 
+    /** Tokens for which preceding comment lines (if any) are checked via previous siblings. */
+    private static final Set<Integer> TOKENS_TO_CHECK_FOR_PRECEDING_COMMENTS = Set.of(
+        TokenTypes.PACKAGE_DEF,
+        TokenTypes.IMPORT,
+        TokenTypes.STATIC_IMPORT,
+        TokenTypes.MODULE_IMPORT,
+        TokenTypes.STATIC_INIT);
+
     /** Allow no empty line between fields. */
     private boolean allowNoEmptyLineBetweenFields;
 
@@ -146,6 +155,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
             TokenTypes.PACKAGE_DEF,
             TokenTypes.IMPORT,
             TokenTypes.STATIC_IMPORT,
+            TokenTypes.MODULE_IMPORT,
             TokenTypes.CLASS_DEF,
             TokenTypes.INTERFACE_DEF,
             TokenTypes.ENUM_DEF,
@@ -200,7 +210,8 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
         switch (astType) {
             case TokenTypes.VARIABLE_DEF -> processVariableDef(ast, nextToken);
 
-            case TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT -> processImport(ast, nextToken);
+            case TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT, TokenTypes.MODULE_IMPORT ->
+                processImport(ast, nextToken);
 
             default -> {
                 if (nextToken.getType() == TokenTypes.RCURLY) {
@@ -447,7 +458,8 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param nextToken next token
      */
     private void processImport(DetailAST ast, DetailAST nextToken) {
-        if (!TokenUtil.isOfType(nextToken, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT)
+        if (!TokenUtil.isOfType(nextToken, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT,
+                TokenTypes.MODULE_IMPORT)
             && !hasEmptyLineAfter(ast)) {
             log(nextToken, MSG_SHOULD_BE_SEPARATED, nextToken.getText());
         }
@@ -486,7 +498,8 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @return true, if token has empty two lines before and allowMultipleEmptyLines is false
      */
     private boolean hasNotAllowedTwoEmptyLinesBefore(DetailAST token) {
-        return !allowMultipleEmptyLines && hasEmptyLineBefore(token)
+        return !allowMultipleEmptyLines
+                && (hasEmptyLineBefore(token) || token.findFirstToken(TokenTypes.TYPE) != null)
                 && isPrePreviousLineEmpty(token);
     }
 
@@ -497,9 +510,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      */
     private void checkComments(DetailAST token) {
         if (!allowMultipleEmptyLines) {
-            if (TokenUtil.isOfType(token,
-                TokenTypes.PACKAGE_DEF, TokenTypes.IMPORT,
-                TokenTypes.STATIC_IMPORT, TokenTypes.STATIC_INIT)) {
+            if (TokenUtil.isOfType(token.getType(), TOKENS_TO_CHECK_FOR_PRECEDING_COMMENTS)) {
                 DetailAST previousNode = token.getPreviousSibling();
                 while (isCommentInBeginningOfLine(previousNode)) {
                     if (hasEmptyLineBefore(previousNode) && isPrePreviousLineEmpty(previousNode)) {
@@ -585,7 +596,8 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
         for (DetailAST typeChild = token.findFirstToken(TokenTypes.TYPE).getLastChild();
              typeChild != null; typeChild = typeChild.getPreviousSibling()) {
 
-            if (isTokenNotOnPreviousSiblingLines(typeChild, token)) {
+            if (typeChild.getLineNo() > 2
+                && isTokenNotOnPreviousSiblingLines(typeChild, token)) {
 
                 final String commentBeginningPreviousLine =
                     getLine(typeChild.getLineNo() - 2);
@@ -620,7 +632,8 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
             previousSibling = astNode;
         }
 
-        return token.getLineNo() != previousSibling.getLineNo();
+        return previousSibling == null
+                || token.getLineNo() != previousSibling.getLineNo();
     }
 
     /**
@@ -694,20 +707,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
             // [lineNo - 2] is the number of the previous line as the numbering starts from zero.
             final String lineBefore = getLine(lineNo - 2);
 
-            if (CommonUtil.isBlank(lineBefore)) {
-                result = true;
-            }
-            else if (token.findFirstToken(TokenTypes.TYPE) != null) {
-                for (DetailAST typeChild = token.findFirstToken(TokenTypes.TYPE).getLastChild();
-                     typeChild != null && !result && typeChild.getLineNo() > 1;
-                     typeChild = typeChild.getPreviousSibling()) {
-
-                    final String commentBeginningPreviousLine =
-                        getLine(typeChild.getLineNo() - 2);
-                    result = CommonUtil.isBlank(commentBeginningPreviousLine);
-
-                }
-            }
+            result = CommonUtil.isBlank(lineBefore);
         }
         return result;
     }
@@ -752,7 +752,10 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @return true variable definition is a type field.
      */
     private static boolean isTypeField(DetailAST variableDef) {
-        return TokenUtil.isTypeDeclaration(variableDef.getParent().getParent().getType());
+        final DetailAST parent = variableDef.getParent();
+
+        return parent.getType() == TokenTypes.COMPACT_COMPILATION_UNIT
+                || TokenUtil.isTypeDeclaration(parent.getParent().getType());
     }
 
 }

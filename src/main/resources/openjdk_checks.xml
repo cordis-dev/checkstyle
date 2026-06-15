@@ -76,7 +76,7 @@
     <!-- §3.12: Expression lambda body length check based on OpenJDK style guide -->
     <module name="LambdaBodyLength"/>
     <module name="NoLineWrap">
-      <property name="tokens" value="PACKAGE_DEF"/>
+      <property name="tokens" value="PACKAGE_DEF, IMPORT, STATIC_IMPORT"/>
     </module>
 
     <module name="UpperEll"/>
@@ -92,6 +92,9 @@
     </module>
 
     <!-- §3.3: Import statements should be sorted -->
+    <module name="AvoidStarImport">
+      <property name="maxAllowedStarImports" value="1"/>
+    </module>
     <module name="ImportOrder">
       <property name="groups" value="java,javax"/>
       <property name="ordered" value="true"/>
@@ -99,6 +102,8 @@
       <property name="option" value="bottom"/>
       <property name="sortStaticImportsAlphabetically" value="true"/>
     </module>
+
+    <module name="UnusedImports"/>
 
     <!-- https://checkstyle.org/filters/suppressionxpathfilter.html -->
     <module name="SuppressionXpathFilter">

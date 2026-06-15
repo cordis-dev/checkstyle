@@ -2454,10 +2454,18 @@ public class XdocsPagesTest {
             final Node row = source.item(position);
             final List<Node> columns = new ArrayList<>(
                     XmlUtil.findChildElementsByTag(row, "td"));
+
             if (columns.isEmpty()) {
                 continue;
             }
             final String ruleName = columns.get(1).getTextContent().trim();
+
+            if (!"--".equals(ruleName)) {
+                validateStyleAnchorsForOpenjdk(
+                    XmlUtil.findChildElementsByTag(columns.getFirst(), "a"),
+                    "openjdk_checks.xml", columns.get(1));
+            }
+
             validateOpenJdkStyleModules(XmlUtil.findChildElementsByTag(columns.get(2), "a"),
                     XmlUtil.findChildElementsByTag(columns.get(3), "a"), styleChecks, ruleName);
         }
@@ -2567,6 +2575,45 @@ public class XdocsPagesTest {
             assertWithMessage("openjdk_style.xml rule '%s' is missing sample link", ruleName)
                 .that(hasChecks)
                 .isFalse();
+        }
+    }
+
+    private static void validateStyleAnchorsForOpenjdk(Set<Node> anchors,
+            String fileName, Node ruleColumn) {
+
+        final String ruleName = ruleColumn.getTextContent().trim();
+        assertWithMessage("%s rule '%s' must have two row anchors", fileName, ruleName)
+            .that(anchors)
+            .hasSize(2);
+
+        final Node ruleAnchor = XmlUtil.findChildElementsByTag(ruleColumn, "a")
+                                    .iterator().next();
+        final String ruleHref = ruleAnchor.getAttributes()
+                                    .getNamedItem("href").getTextContent();
+
+        final String anchorUrl = ruleHref.substring(ruleHref.indexOf('#') + 1);
+
+        int position = 1;
+
+        for (Node anchor : anchors) {
+            final String actualUrl;
+            final String expectedUrl;
+
+            if (position == 1) {
+                actualUrl = XmlUtil.getNameAttributeOfNode(anchor);
+                expectedUrl = anchorUrl;
+            }
+            else {
+                actualUrl = anchor.getAttributes().getNamedItem("href").getTextContent();
+                expectedUrl = "#" + anchorUrl;
+            }
+
+            assertWithMessage("%s rule '%s' anchor %s should have matching name/url", fileName,
+                ruleName, position)
+                .that(actualUrl)
+                .isEqualTo(expectedUrl);
+
+            position++;
         }
     }
 

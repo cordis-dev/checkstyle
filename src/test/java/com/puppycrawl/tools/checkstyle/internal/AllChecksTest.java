@@ -198,7 +198,9 @@ public class AllChecksTest extends AbstractModuleTestSupport {
                 // method declaration could be long due to "parameters/exceptions", it is ok to
                 // be not strict there
                 "METHOD_DEF", "CTOR_DEF", "CLASS_DEF", "ENUM_DEF", "INTERFACE_DEF", "RECORD_DEF",
-                "COMPACT_CTOR_DEF")
+                "COMPACT_CTOR_DEF",
+                // module import declarations are not part of the Google style config token set
+                "MODULE_IMPORT")
                 .collect(Collectors.toUnmodifiableSet()));
         GOOGLE_TOKENS_IN_CONFIG_TO_IGNORE.put("SeparatorWrap", Stream.of(
                 // location could be any to allow writing expressions for indexes evaluation
@@ -228,6 +230,9 @@ public class AllChecksTest extends AbstractModuleTestSupport {
                 // https://github.com/checkstyle/checkstyle/issues/4121
                 "INSTANCE_INIT", "LITERAL_DO", "LITERAL_FOR", "LITERAL_SYNCHRONIZED",
                 "LITERAL_WHILE", "STATIC_INIT").collect(Collectors.toUnmodifiableSet()));
+        GOOGLE_TOKENS_IN_CONFIG_TO_IGNORE.put("EmptyLineSeparator", Stream.of(
+                // module import declarations are not part of the Google style config token set
+                "MODULE_IMPORT").collect(Collectors.toUnmodifiableSet()));
         GOOGLE_TOKENS_IN_CONFIG_TO_IGNORE.put("WhitespaceAround", Stream.of(
                 //  allowed via '4.8.3 Arrays'
                 "ARRAY_INIT",
