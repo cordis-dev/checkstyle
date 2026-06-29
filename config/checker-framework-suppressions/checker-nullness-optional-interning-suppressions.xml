@@ -2921,9 +2921,30 @@
 
   <checkerFrameworkError unstable="false">
     <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/OverloadMethodsDeclarationOrderCheck.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference params</message>
+    <lineContent>return params.getChildCount(TokenTypes.PARAMETER_DEF);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/OverloadMethodsDeclarationOrderCheck.java</fileName>
+    <specifier>unboxing.of.nullable</specifier>
+    <message>unboxing a possibly-null reference methodIsOrderedMap.get(methodName)</message>
+    <lineContent>final boolean isOrdered = methodIsOrderedMap.get(methodName)</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/OverloadMethodsDeclarationOrderCheck.java</fileName>
     <specifier>unboxing.of.nullable</specifier>
     <message>unboxing a possibly-null reference methodLineNumberMap.get(methodName)</message>
     <lineContent>methodLineNumberMap.get(methodName);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/OverloadMethodsDeclarationOrderCheck.java</fileName>
+    <specifier>unboxing.of.nullable</specifier>
+    <message>unboxing a possibly-null reference methodParameterCountMap.get(methodName)</message>
+    <lineContent>&amp;&amp; currentParamCount &gt;= methodParameterCountMap.get(methodName);</lineContent>
   </checkerFrameworkError>
 
   <checkerFrameworkError unstable="false">
@@ -3253,6 +3274,17 @@
     <specifier>argument</specifier>
     <message>incompatible argument for parameter parent of ClassFrame constructor.</message>
     <lineContent>frameStack.addFirst(new ClassFrame(frame, classFrameNameIdent));</lineContent>
+    <details>
+      found   : @Initialized @Nullable AbstractFrame
+      required: @Initialized @NonNull AbstractFrame
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter parent of CompactCompilationUnitFrame constructor.</message>
+    <lineContent>frameStack.addFirst(new CompactCompilationUnitFrame(frame, ast));</lineContent>
     <details>
       found   : @Initialized @Nullable AbstractFrame
       required: @Initialized @NonNull AbstractFrame
@@ -3636,6 +3668,13 @@
     <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/UnusedLocalVariableCheck.java</fileName>
     <specifier>dereference.of.nullable</specifier>
     <message>dereference of possibly-null reference ident</message>
+    <lineContent>final VariableDesc desc = new VariableDesc(ident.getText(), ident, scope);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/UnusedLocalVariableCheck.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference ident</message>
     <lineContent>return UNNAMED_VAR.equals(ident.getText());</lineContent>
   </checkerFrameworkError>
 
@@ -3644,13 +3683,6 @@
     <specifier>dereference.of.nullable</specifier>
     <message>dereference of possibly-null reference ident</message>
     <lineContent>return allowUnnamedVariables &amp;&amp; UNNAMED_VAR.equals(ident.getText());</lineContent>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/UnusedLocalVariableCheck.java</fileName>
-    <specifier>dereference.of.nullable</specifier>
-    <message>dereference of possibly-null reference ident</message>
-    <lineContent>variablesStack.push(new VariableDesc(ident.getText(), ident, scope));</lineContent>
   </checkerFrameworkError>
 
   <checkerFrameworkError unstable="false">
@@ -6039,83 +6071,6 @@
 
   <checkerFrameworkError unstable="false">
     <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter firstArg of JavadocTag constructor.</message>
-    <lineContent>javadocArgMatcher.group(2)));</lineContent>
-    <details>
-      found   : @Initialized @Nullable String
-      required: @Initialized @NonNull String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter firstArg of JavadocTag constructor.</message>
-    <lineContent>javadocArgMissingDescriptionMatcher.group(2)));</lineContent>
-    <details>
-      found   : @Initialized @Nullable String
-      required: @Initialized @NonNull String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter tag of JavadocTag constructor.</message>
-    <lineContent>javadocArgMissingDescriptionMatcher.group(1),</lineContent>
-    <details>
-      found   : @Initialized @Nullable String
-      required: @Initialized @NonNull String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter tag of JavadocTag constructor.</message>
-    <lineContent>tags.add(new JavadocTag(currentLine, 0, noargCurlyMatcher.group(1)));</lineContent>
-    <details>
-      found   : @Initialized @Nullable String
-      required: @Initialized @NonNull String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter tag of JavadocTag constructor.</message>
-    <lineContent>tags.add(new JavadocTag(currentLine, col, javadocArgMatcher.group(1),</lineContent>
-    <details>
-      found   : @Initialized @Nullable String
-      required: @Initialized @NonNull String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter tag of JavadocTag constructor.</message>
-    <lineContent>tags.add(new JavadocTag(currentLine, col, javadocNoargMatcher.group(1)));</lineContent>
-    <details>
-      found   : @Initialized @Nullable String
-      required: @Initialized @NonNull String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
-    <specifier>argument</specifier>
-    <message>incompatible argument for parameter tag of JavadocTag constructor.</message>
-    <lineContent>tags.add(new JavadocTag(tagLine, col, param1));</lineContent>
-    <details>
-      found   : @Initialized @Nullable String
-      required: @Initialized @NonNull String
-    </details>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
     <specifier>dereference.of.nullable</specifier>
     <message>dereference of possibly-null reference params</message>
     <lineContent>DetailAST child = params.getFirstChild();</lineContent>
@@ -6140,6 +6095,13 @@
     <specifier>dereference.of.nullable</specifier>
     <message>dereference of possibly-null reference typeParam.findFirstToken(TokenTypes.IDENT)</message>
     <lineContent>if (typeParam.findFirstToken(TokenTypes.IDENT).getText()</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java</fileName>
+    <specifier>initialization.field.uninitialized</specifier>
+    <message>the default constructor does not initialize field currentAst</message>
+    <lineContent>private DetailAST currentAst;</lineContent>
   </checkerFrameworkError>
 
   <checkerFrameworkError unstable="false">
@@ -6415,20 +6377,6 @@
     <specifier>initialization.field.uninitialized</specifier>
     <message>the default constructor does not initialize field ignoreMethodNamesRegex</message>
     <lineContent>private Pattern ignoreMethodNamesRegex;</lineContent>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/MissingJavadocMethodCheck.java</fileName>
-    <specifier>not.interned</specifier>
-    <message>attempting to use a non-@Interned comparison operand</message>
-    <lineContent>if (lcurly.getFirstChild() == rcurly) {</lineContent>
-  </checkerFrameworkError>
-
-  <checkerFrameworkError unstable="false">
-    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/MissingJavadocMethodCheck.java</fileName>
-    <specifier>not.interned</specifier>
-    <message>attempting to use a non-@Interned comparison operand</message>
-    <lineContent>if (lcurly.getFirstChild() == rcurly) {</lineContent>
   </checkerFrameworkError>
 
   <checkerFrameworkError unstable="false">
@@ -8685,6 +8633,268 @@
   </checkerFrameworkError>
 
   <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter arg0 of Map.containsKey.</message>
+    <lineContent>if (CATEGORY_MAP.containsKey(category)) {</lineContent>
+    <details>
+      found   : @Initialized @Nullable String
+      required: @Initialized @NonNull Object
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter input of Pattern.matcher.</message>
+    <lineContent>.matcher(cells.item(0).getTextContent())</lineContent>
+    <details>
+      found   : @Initialized @Nullable String
+      required: @Initialized @NonNull CharSequence
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter input of Pattern.matcher.</message>
+    <lineContent>.matcher(cells.item(1).getTextContent())</lineContent>
+    <details>
+      found   : @Initialized @Nullable String
+      required: @Initialized @NonNull CharSequence
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter input of Pattern.matcher.</message>
+    <lineContent>.matcher(paragraph.getTextContent())</lineContent>
+    <details>
+      found   : @Initialized @Nullable String
+      required: @Initialized @NonNull CharSequence
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter input of Pattern.matcher.</message>
+    <lineContent>final String fullText = WHITESPACE.matcher(body.getTextContent())</lineContent>
+    <details>
+      found   : @Initialized @Nullable String
+      required: @Initialized @NonNull CharSequence
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter input of Pattern.matcher.</message>
+    <lineContent>final String sectionText = WHITESPACE.matcher(section.getTextContent())</lineContent>
+    <details>
+      found   : @Initialized @Nullable String
+      required: @Initialized @NonNull CharSequence
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter input of Pattern.matcher.</message>
+    <lineContent>final String text = WHITESPACE.matcher(sub.getTextContent())</lineContent>
+    <details>
+      found   : @Initialized @Nullable String
+      required: @Initialized @NonNull CharSequence
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter paragraph of SearchIndexGenerator.buildExampleEntry.</message>
+    <lineContent>paragraph, checkName, baseUrl, category);</lineContent>
+    <details>
+      found   : @Initialized @Nullable Element
+      required: @Initialized @NonNull Element
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter section of SearchIndexGenerator.extractDescription.</message>
+    <lineContent>description = extractDescription((Element) sections.item(index));</lineContent>
+    <details>
+      found   : @Initialized @Nullable Element
+      required: @Initialized @NonNull Element
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter section of SearchIndexGenerator.findSubsectionByPrefix.</message>
+    <lineContent>findSubsectionByPrefix(section, PROPERTIES_FRAGMENT);</lineContent>
+    <details>
+      found   : @Initialized @Nullable Element
+      required: @Initialized @NonNull Element
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter xdocsDir of SearchIndexGenerator.resolvePageUrl.</message>
+    <lineContent>final String pageUrl = resolvePageUrl(xmlFile, xmlFile.getParentFile());</lineContent>
+    <details>
+      found   : @Initialized @Nullable File
+      required: @Initialized @NonNull File
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference ((Element)sections.item(0))</message>
+    <lineContent>((Element) sections.item(0)).getAttribute(NAME_ATTR).trim();</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference body</message>
+    <lineContent>final NodeList sections = body.getElementsByTagName(SECTION);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference body</message>
+    <lineContent>final NodeList sections = body.getElementsByTagName(SECTION);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference body</message>
+    <lineContent>final NodeList sections = body.getElementsByTagName(SECTION);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference body</message>
+    <lineContent>final NodeList sections = body.getElementsByTagName(SECTION);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference cells.item(0)</message>
+    <lineContent>.matcher(cells.item(0).getTextContent())</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference cells.item(1)</message>
+    <lineContent>.matcher(cells.item(1).getTextContent())</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference row</message>
+    <lineContent>final NodeList cells = row.getElementsByTagName(&quot;td&quot;);</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference section</message>
+    <lineContent>.append(section.getAttribute(NAME_ATTR))</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference section</message>
+    <lineContent>final String checkName = section.getAttribute(NAME_ATTR).trim();</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference section</message>
+    <lineContent>if (body.equals(section.getParentNode())) {</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference sub</message>
+    <lineContent>if (sub.getAttribute(NAME_ATTR).trim()</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference titles.item(0)</message>
+    <lineContent>title = titles.item(0).getTextContent().trim();</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference titles.item(0)</message>
+    <lineContent>title = titles.item(0).getTextContent().trim();</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference titles.item(0).getTextContent()</message>
+    <lineContent>title = titles.item(0).getTextContent().trim();</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>dereference.of.nullable</specifier>
+    <message>dereference of possibly-null reference titles.item(0).getTextContent()</message>
+    <lineContent>title = titles.item(0).getTextContent().trim();</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>initialization.fields.uninitialized</specifier>
+    <message>the constructor does not initialize fields: entries, seenUrls</message>
+    <lineContent>private SearchIndexGenerator() {</lineContent>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>return</specifier>
+    <message>incompatible types in return.</message>
+    <lineContent>return result;</lineContent>
+    <details>
+      type of expression: @Initialized @Nullable Element
+      method return type: @Initialized @NonNull Element
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SearchIndexGenerator.java</fileName>
+    <specifier>return</specifier>
+    <message>incompatible types in return.</message>
+    <lineContent>return result;</lineContent>
+    <details>
+      type of expression: @Initialized @Nullable SearchIndexEntry
+      method return type: @Initialized @NonNull SearchIndexEntry
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
     <fileName>src/main/java/com/puppycrawl/tools/checkstyle/site/SiteUtil.java</fileName>
     <specifier>argument</specifier>
     <message>incompatible argument for parameter classLoader of PackageNamesLoader.getPackageNames.</message>
@@ -9252,6 +9462,17 @@
     <details>
       type of expression: @Initialized @Nullable DetailNode
       method return type: @Initialized @NonNull DetailNode
+    </details>
+  </checkerFrameworkError>
+
+  <checkerFrameworkError unstable="false">
+    <fileName>src/main/java/com/puppycrawl/tools/checkstyle/utils/ScopeUtil.java</fileName>
+    <specifier>argument</specifier>
+    <message>incompatible argument for parameter ast of TokenUtil.isOfType.</message>
+    <lineContent>&amp;&amp; !TokenUtil.isOfType(child, TokenTypes.IMPORT,</lineContent>
+    <details>
+      found   : @Initialized @Nullable DetailAST
+      required: @Initialized @NonNull DetailAST
     </details>
   </checkerFrameworkError>
 

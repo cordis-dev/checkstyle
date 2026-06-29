@@ -12,7 +12,7 @@
 
   <groupId>com.puppycrawl.tools</groupId>
   <artifactId>checkstyle</artifactId>
-  <version>13.6.1-SNAPSHOT</version>
+  <version>13.7.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>checkstyle</name>
@@ -221,7 +221,7 @@
     <checkstyle.openrewrite.version>1.0.0-SNAPSHOT</checkstyle.openrewrite.version>
     <java.version>21</java.version>
     <maven.compiler.release>${java.version}</maven.compiler.release>
-    <pitest.plugin.version>1.25.4</pitest.plugin.version>
+    <pitest.plugin.version>1.25.5</pitest.plugin.version>
     <pitest.plugin.timeout.factor>10</pitest.plugin.timeout.factor>
     <pitest.plugin.output.formats>HTML,XML</pitest.plugin.output.formats>
     <pitest.plugin.timeout.constant>50000</pitest.plugin.timeout.constant>
@@ -629,7 +629,7 @@
         <plugin>
           <groupId>com.diffplug.spotless</groupId>
           <artifactId>spotless-maven-plugin</artifactId>
-          <version>3.6.0</version>
+          <version>3.7.0</version>
           <configuration>
             <java>
               <includes>
@@ -1016,6 +1016,21 @@
                 <argument>
                   ${project.build.outputDirectory}/com/puppycrawl/tools/checkstyle/api/tokentypes.properties
                 </argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-search-index</id>
+            <phase>process-classes</phase>
+            <goals><goal>java</goal></goals>
+            <configuration>
+              <classpathScope>compile</classpathScope>
+              <mainClass>
+                com.puppycrawl.tools.checkstyle.site.SearchIndexGenerator
+              </mainClass>
+              <arguments>
+                <argument>${project.basedir}/src/site/xdoc</argument>
+                <argument>${project.build.directory}/site/search-index.json</argument>
               </arguments>
             </configuration>
           </execution>
@@ -1603,7 +1618,7 @@
       <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>
-        <version>0.10.0</version>
+        <version>0.11.0</version>
         <extensions>true</extensions>
         <configuration>
           <publishingServerId>central</publishingServerId>
@@ -1997,6 +2012,7 @@
                 <exclude>markdownlint.rb</exclude>
                 <exclude>openrewrite-recipes-checkstyle.properties</exclude>
                 <exclude>org.eclipse.jdt.core.prefs</exclude>
+                <exclude>search-index-schema.json</exclude>
                 <exclude>projects-to-test/**</exclude>
                 <exclude>qodana.yml</exclude>
                 <exclude>rewrite.yml</exclude>
@@ -2209,6 +2225,13 @@
               <jsonSchema>file:///${project.basedir}/config/sarif-schema-2.1.0.json</jsonSchema>
               <includes>
                 <include>**/*.sarif</include>
+              </includes>
+            </validation>
+            <validation>
+              <directory>${project.build.directory}/site</directory>
+              <jsonSchema>file:///${project.basedir}/config/search-index-schema.json</jsonSchema>
+              <includes>
+                <include>search-index.json</include>
               </includes>
             </validation>
           </validations>
@@ -5411,6 +5434,9 @@
                 <!-- CheckUtil#getNextNonCommentAst and CheckUtil#isTerminated -->
                 <param>
                   com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheckTest
+                </param>
+                <param>
+                  com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheckTest
                 </param>
               </targetTests>
               <avoidCallsTo>

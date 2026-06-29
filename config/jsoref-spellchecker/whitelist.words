@@ -12,11 +12,9 @@ acm
 Aconfig
 actionlint
 addons
-Adoptium
 adr
 AFBR
 AFilter
-aggregators
 allchecks
 allclasses
 allowlegacy
@@ -49,7 +47,6 @@ appveyor
 APRV
 Aqj
 archunit
-Arial
 arity
 Arquillian
 arraycopy
@@ -108,7 +105,6 @@ beanutils
 beforeexecutionexclusionfilefilter
 bestpractices
 bew
-bff
 bitbucket
 bjrke
 Blic
@@ -125,7 +121,7 @@ BNOT
 booleanexpressioncomplexity
 bothfiles
 Bpmn
-breadcrumb
+breadcrumbs
 BSR
 Bsubscribe
 BTest
@@ -265,7 +261,6 @@ Dconfig
 Dconnection
 Dcpd
 Dcyclonedx
-ddd
 DDDL
 Ddokka
 Ddry
@@ -275,6 +270,7 @@ declarationorder
 declarationrightbeforefirstusage
 declaredwhenneeded
 Deconstruction
+dedup
 defau
 defaultcomeslast
 defaultconstructors
@@ -354,7 +350,6 @@ EBNF
 ecj
 eclipsecommunityawards
 Edad
-ededed
 edef
 edu
 Eghj
@@ -392,7 +387,6 @@ errorprone
 esac
 Eslint
 esslingen
-esversion
 etsy
 ev
 Evt
@@ -559,7 +553,6 @@ hne
 homepage
 horizontalwhitespace
 Hostname
-hotspot
 href
 htaccess
 htag
@@ -664,6 +657,7 @@ javadocstyle
 javadoctagcontinuationindentation
 javadoctags
 javadoctype
+javadocutil
 javadocvariable
 Javaee
 javaformat
@@ -730,9 +724,7 @@ Jscs
 jsecurity
 Jsf
 jshiell
-jshint
 JSJ
-jslint
 jsni
 json
 jsoref
@@ -756,7 +748,6 @@ kazgroup
 kbd
 kclee
 KDoc
-keyframes
 keyname
 keyscan
 konstantinos
@@ -783,6 +774,7 @@ linebreak
 linecolumn
 lineending
 linelength
+linewrapping
 linkcheck
 linkplain
 linksource
@@ -799,6 +791,7 @@ Loggable
 lombok
 lookaround
 Loughran
+lowercased
 lparen
 lte
 lucene
@@ -883,6 +876,7 @@ multiplevariabledeclarations
 Multiset
 multithreading
 mutableexception
+mutationtest
 MVC
 mvn
 mvnrepository
@@ -927,7 +921,6 @@ nlow
 NMCS
 NMTOKEN
 noarch
-noarg
 noarraytrailingcomma
 noblank
 nobr
@@ -971,7 +964,6 @@ nowhitespaceafter
 nowhitespacebefore
 nowhitespacebeforecasedefaultcolon
 nowildcard
-nowrap
 npath
 npathcomplexity
 npe
@@ -1044,14 +1036,13 @@ packageobjectfactory
 packagestatement
 packge
 Pageflow
-pageview
 Paikin
 Papaioannou
 paraception
+paramcounter
 parameterassignment
 parametername
 parameternumber
-paramnum
 Parcelable
 parenpad
 PARM
@@ -1109,6 +1100,7 @@ priva
 PRMC
 programpractice
 Proguard
+propert
 propertycachefile
 propkey
 protonpack
@@ -1150,7 +1142,6 @@ refactor
 refactoring
 refaster
 refid
-refreshenv
 regex
 regexp
 regexpheader
@@ -1163,6 +1154,7 @@ releasenotes
 RELi
 remkop
 reportyml
+requiredtags
 requireemptylinebeforeblocktaggroup
 requirethis
 resourceleak
@@ -1174,7 +1166,6 @@ reviewdog
 revwalk
 rfc
 Rgb
-rgba
 rhs
 rhysd
 rickgiles
@@ -1193,19 +1184,26 @@ Rsa
 RSPEC
 Rtl
 ru
+ruleclassinterfaceandenumnames
+ruleclassstructure
+ruleconstants
 ruleimportstatements
 ruleindentation
 rulejavasourcefiles
 rulelambdaexpressions
 ruleliterals
 rulemethodnames
+rulemodifiers
+ruleorderofconstructorsandoverloadedmethods
 rulepackagedeclaration
 rulepackagenames
+ruleredundantparenthesis
 ruleset
 rulesetfiles
 rulespecialcharacters
 rulevariabledeclarations
 rulewildcardimports
+rulewrappingexpressions
 rulewrappinglines
 Ruslan
 rw
@@ -1445,6 +1443,7 @@ unusedimports
 unusedlambdaparametershouldbeunnamed
 unusedlocalvariable
 unusedtryresourceshouldbeunnamed
+uppercased
 upperell
 urandom
 uri
@@ -1464,12 +1463,10 @@ VALUELONG
 vararg
 variabledeclarationusagedistance
 Veach
-Verdana
 Versioning
 verticalwhitespace
 Vetrenko
 Vfs
-vh
 viesure
 visibilitymodifier
 visualstudio
@@ -1505,7 +1502,6 @@ Wifi
 wiki
 wikipedia
 wiktionary
-windowsservercore
 withgoogle
 wj
 wnd
@@ -1563,7 +1559,6 @@ xpathmapper
 xpathquerygenerator
 Xpkginfo
 Xplugin
-xright
 xsd
 Xshare
 xsi
@@ -1591,5 +1586,4 @@ yyyy
 Zbbh
 zf
 zh
-zm
 ZSH

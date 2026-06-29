@@ -141,6 +141,12 @@ public class JavadocCommentsAstRegressionTest extends AbstractTreeTestSupport {
     }
 
     @Test
+    public void testSpecTag() throws Exception {
+        verifyJavadocTree(getBlockTagsPath("ExpectedSpecTag.txt"),
+                getBlockTagsPath("InputSpecTag.javadoc"));
+    }
+
+    @Test
     public void testCodeInlineTag() throws Exception {
         verifyJavadocTree(getInlineTagsPath("ExpectedCodeInlineTag.txt"),
                 getInlineTagsPath("InputCodeInlineTag.javadoc"));
@@ -165,9 +171,27 @@ public class JavadocCommentsAstRegressionTest extends AbstractTreeTestSupport {
     }
 
     @Test
+    public void testLinkInlineTagGenericInner() throws Exception {
+        verifyJavadocTree(getInlineTagsPath("ExpectedLinkInlineTagGenericInner.txt"),
+                getInlineTagsPath("InputLinkInlineTagGenericInner.javadoc"));
+    }
+
+    @Test
+    public void testLinkInlineTagWithArrayInitializerLabel() throws Exception {
+        verifyJavadocTree(getInlineTagsPath("ExpectedLinkInlineTagWithArrayInitializerLabel.txt"),
+                getInlineTagsPath("InputLinkInlineTagWithArrayInitializerLabel.javadoc"));
+    }
+
+    @Test
     public void testValueAndInheritDocInlineTag() throws Exception {
         verifyJavadocTree(getInlineTagsPath("ExpectedValueAndInheritDocInlineTag.txt"),
                 getInlineTagsPath("InputValueAndInheritDocInlineTag.javadoc"));
+    }
+
+    @Test
+    public void testValueInlineTagWithQuotedFormat() throws Exception {
+        verifyJavadocTree(getInlineTagsPath("ExpectedValueInlineTagWithQuotedFormat.txt"),
+                getInlineTagsPath("InputValueInlineTagWithQuotedFormat.javadoc"));
     }
 
     @Test

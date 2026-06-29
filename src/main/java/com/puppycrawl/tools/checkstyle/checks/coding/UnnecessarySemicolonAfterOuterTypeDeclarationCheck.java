@@ -75,8 +75,8 @@ public final class UnnecessarySemicolonAfterOuterTypeDeclarationCheck extends Ab
     public void visitToken(DetailAST ast) {
         final DetailAST nextSibling = ast.getNextSibling();
         if (nextSibling != null
-                && ScopeUtil.isOuterMostType(ast)
-                && nextSibling.getType() == TokenTypes.SEMI) {
+                && nextSibling.getType() == TokenTypes.SEMI
+                && ScopeUtil.isOuterMostType(ast)) {
             log(nextSibling, MSG_SEMI);
         }
     }

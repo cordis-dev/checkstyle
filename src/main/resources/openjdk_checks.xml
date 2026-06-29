@@ -73,10 +73,24 @@
     </module>
     <module name="AvoidEscapedUnicodeCharacters"/>
 
+    <module name="OverloadMethodsDeclarationOrder">
+      <property name="orderByIncreasingParameterCount" value="true"/>
+    </module>
+
+    <module name="ConstructorsDeclarationGrouping">
+      <property name="orderByIncreasingParameterCount" value="true"/>
+    </module>
+
     <!-- §3.12: Expression lambda body length check based on OpenJDK style guide -->
     <module name="LambdaBodyLength"/>
     <module name="NoLineWrap">
       <property name="tokens" value="PACKAGE_DEF, IMPORT, STATIC_IMPORT"/>
+    </module>
+
+    <module name="DeclarationOrder">
+      <property name="ignoreModifiers" value="true"/>
+      <message key="declaration.order.instance" value="Field declaration is in wrong order"/>
+      <message key="declaration.order.static" value="Field declaration is in wrong order"/>
     </module>
 
     <module name="UpperEll"/>
@@ -90,26 +104,68 @@
     <module name="MethodName">
       <property name="format" value="^[a-z]{2,}[a-zA-Z0-9]*$"/>
     </module>
+    <module name="TypeName">
+      <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF"/>
+      <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+    </module>
+    <module name="AbbreviationAsWordInName">
+      <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF"/>
+      <property name="allowedAbbreviationLength" value="0"/>
+      <property name="ignoreFinal" value="false"/>
+      <property name="ignoreStatic" value="false"/>
+      <property name="ignoreStaticFinal" value="false"/>
+    </module>
+    <module name="ConstantName">
+      <property name="format" value="^[A-Z0-9]+(_[A-Z0-9]+)*$"/>
+    </module>
+    <module name="IllegalIdentifierName">
+      <property name="tokens" value="ENUM_CONSTANT_DEF"/>
+      <property name="format" value="^[A-Z0-9]+(_[A-Z0-9]+)*$"/>
+    </module>
 
-    <!-- §3.3: Import statements should be sorted -->
     <module name="AvoidStarImport">
       <property name="maxAllowedStarImports" value="1"/>
     </module>
+
     <module name="ImportOrder">
-      <property name="groups" value="java,javax"/>
+      <property name="groups" value="java,javax,org,com"/>
       <property name="ordered" value="true"/>
-      <property name="separated" value="true"/>
       <property name="option" value="bottom"/>
+      <property name="staticGroups" value="java,javax,org,com"/>
       <property name="sortStaticImportsAlphabetically" value="true"/>
+    </module>
+    <module name="SuppressionXpathSingleFilter">
+      <property name="checks" value="ImportOrder"/>
+      <property name="message" value=".*(separation|separated).*"/>
     </module>
 
     <module name="UnusedImports"/>
+
+    <module name="MatchXpath">
+      <property name="id" value="unnecessaryParenthesesInReturn"/>
+      <property name="query"
+                value="//LITERAL_RETURN/EXPR[./LPAREN and ./RPAREN
+                       and not(./LPAREN/preceding-sibling::*)]"/>
+      <message key="matchxpath.match" value="Unnecessary parentheses in return statement."/>
+    </module>
+
+    <module name="RedundantModifier"/>
 
     <!-- https://checkstyle.org/filters/suppressionxpathfilter.html -->
     <module name="SuppressionXpathFilter">
       <property name="file" value="${org.checkstyle.openjdk.suppressionxpathfilter.config}"
                 default="checkstyle-xpath-suppressions.xml" />
       <property name="optional" value="true"/>
+    </module>
+
+    <module name="OperatorWrap">
+      <property name="option" value="nl"/>
+      <property name="tokens"
+                value="QUESTION, COLON, EQUAL, NOT_EQUAL, DIV, PLUS, MINUS,
+                  STAR, MOD, SR, BSR, GE, GT, SL, LE, LT, BXOR, BOR, LOR, BAND,
+                  LAND, LITERAL_INSTANCEOF, TYPE_EXTENSION_AND, ASSIGN, DIV_ASSIGN,
+                  PLUS_ASSIGN, MINUS_ASSIGN, STAR_ASSIGN, MOD_ASSIGN, SR_ASSIGN, BSR_ASSIGN,
+                  SL_ASSIGN, BXOR_ASSIGN, BOR_ASSIGN, BAND_ASSIGN, METHOD_REF, LAMBDA"/>
     </module>
 
     <module name="PackageName">

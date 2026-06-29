@@ -22,6 +22,7 @@
 [![][closed issues img]][closed issues]
 [![][link check img]][link check]
 [![][milestone img]][milestone]
+[![][buildkite img]][buildkite]
 
 [![][mavenbadge img]][mavenbadge]
 
@@ -94,7 +95,7 @@ https://github.com/checkstyle/checkstyle/blob/master/.github/CONTRIBUTING.md
 
 ## Build Instructions
 
-Please see the [CheckStyle Documentation](https://checkstyle.org/contributing.html#Build) for
+Please see the [Build Instructions][build-instructions] for
 information on how to build the project.
 
 ## Feedback and Support
@@ -262,5 +263,13 @@ https://github.com/checkstyle/checkstyle/actions/workflows/qodana.yml
 [qodana img]:
 https://github.com/checkstyle/checkstyle/actions/workflows/qodana.yml/badge.svg
 
+[buildkite]:
+https://buildkite.com/checkstyle/ci
+[buildkite img]:
+https://badge.buildkite.com/7b2915755b859543851a246ca6c9f281c46bb0c599a96f48f4.svg
+
 [checks-docs]:
 https://checkstyle.org/checks.html
+
+[build-instructions]:
+https://github.com/checkstyle/checkstyle/blob/master/docs/BEGINNING_DEVELOPMENT.md

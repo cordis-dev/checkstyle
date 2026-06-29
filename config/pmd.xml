@@ -409,7 +409,9 @@
       <property name="violationSuppressXPath"
                 value="//ClassDeclaration[@SimpleName='JavaAstVisitor'
                     or @SimpleName='SiteUtil' or @SimpleName='JavadocCommentsAstVisitor'
-                    or @SimpleName='RequireThisCheck']"/>
+                    or @SimpleName='RequireThisCheck'
+                    or @SimpleName='UnusedLocalVariableCheck']"/>
+
     </properties>
   </rule>
   <rule ref="category/java/design.xml/ExcessiveParameterList">
@@ -552,7 +554,9 @@
                                             or @Name='setExcludedPackages']
                       | //ClassDeclaration[@SimpleName='UnusedImportsCheck']
                       //MethodDeclaration[@Name='setViolateExecutionOnNonTightHtml'
-                                            or @Name='setJavadocTokens']"/>
+                                            or @Name='setJavadocTokens']
+                      | //ClassDeclaration[@SimpleName='JavadocMethodCheck']
+                      //MethodDeclaration[@Name='setViolateExecutionOnNonTightHtml']"/>
     </properties>
   </rule>
 </ruleset>
