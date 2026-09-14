@@ -365,6 +365,7 @@ public class LeftCurlyCheckTest extends AbstractModuleTestSupport {
     public void testIgnoreEnumsOptionTrue() throws Exception {
         final String[] expectedWhileTrue = {
             "21:44: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 44),
+            "34:20: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 20),
         };
         verifyWithInlineConfigParser(
                 getPath("InputLeftCurlyIgnoreEnumsOptTrue.java"), expectedWhileTrue);
@@ -375,9 +376,29 @@ public class LeftCurlyCheckTest extends AbstractModuleTestSupport {
         final String[] expectedWhileFalse = {
             "17:17: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 17),
             "21:44: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 44),
+            "34:20: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 20),
         };
         verifyWithInlineConfigParser(
                 getPath("InputLeftCurlyIgnoreEnumsOptFalse.java"), expectedWhileFalse);
+    }
+
+    @Test
+    public void testObjBlockTokenOnly() throws Exception {
+        final String[] expected = {
+            "24:41: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 41),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputLeftCurlyObjBlockTokenOnly.java"), expected);
+    }
+
+    @Test
+    public void testObjBlockWithTypeToken() throws Exception {
+        final String[] expected = {
+            "13:1: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 1),
+            "15:5: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 5),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputLeftCurlyObjBlockWithTypeToken.java"), expected);
     }
 
     @Test
@@ -663,6 +684,44 @@ public class LeftCurlyCheckTest extends AbstractModuleTestSupport {
         };
         verifyWithInlineConfigParser(
                 getPath("InputLeftCurlySwitchMutation.java"), expected);
+    }
+
+    @Test
+    public void testSwitchWhen() throws Exception {
+        final String[] expected = {
+            "17:13: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 13),
+            "22:13: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 13),
+            "28:13: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 13),
+            "40:13: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 13),
+            "49:13: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 13),
+            "52:13: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 13),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputLeftCurlySwitchWhen.java"), expected);
+    }
+
+    @Test
+    public void testTypesEol() throws Exception {
+        final String[] expected = {
+            "19:11: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 11),
+            "23:15: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 15),
+            "27:17: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 17),
+            "31:12: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 12),
+            "36:17: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 17),
+            "40:12: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 12),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputLeftCurlyTestTypesEol.java"), expected);
+    }
+
+    @Test
+    public void testAnonymousClassEol() throws Exception {
+        final String[] expected = {
+            "28:38: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 38),
+            "36:9: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 9),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputLeftCurlyAnonymousClassEol.java"), expected);
     }
 
 }

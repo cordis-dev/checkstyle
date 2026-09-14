@@ -28,6 +28,7 @@ import com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumberCheck;
 import com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck;
 
 public class SuppressWarningsHolderExamplesTest extends AbstractExamplesModuleTestSupport {
+
     @Override
     public String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/checks/annotation/suppresswarningsholder";
@@ -67,7 +68,7 @@ public class SuppressWarningsHolderExamplesTest extends AbstractExamplesModuleTe
     }
 
     @Test
-    public void testExample3() throws Exception {
+    public void testUseCase1() throws Exception {
         final String[] expected = {
             "29:15: " + getCheckMessage(ParameterNumberCheck.class,
                         ParameterNumberCheck.MSG_KEY, 7, 8),
@@ -75,11 +76,11 @@ public class SuppressWarningsHolderExamplesTest extends AbstractExamplesModuleTe
                         ParameterNumberCheck.MSG_KEY, 7, 8),
         };
 
-        verifyWithInlineConfigParser(getPath("Example3.java"), expected);
+        verifyWithInlineConfigParser(getPath("UseCase1.java"), expected);
     }
 
     @Test
-    public void testExample4() throws Exception {
+    public void testUseCase2() throws Exception {
         final String[] expected = {
             "29:15: " + getCheckMessage(ParameterNumberCheck.class,
                         ParameterNumberCheck.MSG_KEY, 7, 8),
@@ -87,6 +88,7 @@ public class SuppressWarningsHolderExamplesTest extends AbstractExamplesModuleTe
                         ParameterNumberCheck.MSG_KEY, 7, 8),
         };
 
-        verifyWithInlineConfigParser(getPath("Example4.java"), expected);
+        verifyWithInlineConfigParser(getPath("UseCase2.java"), expected);
     }
+
 }
