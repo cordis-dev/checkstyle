@@ -29,6 +29,45 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 
+/**
+ * <div>
+ * Reports the modified cyclomatic complexity of every method, constructor,
+ * static initializer and instance initializer. It is a measure of the
+ * number of independent paths through the source and therefore of the number
+ * of required tests, it is not about quality of code. See
+ * <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html">
+ * initializer blocks</a> for details on initializers.
+ * </div>
+ *
+ * <p>
+ * Counting starts at {@code 0} and each decision point adds {@code 1}.
+ * Decision points:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code if}, {@code else}, {@code while}, {@code do}, {@code for},
+ * {@code ?:}, {@code catch} and {@code switch} statements. An {@code else if}
+ * counts once, and a whole {@code switch} block counts as a single decision point
+ * regardless of the cases, guards or nested statements it contains.
+ * </li>
+ * <li>
+ * Sequences of the same logical operator {@code &&} or {@code ||} in the body
+ * of target. Each uninterrupted sequence counts once regardless of its length.
+ * </li>
+ * <li>
+ * Recursive calls, that is calls to a method with the same name as the enclosing
+ * method.
+ * </li>
+ * </ul>
+ *
+ * <p>
+ * The complexity is reported for every target together with its name. Initializer
+ * blocks are reported as {@code ClassName.INSTANCE_INIT} and
+ * {@code ClassName.STATIC_INIT}.
+ * </p>
+ *
+ * @since 3.2
+ */
 @FileStatefulCheck
 public class CyclomaticComplexityCheck
     extends AbstractCheck {

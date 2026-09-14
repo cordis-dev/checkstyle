@@ -5,46 +5,39 @@
              name="CyclomaticComplexity"
              parent="com.puppycrawl.tools.checkstyle.TreeWalker">
          <description>&lt;div&gt;
- Checks cyclomatic complexity against a specified limit. It is a measure of
- the minimum number of possible paths through the source and therefore the
- number of required tests, it is not about quality of code! It is only
- applied to methods, c-tors,
+ Reports the modified cyclomatic complexity of every method, constructor,
+ static initializer and instance initializer. It is a measure of the
+ number of independent paths through the source and therefore of the number
+ of required tests, it is not about quality of code. See
  &lt;a href="https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html"&gt;
- static initializers and instance initializers&lt;/a&gt;.
+ initializer blocks&lt;/a&gt; for details on initializers.
  &lt;/div&gt;
 
  &lt;p&gt;
- The complexity is equal to the number of decision points &lt;code&gt;+ 1&lt;/code&gt;.
+ Counting starts at &lt;code&gt;0&lt;/code&gt; and each decision point adds &lt;code&gt;1&lt;/code&gt;.
  Decision points:
  &lt;/p&gt;
  &lt;ul&gt;
  &lt;li&gt;
- &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;while&lt;/code&gt;, &lt;code&gt;do&lt;/code&gt;, &lt;code&gt;for&lt;/code&gt;,
- &lt;code&gt;?:&lt;/code&gt;, &lt;code&gt;catch&lt;/code&gt;, &lt;code&gt;switch&lt;/code&gt;, &lt;code&gt;case&lt;/code&gt; statements.
+ &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;else&lt;/code&gt;, &lt;code&gt;while&lt;/code&gt;, &lt;code&gt;do&lt;/code&gt;, &lt;code&gt;for&lt;/code&gt;,
+ &lt;code&gt;?:&lt;/code&gt;, &lt;code&gt;catch&lt;/code&gt; and &lt;code&gt;switch&lt;/code&gt; statements. An &lt;code&gt;else if&lt;/code&gt;
+ counts once, and a whole &lt;code&gt;switch&lt;/code&gt; block counts as a single decision point
+ regardless of the cases, guards or nested statements it contains.
  &lt;/li&gt;
  &lt;li&gt;
-  Operators &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; and &lt;code&gt;||&lt;/code&gt; in the body of target.
+ Sequences of the same logical operator &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; or &lt;code&gt;||&lt;/code&gt; in the body
+ of target. Each uninterrupted sequence counts once regardless of its length.
  &lt;/li&gt;
  &lt;li&gt;
-  &lt;code&gt;when&lt;/code&gt; expression in case labels, also known as guards.
+ Recursive calls, that is calls to a method with the same name as the enclosing
+ method.
  &lt;/li&gt;
  &lt;/ul&gt;
 
  &lt;p&gt;
- By pure theory level 1-4 is considered easy to test, 5-7 OK, 8-10 consider
- re-factoring to ease testing, and 11+ re-factor now as testing will be painful.
- &lt;/p&gt;
-
- &lt;p&gt;
- When it comes to code quality measurement by this metric level 10 is very
- good level as a ultimate target (that is hard to archive). Do not be ashamed
- to have complexity level 15 or even higher, but keep it below 20 to catch
- really bad-designed code automatically.
- &lt;/p&gt;
-
- &lt;p&gt;
- Please use Suppression to avoid violations on cases that could not be split
- in few methods without damaging readability of code or encapsulation.
+ The complexity is reported for every target together with its name. Initializer
+ blocks are reported as &lt;code&gt;ClassName.INSTANCE_INIT&lt;/code&gt; and
+ &lt;code&gt;ClassName.STATIC_INIT&lt;/code&gt;.
  &lt;/p&gt;</description>
          <properties>
             <property default-value="10" name="max" type="int">
@@ -55,7 +48,7 @@
                       type="boolean">
                <description>Control whether to treat the whole switch block as a single decision point.</description>
             </property>
-            <property default-value="LITERAL_WHILE,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_SWITCH,LITERAL_CASE,LITERAL_CATCH,QUESTION,LAND,LOR,LITERAL_WHEN"
+            <property default-value="LITERAL_WHILE,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_ELSE,LITERAL_SWITCH,LITERAL_CASE,LITERAL_DEFAULT,LITERAL_CATCH,QUESTION,LAND,LOR,LITERAL_WHEN,METHOD_CALL"
                       name="tokens"
                       type="java.lang.String[]"
                       validation-type="tokenSet">
