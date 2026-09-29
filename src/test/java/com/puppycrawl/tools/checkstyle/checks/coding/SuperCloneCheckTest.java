@@ -20,7 +20,7 @@
 package com.puppycrawl.tools.checkstyle.checks.coding;
 
 import static com.google.common.truth.Truth.assertWithMessage;
-import static com.puppycrawl.tools.checkstyle.checks.coding.AbstractSuperCheck.MSG_KEY;
+import static com.puppycrawl.tools.checkstyle.checks.coding.SuperCloneCheck.MSG_KEY;
 
 import java.io.File;
 import java.util.Collection;
@@ -63,6 +63,15 @@ public class SuperCloneCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputSuperClonePlainAndSubclasses.java"), expected);
+    }
+
+    @Test
+    public void testCompactSourceFile() throws Exception {
+        final String[] expected = {
+            "12:15: " + getCheckMessage(MSG_KEY, "clone", "super.clone"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputSuperCloneCompactSourceFile.java"), expected);
     }
 
     @Test

@@ -168,7 +168,7 @@ public final class SarifLogger extends AbstractAutomaticBean implements AuditLis
      * @throws IOException if there is reading errors.
      * @throws IllegalArgumentException if outputStreamOptions is null
      * @noinspection deprecation
-     * @noinspectionreason We are forced to keep AutomaticBean compatability
+     * @noinspectionreason We are forced to keep AutomaticBean compatibility
      *     because of maven-checkstyle-plugin. Until #12873.
      */
     public SarifLogger(
@@ -319,8 +319,7 @@ public final class SarifLogger extends AbstractAutomaticBean implements AuditLis
             final ResourceBundle bundle = ResourceBundle.getBundle(
                     bundleName,
                     Locale.ROOT,
-                    moduleClass.getClassLoader(),
-                    new LocalizedMessage.Utf8Control()
+                    moduleClass.getClassLoader()
             );
             for (String key : moduleDetails.getViolationMessageKeys()) {
                 result.put(key, bundle.getString(key));

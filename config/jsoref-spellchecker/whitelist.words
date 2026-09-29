@@ -136,6 +136,7 @@ btn
 btnfrs
 buf
 bugdatabase
+Bugzilla
 buildkite
 Bunsubscribe
 bw
@@ -195,6 +196,7 @@ clazz
 clemens
 Clickable
 Cloneable
+Cloudflare
 cls
 cmdline
 cmp
@@ -225,7 +227,6 @@ concat
 config
 configurationloader
 Connell's
-connrefused
 constantname
 constructorsdeclarationgrouping
 CONTACTSERVER
@@ -286,6 +287,7 @@ declarationrightbeforefirstusage
 declaredwhenneeded
 Deconstruction
 dedup
+deduplicating
 defau
 defaultcomeslast
 defaultconstructors
@@ -530,6 +532,7 @@ googleecommon
 googlegroups
 googlemethodname
 googlenonconstantfieldname
+googlerightcurly
 googlesource
 GPath
 gpg
@@ -595,6 +598,7 @@ identifiernames
 Idref
 idx
 ietf
+ifstatements
 Igno
 IGNORETHIS
 igorminar
@@ -684,6 +688,7 @@ javadocparagraph
 javadocparamorder
 javadocpropertiesgenerator
 javadocregexp
+javadocseetagorder
 javadoctagcontinuationindentation
 javadoctags
 javadocthrowsorder
@@ -1503,6 +1508,7 @@ Unitless
 unnecessaryfullyqualifiedtype
 unnecessarynullcheckwithinstanceof
 unnecessaryparentheses
+unnecessarypermitsclause
 unnecessarysemicolonafteroutertypedeclaration
 unnecessarysemicolonaftertypememberdeclaration
 unnecessarysemicoloninenumeration
@@ -1532,7 +1538,7 @@ userguide
 username
 usr
 UTests
-utf
+UTF
 Uth
 UUID
 UWF
@@ -1593,6 +1599,7 @@ workaround
 workflow
 worktree
 wq
+wrappinglines
 writetag
 writingchecks
 writingdoccomments
