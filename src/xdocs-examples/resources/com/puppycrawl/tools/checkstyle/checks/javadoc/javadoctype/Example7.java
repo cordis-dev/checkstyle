@@ -11,8 +11,8 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc.javadoctype;
 import javax.annotation.processing.Generated;
 // xdoc section - start
 /**
- * @author a
- * @version $Revision1$
+ * @author
+ * @version 1.0
  */
 public class Example7 {
   /**
@@ -35,13 +35,16 @@ public class Example7 {
   public class ClassD {}
 
   /** */
-  public class ClassE<T> {} // violation, as param tag for <T> is missing
+  public class ClassE<T> {} // violation 'missing @param '<T>' tag.'
 
   /** */
-  private class ClassF<T> {} // violation, as param tag for <T> is missing
+  private class ClassF<T> {} // violation 'missing @param '<T>' tag.'
 
   /** */
   @Generated("tool")
   public class ClassG<T> {}
+
+  /** */
+  public interface InterfaceH<T> {} // violation 'missing @param '<T>' tag.'
 }
 // xdoc section - end

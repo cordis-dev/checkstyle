@@ -80,6 +80,11 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
     private static final Pattern SPACE_PATTERN = Pattern.compile(" ");
 
     /**
+     * Compiled pattern for all system newlines.
+     */
+    private static final Pattern ALL_NEW_LINES = Pattern.compile("\\R");
+
+    /**
      * Construct the check with default values.
      */
     public OrderedPropertiesCheck() {
@@ -126,7 +131,8 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
             if (String.CASE_INSENSITIVE_ORDER.compare(previousProp, propKey) > 0) {
 
                 final int lineNo = getLineNumber(startLineNo, fileText, previousProp, propKey);
-                log(lineNo + 1, MSG_KEY, propKey, previousProp);
+                log(lineNo + 1, MSG_KEY,
+                        escapeLineBreaks(propKey), escapeLineBreaks(previousProp));
                 // start searching at position of the last reported validation
                 startLineNo = lineNo;
             }
@@ -137,8 +143,7 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
 
     /**
      * Method returns the index number where the key is detected (starting at 0).
-     * To assure that we get the correct line it starts at the point
-     * of the last occurrence.
+     * To assure that we get the correct line it starts at the point of the last occurrence.
      * Also, the previousProp should be in file before propKey.
      *
      * @param startLineNo start searching at line
@@ -174,6 +179,17 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
             }
         }
         return indexNumber;
+    }
+
+    /**
+     * Rewrites all line breaks in a property key as the literal {@code \n},
+     * so the violation message stays on a single line.
+     *
+     * @param keyName key name to process
+     * @return key name with all line breaks escaped
+     */
+    private static String escapeLineBreaks(String keyName) {
+        return ALL_NEW_LINES.matcher(keyName).replaceAll("\\\\n");
     }
 
     /**
@@ -246,6 +262,7 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
 
             return null;
         }
+
     }
 
 }

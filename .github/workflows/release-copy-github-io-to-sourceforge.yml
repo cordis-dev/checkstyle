@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Checkout the latest code
         uses: actions/checkout@v7
+        with:
+          # this workflow executes only by maintainers on master
+          persist-credentials: true
 
       - name: Configure SSH
         env:

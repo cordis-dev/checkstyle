@@ -30,11 +30,15 @@ jobs:
     steps:
       - name: Checkout the latest code
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup local maven cache
         uses: actions/cache@v6
         with:
-          path: ~/.m2/repository
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
           key: checkstyle-maven-cache-${{ hashFiles('**/pom.xml') }}
 
       - name: Modify File

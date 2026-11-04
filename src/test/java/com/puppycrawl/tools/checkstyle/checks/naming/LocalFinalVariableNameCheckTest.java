@@ -28,8 +28,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class LocalFinalVariableNameCheckTest
-    extends AbstractModuleTestSupport {
+public class LocalFinalVariableNameCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -203,6 +202,35 @@ public class LocalFinalVariableNameCheckTest
         };
         verifyWithInlineConfigParser(
                 getNonCompilablePath("InputLocalFinalVariableNameUnnamedVariables.java"),
+                expected);
+    }
+
+    @Test
+    public void testLocalFinalVariableNameCompactSourceFileDefault() throws Exception {
+        final String pattern = "^([a-z][a-zA-Z0-9]*|_)$";
+
+        final String[] expected = {
+            "13:15: " + getCheckMessage(MSG_INVALID_PATTERN, "Bad", pattern),
+            "15:31: " + getCheckMessage(MSG_INVALID_PATTERN, "Reader", pattern),
+            "18:28: " + getCheckMessage(MSG_INVALID_PATTERN, "E", pattern),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputLocalFinalVariableNameCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testLocalFinalVariableNameCompactSourceFileProperties() throws Exception {
+        final String pattern = "^[A-Z][A-Z0-9]*$";
+
+        final String[] expected = {
+            "13:15: " + getCheckMessage(MSG_INVALID_PATTERN, "bad", pattern),
+            "14:31: " + getCheckMessage(MSG_INVALID_PATTERN, "reader", pattern),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputLocalFinalVariableNameCompactSourceFileProperties.java"),
                 expected);
     }
 

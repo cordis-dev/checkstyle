@@ -103,7 +103,7 @@ public class AnnotationOnSameLineCheckTest extends AbstractModuleTestSupport {
         final String[] expected = {
             "20:5: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "Ann"),
             "26:5: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "SuppressWarnings"),
-            "30:5: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "SuppressWarnings"),
+            "31:5: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "SuppressWarnings"),
             "32:5: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "Ann"),
         };
         verifyWithInlineConfigParser(
@@ -185,6 +185,18 @@ public class AnnotationOnSameLineCheckTest extends AbstractModuleTestSupport {
         };
         verifyWithInlineConfigParser(
                 getPath("InputAnnotationOnSameLineTwo.java"),
+            expected);
+    }
+
+    @Test
+    public void testAnnotationOnSameLineCompactSourceFile() throws Exception {
+        final String[] expected = {
+            "16:1: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "Deprecated"),
+            "23:1: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "SuppressWarnings"),
+            "29:5: " + getCheckMessage(MSG_KEY_ANNOTATION_ON_SAME_LINE, "Deprecated"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputAnnotationOnSameLineCompactSourceFile.java"),
             expected);
     }
 

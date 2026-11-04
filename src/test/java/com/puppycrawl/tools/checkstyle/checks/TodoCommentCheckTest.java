@@ -27,8 +27,7 @@ import org.junit.jupiter.api.Test;
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-public class TodoCommentCheckTest
-    extends AbstractModuleTestSupport {
+public class TodoCommentCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -85,6 +84,31 @@ public class TodoCommentCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputTodoCommentDefault.java"), expected);
+    }
+
+    @Test
+    public void testTodoCommentCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "11:3: " + getCheckMessage(MSG_KEY, "TODO:"),
+            "18:7: " + getCheckMessage(MSG_KEY, "TODO:"),
+            "22:7: " + getCheckMessage(MSG_KEY, "TODO:"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputTodoCommentCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testTodoCommentCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "11:3: " + getCheckMessage(MSG_KEY, "FIXME:"),
+            "18:7: " + getCheckMessage(MSG_KEY, "FIXME:"),
+            "22:7: " + getCheckMessage(MSG_KEY, "FIXME:"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputTodoCommentCompactSourceFileProperties.java"),
+                expected);
     }
 
 }

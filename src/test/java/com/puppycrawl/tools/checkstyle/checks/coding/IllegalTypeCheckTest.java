@@ -23,12 +23,12 @@ import static com.google.common.truth.Truth.assertWithMessage;
 import static com.puppycrawl.tools.checkstyle.checks.coding.IllegalTypeCheck.MSG_KEY;
 import static com.puppycrawl.tools.checkstyle.internal.utils.TestUtil.getExpectedThrowable;
 
-import java.io.File;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
-import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.DetailAstImpl;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
@@ -38,6 +38,49 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
     @Override
     public String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/checks/coding/illegaltype";
+    }
+
+    @Test
+    public void testCompactSourceFile() throws Exception {
+        final String[] expected = {
+            "27:1: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "28:1: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "29:6: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "32:1: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "33:9: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "38:5: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "50:5: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "53:14: " + getCheckMessage(MSG_KEY, "HashMap"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputIllegalTypeCompactSourceFile.java"), expected);
+    }
+
+    @Test
+    public void testCompactSourceFileAbstractNames() throws Exception {
+        final String[] expected = {
+            "25:1: " + getCheckMessage(MSG_KEY, "BaseForbidden"),
+            "28:1: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "30:1: " + getCheckMessage(MSG_KEY, "BaseForbidden"),
+            "31:9: " + getCheckMessage(MSG_KEY, "BaseForbidden"),
+        };
+        verifyWithInlineConfigParser(getNonCompilablePath(
+                "compact/InputIllegalTypeCompactSourceFileAbstractNames.java"), expected);
+    }
+
+    @Test
+    public void testCompactSourceFileMemberModifiers() throws Exception {
+        final String[] expected = {
+            "24:8: " + getCheckMessage(MSG_KEY, "ArrayList"),
+            "26:8: " + getCheckMessage(MSG_KEY, "java.util.ArrayList"),
+            "30:8: " + getCheckMessage(MSG_KEY, "ArrayList"),
+            "31:9: " + getCheckMessage(MSG_KEY, "ArrayList"),
+            "43:8: " + getCheckMessage(MSG_KEY, "ArrayList"),
+            "44:9: " + getCheckMessage(MSG_KEY, "ArrayList"),
+            "49:22: " + getCheckMessage(MSG_KEY, "ArrayList"),
+        };
+        verifyWithInlineConfigParser(getNonCompilablePath(
+                "compact/InputIllegalTypeCompactSourceFileMemberModifiers.java"), expected);
     }
 
     @Test
@@ -282,18 +325,14 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
 
     @Test
     public void testClearDataBetweenFiles() throws Exception {
-        final DefaultConfiguration checkConfig = createModuleConfig(IllegalTypeCheck.class);
-        final String violationFile = getPath("InputIllegalTypeTestClearDataBetweenFiles.java");
-        checkConfig.addProperty("illegalClassNames", "java.util.TreeSet");
-        final String[] expected = {
-            "21:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "23:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
-        };
+        final String fileName1 = getPath("InputIllegalTypeTestClearDataBetweenFiles.java");
+        final String fileName2 = getPath("InputIllegalTypeSimilarClassName.java");
+        final List<String> expected1 = List.of(
+            "32:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "34:13: " + getCheckMessage(MSG_KEY, "TreeSet"));
+        final List<String> expected2 = Collections.emptyList();
 
-        verify(createChecker(checkConfig), new File[] {
-            new File(violationFile),
-            new File(getPath("InputIllegalTypeSimilarClassName.java")),
-        }, violationFile, expected);
+        verifyWithInlineConfigParser(fileName1, fileName2, expected1, expected2);
     }
 
     @Test

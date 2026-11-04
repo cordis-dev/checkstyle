@@ -32,8 +32,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class EmptyForInitializerPadCheckTest
-    extends AbstractModuleTestSupport {
+public class EmptyForInitializerPadCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -128,8 +127,10 @@ public class EmptyForInitializerPadCheckTest
         });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                 + "whitespace.EmptyForInitializerPadCheck");
     }
 
@@ -140,6 +141,30 @@ public class EmptyForInitializerPadCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputEmptyForInitializerPadSetOptionTrim.java"), expected);
+    }
+
+    @Test
+    public void testEmptyForInitializerPadCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "14:11: " + getCheckMessage(MSG_PRECEDED, ";"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/"
+                        + "InputEmptyForInitializerPadCompactSourceFileDefault.java"),
+            expected);
+    }
+
+    @Test
+    public void testEmptyForInitializerPadCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "15:10: " + getCheckMessage(MSG_NOT_PRECEDED, ";"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/"
+                        + "InputEmptyForInitializerPadCompactSourceFileProperties.java"),
+            expected);
     }
 
 }

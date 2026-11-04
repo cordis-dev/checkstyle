@@ -35,8 +35,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 public final class NestedForDepthCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_KEY = "nested.for.depth";
 
@@ -75,6 +74,11 @@ public final class NestedForDepthCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {TokenTypes.LITERAL_FOR};
+    }
+
+    @Override
+    public void beginTree(DetailAST rootAST) {
+        depth = 0;
     }
 
     @Override

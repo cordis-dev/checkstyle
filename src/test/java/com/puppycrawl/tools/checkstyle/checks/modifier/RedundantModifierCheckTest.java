@@ -30,8 +30,7 @@ import com.puppycrawl.tools.checkstyle.DetailAstImpl;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class RedundantModifierCheckTest
-    extends AbstractModuleTestSupport {
+public class RedundantModifierCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -471,6 +470,34 @@ public class RedundantModifierCheckTest
         };
         verifyWithInlineConfigParser(
                 getNonCompilablePath("InputRedundantModifierCompactSourceFile.java"),
+                expected);
+    }
+
+    @Test
+    public void testPublicMethodInCompactSourceFile() throws Exception {
+        final String[] expected = {
+            "12:1: " + getCheckMessage(MSG_KEY, "public"),
+            "14:1: " + getCheckMessage(MSG_KEY, "public"),
+            "34:1: " + getCheckMessage(MSG_KEY, "public"),
+            "36:1: " + getCheckMessage(MSG_KEY, "public"),
+            "40:1: " + getCheckMessage(MSG_KEY, "public"),
+            "42:1: " + getCheckMessage(MSG_KEY, "public"),
+            "44:1: " + getCheckMessage(MSG_KEY, "public"),
+            "47:1: " + getCheckMessage(MSG_KEY, "public"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("InputRedundantModifierPublicCompactSourceFile.java"),
+                expected);
+    }
+
+    @Test
+    public void testPublicMethodInCompactSourceFileQualifiedObject() throws Exception {
+        final String[] expected = {
+            "15:1: " + getCheckMessage(MSG_KEY, "public"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "InputRedundantModifierPublicCompactSourceFileQualifiedObject.java"),
                 expected);
     }
 

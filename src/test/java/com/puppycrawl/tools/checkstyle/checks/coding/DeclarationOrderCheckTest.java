@@ -35,8 +35,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.api.Violation;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class DeclarationOrderCheckTest
-    extends AbstractModuleTestSupport {
+public class DeclarationOrderCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -281,14 +280,27 @@ public class DeclarationOrderCheckTest
             "35:5: " + getCheckMessage(MSG_INSTANCE),
         };
         verifyWithInlineConfigParser(
-                getNonCompilablePath("InputDeclarationOrderCompactSourceFile.java"), expected);
+                getNonCompilablePath("compact/InputDeclarationOrderCompactSourceFile.java"),
+                expected);
     }
 
     @Test
     public void testCompactSourceFileValid() throws Exception {
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
         verifyWithInlineConfigParser(
-                getNonCompilablePath("InputDeclarationOrderCompactSourceFileValid.java"), expected);
+                getNonCompilablePath("compact/InputDeclarationOrderCompactSourceFileValid.java"),
+                expected);
+    }
+
+    @Test
+    public void testCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "27:1: " + getCheckMessage(MSG_INSTANCE),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputDeclarationOrderCompactSourceFileProperties.java"),
+                expected);
     }
 
     @Test

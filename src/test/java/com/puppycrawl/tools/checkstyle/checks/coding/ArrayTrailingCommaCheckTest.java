@@ -26,8 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 
-public class ArrayTrailingCommaCheckTest
-    extends AbstractModuleTestSupport {
+public class ArrayTrailingCommaCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -77,6 +76,29 @@ public class ArrayTrailingCommaCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputArrayTrailingCommaAlwaysDemandTrailingComma.java"), expected);
+    }
+
+    @Test
+    public void testCompactSourceFile() throws Exception {
+        final String[] expected = {
+            "13:5: " + getCheckMessage(MSG_KEY),
+            "26:9: " + getCheckMessage(MSG_KEY),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputArrayTrailingCommaCompactSourceFile.java"),
+                expected);
+    }
+
+    @Test
+    public void testCompactSourceFileAlwaysDemandTrailingComma() throws Exception {
+        final String[] expected = {
+            "11:22: " + getCheckMessage(MSG_KEY),
+            "17:9: " + getCheckMessage(MSG_KEY),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                    "compact/InputArrayTrailingCommaCompactSourceFileAlwaysDemand.java"),
+                expected);
     }
 
 }

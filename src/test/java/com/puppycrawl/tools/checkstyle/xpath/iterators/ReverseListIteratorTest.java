@@ -29,8 +29,11 @@ import org.junit.jupiter.api.Test;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.xpath.AbstractNode;
+import net.sf.saxon.om.GNode;
 import net.sf.saxon.om.NamespaceUri;
 import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.pattern.nodetest.NodePredicate;
 
 public class ReverseListIteratorTest {
 
@@ -92,7 +95,7 @@ public class ReverseListIteratorTest {
         }
 
         @Override
-        public int compareOrder(NodeInfo other) {
+        public int compareOrder(GNode other) {
             return 0;
         }
 
@@ -120,6 +123,22 @@ public class ReverseListIteratorTest {
         public boolean hasChildNodes() {
             return false;
         }
+
+        @Override
+        public SequenceIterator iterateChildAxis(NodePredicate predicate) {
+            return null;
+        }
+
+        @Override
+        public SequenceIterator iterateFollowingSiblingAxis(NodePredicate predicate) {
+            return null;
+        }
+
+        @Override
+        public SequenceIterator iteratePrecedingSiblingAxis(NodePredicate predicate) {
+            return null;
+        }
+
     }
 
 }

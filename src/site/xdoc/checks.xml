@@ -226,6 +226,17 @@
           </tr>
           <tr>
             <td>
+              <a href="checks/javadoc/blockcommentendposition.html#BlockCommentEndPosition">
+                BlockCommentEndPosition
+              </a>
+            </td>
+            <td>
+              Checks that the Javadoc block comment end delimiter position is either alone on its
+              own line or on the same line as the block comment begin <code>/**</code>.
+            </td>
+          </tr>
+          <tr>
+            <td>
               <a href="checks/metrics/booleanexpressioncomplexity.html#BooleanExpressionComplexity">
                 BooleanExpressionComplexity
               </a>
@@ -265,6 +276,18 @@
             <td>
               Checks the number of other types a given class/record/interface/enum/annotation relies
               on.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="checks/misc/classheaderwrapopenjdk.html#ClassHeaderWrapOpenjdk">
+                ClassHeaderWrapOpenjdk
+              </a>
+            </td>
+            <td>
+              Checks that a wrapped class, interface, enum, or record header is wrapped according to
+              the <a href="https://cr.openjdk.org/~alundblad/styleguide/index-v6.html#toc-wrapping-class-declarations">
+              OpenJDK Java Style Guide</a>.
             </td>
           </tr>
           <tr>
@@ -448,6 +471,17 @@
           </tr>
           <tr>
             <td>
+              <a href="checks/whitespace/emptylinewrappinginblock.html#EmptyLineWrappingInBlock">
+                EmptyLineWrappingInBlock
+              </a>
+            </td>
+            <td>
+              Checks the empty line right after the opening brace and right before the closing brace
+              of a block.
+            </td>
+          </tr>
+          <tr>
+            <td>
               <a href="checks/coding/emptystatement.html#EmptyStatement">
                 EmptyStatement
               </a>
@@ -476,6 +510,16 @@
             <td>
               Checks that classes that either override <code>equals()</code> or
               <code>hashCode()</code> also overrides the other.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="checks/coding/exceptionthrowshouldusecontext.html#ExceptionThrowShouldUseContext">
+                ExceptionThrowShouldUseContext
+              </a>
+            </td>
+            <td>
+              Checks that exception throw statements in catch blocks use context variables.
             </td>
           </tr>
           <tr>
@@ -570,6 +614,16 @@
             </td>
             <td>
               Checks that parameters for methods, constructors, catch and for-each blocks are final.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="checks/coding/finalpatternvariable.html#FinalPatternVariable">
+                FinalPatternVariable
+              </a>
+            </td>
+            <td>
+              Checks that pattern variables that never have their values changed are declared final.
             </td>
           </tr>
           <tr>
@@ -1094,6 +1148,16 @@
           </tr>
           <tr>
             <td>
+              <a href="checks/javadoc/javadocutilizingtrailingspace.html#JavadocUtilizingTrailingSpace">
+                JavadocUtilizingTrailingSpace
+              </a>
+            </td>
+            <td>
+              Checks that Javadoc lines efficiently utilize the available horizontal space.
+            </td>
+          </tr>
+          <tr>
+            <td>
               <a href="checks/javadoc/javadocvariable.html#JavadocVariable">
                 JavadocVariable
               </a>
@@ -1521,6 +1585,18 @@
           </tr>
           <tr>
             <td>
+              <a href="checks/coding/nocausegetmessageinexceptionconstructor.html#NoCauseGetMessageInExceptionConstructor">
+                NoCauseGetMessageInExceptionConstructor
+              </a>
+            </td>
+            <td>
+              Checks that throw statements within catch blocks do not use the caught exception's
+              getMessage() call when the thrown exception is the same type as the caught exception,
+              as rethrowing the same exception type with its own message is redundant.
+            </td>
+          </tr>
+          <tr>
+            <td>
               <a href="checks/coding/noclone.html#NoClone">
                 NoClone
               </a>
@@ -1651,6 +1727,17 @@
             <td>
               Verifies that annotations are properly placed by <a href="https://cr.openjdk.org/~alundblad/styleguide/index-v6.html#toc-annotations">
               OpenJDK Style</a>.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="checks/whitespace/openjdkmethodparameteralignment.html#OpenjdkMethodParameterAlignment">
+                OpenjdkMethodParameterAlignment
+              </a>
+            </td>
+            <td>
+              Checks that the parameters of a wrapped method declaration follow one of the two forms
+              allowed by the OpenJDK style guidelines.
             </td>
           </tr>
           <tr>
@@ -1880,6 +1967,29 @@
             </td>
             <td>
               Checks for redundant modifiers.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="checks/modifier/redundantmodifiercompactsource.html#RedundantModifierCompactSource">
+                RedundantModifierCompactSource
+              </a>
+            </td>
+            <td>
+              Checks for redundant modifiers on fields and methods declared directly in a compact
+              source file.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="checks/coding/redundantthis.html#RedundantThis">
+                RedundantThis
+              </a>
+            </td>
+            <td>
+              Checks that references to instance variables and methods of the current object avoid
+              unnecessary use of <code>this</code>, unless it is required to resolve ambiguity with
+              a shadowed field.
             </td>
           </tr>
           <tr>

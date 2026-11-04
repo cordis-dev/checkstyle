@@ -96,8 +96,7 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 public final class TranslationCheck extends AbstractFileSetCheck {
 
     /**
-     * A key is pointing to the warning message text for missing key
-     * in "messages.properties" file.
+     * A key is pointing to the warning message text for missing key in "messages.properties" file.
      */
     public static final String MSG_KEY = "translation.missingKey";
 
@@ -153,6 +152,11 @@ public final class TranslationCheck extends AbstractFileSetCheck {
         "^%1$s\\_%2$s(\\_[A-Z]{2})?\\.%3$s$|^%1$s\\_%2$s\\_[A-Z]{2}\\_[A-Za-z]+\\.%3$s$";
     /** Formatting string to form regexp to validate default translations file names. */
     private static final String REGEXP_FORMAT_TO_CHECK_DEFAULT_TRANSLATIONS = "^%s\\.%s$";
+
+    /**
+     * Compiled pattern for all system newlines.
+     */
+    private static final Pattern ALL_NEW_LINES = Pattern.compile("\\R");
 
     /** Logger for TranslationCheck. */
     private final Log log;
@@ -475,8 +479,8 @@ public final class TranslationCheck extends AbstractFileSetCheck {
                 final MessageDispatcher dispatcher = getMessageDispatcher();
                 final String path = fileKey.getKey().getAbsolutePath();
                 dispatcher.fireFileStarted(path);
-                for (Object key : missingKeys) {
-                    log(1, MSG_KEY, key);
+                for (String key : missingKeys) {
+                    log(1, MSG_KEY, ALL_NEW_LINES.matcher(key).replaceAll("\\\\n"));
                 }
                 fireErrors(path);
                 dispatcher.fireFileFinished(path);

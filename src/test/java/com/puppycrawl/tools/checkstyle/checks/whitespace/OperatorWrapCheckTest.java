@@ -30,8 +30,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class OperatorWrapCheckTest
-    extends AbstractModuleTestSupport {
+public class OperatorWrapCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -172,8 +171,10 @@ public class OperatorWrapCheckTest
             });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                 + "whitespace.OperatorWrapCheck");
     }
 
@@ -242,6 +243,30 @@ public class OperatorWrapCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputOperatorWrapLambdaNl.java"), expected);
+    }
+
+    @Test
+    public void testOperatorWrapCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "14:21: " + getCheckMessage(MSG_LINE_NEW, "+"),
+            "16:25: " + getCheckMessage(MSG_LINE_NEW, "&&"),
+            "18:23: " + getCheckMessage(MSG_LINE_NEW, "?"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputOperatorWrapCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testOperatorWrapCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "15:13: " + getCheckMessage(MSG_LINE_PREVIOUS, "+"),
+            "17:13: " + getCheckMessage(MSG_LINE_PREVIOUS, "&&"),
+            "19:13: " + getCheckMessage(MSG_LINE_PREVIOUS, "?"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputOperatorWrapCompactSourceFileProperties.java"),
+                expected);
     }
 
 }

@@ -65,15 +65,13 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 public class EmptyLineSeparatorCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message empty.line.separator in "messages.properties"
-     * file.
+     * A key is pointing to the warning message empty.line.separator in "messages.properties" file.
      */
     public static final String MSG_SHOULD_BE_SEPARATED = "empty.line.separator";
 
     /**
      * A key is pointing to the warning message empty.line.separator.multiple.lines
-     *  in "messages.properties"
-     * file.
+     *  in "messages.properties" file.
      */
     public static final String MSG_MULTIPLE_LINES = "empty.line.separator.multiple.lines";
 
@@ -524,13 +522,14 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
             result = true;
         }
         else {
-            // For multiline enum, true if token is placed in group of single line
-            // except first enum constant
-            final DetailAST firstConstant =
-                    objectBlock.findFirstToken(TokenTypes.ENUM_CONSTANT_DEF);
-            if (firstConstant.getLineNo() == ast.getLineNo()
-                    && firstConstant.getColumnNo() < ast.getColumnNo()) {
-                result = true;
+            for (DetailAST previousSibling = ast.getPreviousSibling();
+                 previousSibling != null;
+                 previousSibling = previousSibling.getPreviousSibling()) {
+                if (previousSibling.getType() == TokenTypes.ENUM_CONSTANT_DEF
+                        && previousSibling.getLineNo() == ast.getLineNo()) {
+                    result = true;
+                    break;
+                }
             }
         }
 
@@ -664,6 +663,35 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
     }
 
     /**
+     * Returns the line on which token starts, a comment preceding its first annotation.
+     *
+     * @param token token to process.
+     * @return line number of token, or of its annotation's leading comment.
+     */
+    private int getStartLineNo(DetailAST token) {
+        int lineNo = token.getLineNo();
+        final DetailAST modifiers = token.findFirstToken(TokenTypes.MODIFIERS);
+        if (modifiers != null) {
+            final DetailAST firstModifier = modifiers.getFirstChild();
+            if (firstModifier != null && firstModifier.getType() == TokenTypes.ANNOTATION) {
+                final DetailAST comment = firstModifier.getFirstChild();
+                if (isCommentInBeginningOfLine(comment)) {
+                    DetailAST lastComment = comment;
+                    while (TokenUtil.isCommentType(lastComment.getNextSibling().getType())) {
+                        lastComment = lastComment.getNextSibling();
+                    }
+                    final DetailAST afterComment = lastComment.getNextSibling();
+                    final DetailAST lastCommentLine = lastComment.getLastChild();
+                    if (afterComment.getLineNo() - lastCommentLine.getLineNo() <= 1) {
+                        lineNo = comment.getLineNo();
+                    }
+                }
+            }
+        }
+        return lineNo;
+    }
+
+    /**
      * Checks if a token has empty pre-previous line.
      *
      * @param token DetailAST token.
@@ -671,7 +699,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      */
     private boolean isPrePreviousLineEmpty(DetailAST token) {
         boolean result = false;
-        final int lineNo = token.getLineNo();
+        final int lineNo = getStartLineNo(token);
         // 3 is the number of the pre-previous line because the numbering starts from zero.
         final int number = 3;
         if (lineNo >= number) {
@@ -785,8 +813,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      *
      * @param startLine number of the first line in the range
      * @param endLine number of the second line in the range
-     * @return {@code true} if found any blank line within the range, {@code false}
-     *         otherwise
+     * @return {@code true} if found any blank line within the range, {@code false} otherwise
      */
     private boolean hasEmptyLine(int startLine, int endLine) {
         // Initial value is false - blank line not found

@@ -33,6 +33,7 @@
             <li><a href="#short">short</a></li>
             <li><a href="#short.5B.5D">short[]</a></li>
             <li><a href="#AccessModifierOption.5B.5D">AccessModifierOption[]</a></li>
+            <li><a href="#BlockCommentEndPositionOption">BlockCommentEndPositionOption</a></li>
             <li><a href="#BlockOption">BlockOption</a></li>
             <li><a href="#ClosingParensOption">ClosingParensOption</a></li>
             <li><a href="#ElementStyleOption">ElementStyleOption</a></li>
@@ -47,6 +48,7 @@
             <li><a href="#Pattern.5B.5D">Pattern[]</a></li>
             <li><a href="#RightCurlyOption">RightCurlyOption</a></li>
             <li><a href="#Scope">Scope</a></li>
+            <li><a href="#SeparatorOption">SeparatorOption</a></li>
             <li><a href="#SeverityLevel">SeverityLevel</a></li>
             <li><a href="#String">String</a></li>
             <li><a href="#String.5B.5D">String[]</a></li>
@@ -238,6 +240,64 @@
         <li><code>package</code></li>
         <li><code>private</code></li>
       </ul>
+    </section>
+
+    <section name="BlockCommentEndPositionOption">
+      <p>
+        This type represents policy on placement of the block comment end
+          <code>*/</code>.
+        The following table describes the valid options:
+      </p>
+
+      <div class="wrapper">
+        <table summary="BlockCommentEndPositionOption options">
+          <tr>
+            <td>Option</td>
+            <td>Definition</td>
+          </tr>
+
+          <tr>
+            <td><code>ALONE</code></td>
+            <td>
+              Represents the policy that the block comment end
+              must be alone on its own line.
+              Example:
+              <div class="wrapper">
+                <pre class="prettyprint"><code class="language-java">
+&#47;**
+ * Multiple lines of Javadoc text are written here,
+ * wrapped normally...
+ *&#47;
+public void method();
+                </code></pre>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><code>ALONE_OR_SINGLELINE</code></td>
+            <td>
+              Represents the policy that the block comment end
+              must be alone on its own line or on the same line as the
+              block comment begin.
+              Example:
+              <div class="wrapper">
+                <pre class="prettyprint"><code class="language-java">
+&#47;**
+ * Multiple lines of Javadoc text are written here,
+ * wrapped normally...
+ *&#47;
+public void method();
+
+&#47;** Javadoc summary. *&#47;
+public void method1();
+                </code></pre>
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </div>
     </section>
 
     <section name="BlockOption">
@@ -681,6 +741,31 @@ public void method();
               </div>
             </td>
           </tr>
+
+          <tr>
+            <td>
+              <a id="LeftCurlyOption-nl_or_singleline"/>
+              <a href="#LeftCurlyOption-nl_or_singleline">nl_or_singleline</a>
+            </td>
+            <td>
+              If the whole block fits on a single line, then apply the
+              <code>eol</code> rule. Otherwise, apply the <code>nl</code> rule.
+              Checkstyle will allow:
+              <div class="wrapper">
+                <pre><code class="language-java">if (condition) { doSomething(); }
+</code></pre>
+              </div>
+              But for a block spanning multiple lines, Checkstyle will
+              enforce:
+              <div class="wrapper">
+                <pre><code class="language-java">if (condition)
+{
+    ...
+}
+</code></pre>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
     </section>
@@ -1056,6 +1141,49 @@ if (a &#62; 0) {
         others, then you must set the exclude scope property, if available, to the scope above
         it in the table. In this case you would exclude <code>package</code>.
       </p>
+    </section>
+
+    <section name="SeparatorOption">
+      <p>
+        This type represents the policy for empty lines at the top and bottom
+        of a block. The following table describes the valid options:
+      </p>
+
+      <div class="wrapper">
+        <table summary="separator options">
+          <tr>
+            <td>Option</td>
+            <td>Definition</td>
+          </tr>
+          <tr>
+            <td>
+              <a id="SeparatorOption-empty_line"/>
+              <a href="#SeparatorOption-empty_line">empty_line</a>
+            </td>
+            <td>
+              Exactly one empty line is required.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a id="SeparatorOption-empty_line_allowed"/>
+              <a href="#SeparatorOption-empty_line_allowed">empty_line_allowed</a>
+            </td>
+            <td>
+              Presence or absence of an empty line is OK.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a id="SeparatorOption-no_empty_line"/>
+              <a href="#SeparatorOption-no_empty_line">no_empty_line</a>
+            </td>
+            <td>
+              An empty line is not allowed.
+            </td>
+          </tr>
+        </table>
+      </div>
     </section>
 
     <section name="SeverityLevel">

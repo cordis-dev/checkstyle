@@ -29,8 +29,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class MethodNameCheckTest
-    extends AbstractModuleTestSupport {
+public class MethodNameCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -246,7 +245,31 @@ public class MethodNameCheckTest
         };
 
         verifyWithInlineConfigParser(
-                getNonCompilablePath("InputMethodNameCompactSourceFile.java"), expected);
+                getNonCompilablePath("compact/InputMethodNameCompactSourceFile.java"), expected);
+    }
+
+    @Test
+    public void testCompactSourceFileProperties1() throws Exception {
+
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputMethodNameCompactSourceFileProperties1.java"),
+            expected);
+    }
+
+    @Test
+    public void testCompactSourceFileProperties2() throws Exception {
+
+        final String pattern = "^[a-z][a-zA-Z0-9]*$";
+
+        final String[] expected = {
+            "26:17: " + getCheckMessage(MSG_INVALID_PATTERN, "Bad_Method4", pattern),
+        };
+
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputMethodNameCompactSourceFileProperties2.java"),
+            expected);
     }
 
 }

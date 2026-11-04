@@ -31,8 +31,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class TypecastParenPadCheckTest
-    extends AbstractModuleTestSupport {
+public class TypecastParenPadCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -73,6 +72,34 @@ public class TypecastParenPadCheckTest
         verifyWithInlineConfigParser(
                 getPath("InputTypecastParenPadWhitespaceAround.java"),
                expected);
+    }
+
+    @Test
+    public void testTypecastParenPadCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "12:23: " + getCheckMessage(MSG_WS_FOLLOWED, "("),
+            "13:31: " + getCheckMessage(MSG_WS_PRECEDED, ")"),
+            "14:19: " + getCheckMessage(MSG_WS_FOLLOWED, "("),
+            "14:28: " + getCheckMessage(MSG_WS_PRECEDED, ")"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputTypecastParenPadCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testTypecastParenPadCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "12:25: " + getCheckMessage(MSG_WS_NOT_FOLLOWED, "("),
+            "13:33: " + getCheckMessage(MSG_WS_NOT_PRECEDED, ")"),
+            "14:22: " + getCheckMessage(MSG_WS_NOT_FOLLOWED, "("),
+            "14:29: " + getCheckMessage(MSG_WS_NOT_PRECEDED, ")"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputTypecastParenPadCompactSourceFileProperties.java"),
+                expected);
     }
 
     @Test

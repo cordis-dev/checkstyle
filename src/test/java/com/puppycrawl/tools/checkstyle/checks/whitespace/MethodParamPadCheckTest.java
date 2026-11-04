@@ -32,8 +32,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class MethodParamPadCheckTest
-    extends AbstractModuleTestSupport {
+public class MethodParamPadCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -208,8 +207,10 @@ public class MethodParamPadCheckTest
         });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                 + "whitespace.MethodParamPadCheck");
     }
 
@@ -255,6 +256,28 @@ public class MethodParamPadCheckTest
         };
         verifyWithInlineConfigParser(
                 getNonCompilablePath("InputMethodParamPadCheckRecordPattern2.java"), expected);
+    }
+
+    @Test
+    public void testMethodParamPadCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "13:13: " + getCheckMessage(MSG_WS_PRECEDED, "("),
+            "20:9: " + getCheckMessage(MSG_LINE_PREVIOUS, "("),
+            "24:12: " + getCheckMessage(MSG_WS_PRECEDED, "("),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputMethodParamPadCompactSourceFileDefault.java"),
+            expected);
+    }
+
+    @Test
+    public void testMethodParamPadCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "13:12: " + getCheckMessage(MSG_WS_NOT_PRECEDED, "("),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputMethodParamPadCompactSourceFileProperties.java"),
+            expected);
     }
 
 }

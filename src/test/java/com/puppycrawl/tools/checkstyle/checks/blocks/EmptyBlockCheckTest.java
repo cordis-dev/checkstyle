@@ -30,8 +30,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class EmptyBlockCheckTest
-    extends AbstractModuleTestSupport {
+public class EmptyBlockCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -133,8 +132,10 @@ public class EmptyBlockCheckTest
                 });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                    + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                     + "blocks.EmptyBlockCheck");
     }
 
@@ -261,6 +262,31 @@ public class EmptyBlockCheckTest
         };
         verifyWithInlineConfigParser(
                 getNonCompilablePath("InputEmptyBlockCaseAndDefaultWithTextOption.java"),
+                expected);
+    }
+
+    @Test
+    public void testEmptyBlockCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "14:15: " + getCheckMessage(MSG_KEY_BLOCK_NO_STATEMENT),
+            "16:15: " + getCheckMessage(MSG_KEY_BLOCK_NO_STATEMENT),
+            "20:18: " + getCheckMessage(MSG_KEY_BLOCK_NO_STATEMENT),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputEmptyBlockCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testEmptyBlockCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "14:15: " + getCheckMessage(MSG_KEY_BLOCK_EMPTY, "if"),
+            "20:18: " + getCheckMessage(MSG_KEY_BLOCK_EMPTY, "while"),
+            "22:9: " + getCheckMessage(MSG_KEY_BLOCK_EMPTY, "try"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputEmptyBlockCompactSourceFileProperties.java"),
                 expected);
     }
 

@@ -34,8 +34,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.internal.utils.TestUtil;
 
-public class FinalClassCheckTest
-    extends AbstractModuleTestSupport {
+public class FinalClassCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -117,7 +116,18 @@ public class FinalClassCheckTest
             "19:1: " + getCheckMessage(MSG_KEY, "Bar"),
         };
         verifyWithInlineConfigParser(
-                getNonCompilablePath("InputFinalClassCompactSourceFile.java"),
+                getNonCompilablePath("compact/InputFinalClassCompactSourceFile.java"),
+                expected);
+    }
+
+    @Test
+    public void testCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "9:1: " + getCheckMessage(MSG_KEY, "Alpha"),
+            "29:1: " + getCheckMessage(MSG_KEY, "Zeta"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputFinalClassCompactSourceFileDefault.java"),
                 expected);
     }
 
@@ -128,7 +138,7 @@ public class FinalClassCheckTest
         };
         verifyWithInlineConfigParser(
                 getNonCompilablePath(
-                        "InputFinalClassCompactSourceFileAnonymousNestedResolution.java"),
+                        "compact/InputFinalClassCompactSourceFileAnonymousNestedResolution.java"),
                 expected);
     }
 

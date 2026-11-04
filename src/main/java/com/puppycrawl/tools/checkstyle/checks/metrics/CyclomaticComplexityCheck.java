@@ -69,12 +69,10 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * @since 3.2
  */
 @FileStatefulCheck
-public class CyclomaticComplexityCheck
-    extends AbstractCheck {
+public class CyclomaticComplexityCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_KEY = "cyclomaticComplexity";
 
@@ -195,6 +193,14 @@ public class CyclomaticComplexityCheck
     }
 
     @Override
+    public void beginTree(DetailAST rootAST) {
+        valueStack.clear();
+        currentValue = INITIAL_VALUE;
+        methodNameStack.clear();
+        currentMethodName = INITIAL_METHOD_NAME;
+    }
+
+    @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
@@ -225,8 +231,7 @@ public class CyclomaticComplexityCheck
     }
 
     /**
-     * Hook called when visiting a token. Will not be called the method
-     * definition tokens.
+     * Hook called when visiting a token. Will not be called the method definition tokens.
      *
      * @param ast the token being visited
      */

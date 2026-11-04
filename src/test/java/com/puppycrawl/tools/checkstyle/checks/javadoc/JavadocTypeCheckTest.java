@@ -451,13 +451,13 @@ public class JavadocTypeCheckTest extends AbstractModuleTestSupport {
             "61:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "notMyString"),
             "64:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myString"),
             "64:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myInt"),
-            "69:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "x"),
-            "71:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myList"),
-            "78:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "X"),
-            "82:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "notMyString"),
-            "85:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "<T>"),
-            "85:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myInt"),
-            "85:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myString"),
+            "72:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "x"),
+            "74:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myList"),
+            "81:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "X"),
+            "85:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "notMyString"),
+            "88:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "<T>"),
+            "88:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myInt"),
+            "88:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "myString"),
         };
         verifyWithInlineConfigParser(
                 getPath("InputJavadocTypeRecordComponents2.java"), expected);
@@ -599,6 +599,34 @@ public class JavadocTypeCheckTest extends AbstractModuleTestSupport {
         assertWithMessage("Message must include token name")
             .that(exc.getMessage())
             .contains("EQUALS");
+    }
+
+    @Test
+    public void testJavadocTypeCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "32:4: " + getCheckMessage(MSG_UNKNOWN_TAG, "unknownTag"),
+            "41:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "<X>"),
+            "43:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "<T>"),
+            "50:4: " + getCheckMessage(MSG_UNUSED_TAG_GENERAL),
+            "58:1: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "value"),
+            "66:5: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "<T>"),
+            "84:5: " + getCheckMessage(MSG_MISSING_TAG_WITH_QUOTES, "@param", "<T>"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputJavadocTypeCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testJavadocTypeCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "48:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "<X>"),
+            "57:4: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "unused"),
+            "80:12: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "<X>"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputJavadocTypeCompactSourceFileProperties.java"),
+                expected);
     }
 
 }

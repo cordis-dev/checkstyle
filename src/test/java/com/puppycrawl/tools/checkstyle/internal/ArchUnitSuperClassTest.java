@@ -22,7 +22,6 @@ package com.puppycrawl.tools.checkstyle.internal;
 import static com.google.common.truth.Truth.assertWithMessage;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -37,7 +36,6 @@ import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.domain.JavaType;
-import com.tngtech.archunit.core.domain.properties.HasName;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.lang.ArchCondition;
@@ -55,7 +53,6 @@ public class ArchUnitSuperClassTest {
         "com.puppycrawl.tools.checkstyle.checks.coding.SuperFinalizeCheck",
         "com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck",
         "com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck",
-        "com.puppycrawl.tools.checkstyle.checks.header.MultiFileRegexpHeaderCheck",
         "com.puppycrawl.tools.checkstyle.checks.metrics.ClassDataAbstractionCouplingCheck",
         "com.puppycrawl.tools.checkstyle.checks.metrics.ClassFanOutComplexityCheck",
         "com.puppycrawl.tools.checkstyle.checks.naming.CatchParameterNameCheck",
@@ -108,20 +105,24 @@ public class ArchUnitSuperClassTest {
                 }
             });
 
-        final SuppressionArchCondition<JavaClass> beSuppressedClass =
-                new SuppressionArchCondition<>(SUPPRESSED_CLASSES, "be suppressed");
+        final ArchCondition<JavaClass> beDirectSubclassOfAllowedClass =
+                beDirectSubclassOf(AbstractCheck.class)
+                        .or(beDirectSubclassOf(AbstractFileSetCheck.class))
+                        .or(beDirectSubclassOf(AbstractJavadocCheck.class));
+
+        final ArchConditionWithSuppression<JavaClass> beDirectSubclassOfAllowedClassOrSuppressed =
+                new ArchConditionWithSuppression<>(beDirectSubclassOfAllowedClass,
+                        SUPPRESSED_CLASSES);
 
         final ArchRule checksShouldHaveAllowedAbstractClassAsSuper = classes()
-            .should(beDirectSubclassOf(AbstractCheck.class)
-                        .or(beDirectSubclassOf(AbstractFileSetCheck.class))
-                        .or(beDirectSubclassOf(AbstractJavadocCheck.class)))
-            .orShould(beSuppressedClass);
+            .should(beDirectSubclassOfAllowedClassOrSuppressed);
 
         checksShouldHaveAllowedAbstractClassAsSuper.check(checksPackage);
 
         assertWithMessage("Outdated suppressions (can be removed)")
-                .that(beSuppressedClass.suppressions)
-                .containsExactlyElementsIn(beSuppressedClass.usedSuppressions);
+            .that(beDirectSubclassOfAllowedClassOrSuppressed.getSuppressions())
+            .containsExactlyElementsIn(
+                    beDirectSubclassOfAllowedClassOrSuppressed.getUsedSuppressions());
     }
 
     /**
@@ -151,35 +152,7 @@ public class ArchUnitSuperClassTest {
                 }
             }
         }
-    }
 
-    /**
-     * ArchCondition checking if a type or a member is present in the suppression list.
-     */
-    private static final class SuppressionArchCondition<T extends HasName.AndFullName>
-        extends ArchCondition<T> {
-
-        private final Set<String> suppressions;
-        private final Set<String> usedSuppressions;
-
-        private SuppressionArchCondition(Set<String> suppressions, String description) {
-            super(description);
-            this.suppressions = suppressions;
-            usedSuppressions = new HashSet<>();
-        }
-
-        @Override
-        public void check(HasName.AndFullName item, ConditionEvents events) {
-            final String fullName = item.getFullName();
-            if (suppressions.contains(fullName)) {
-                usedSuppressions.add(fullName);
-            }
-            else {
-                final String message = String.format(
-                    Locale.ROOT, "should %s or resolved.", getDescription());
-                events.add(SimpleConditionEvent.violated(item, message));
-            }
-        }
     }
 
 }

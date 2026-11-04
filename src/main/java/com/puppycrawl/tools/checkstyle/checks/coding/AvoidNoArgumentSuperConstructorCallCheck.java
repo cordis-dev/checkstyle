@@ -39,8 +39,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 public final class AvoidNoArgumentSuperConstructorCallCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_CTOR = "super.constructor.call";
 
@@ -70,7 +69,8 @@ public final class AvoidNoArgumentSuperConstructorCallCheck extends AbstractChec
 
     @Override
     public void visitToken(DetailAST ast) {
-        if (ast.getFirstChild().getType() == TokenTypes.LPAREN
+        if (ast.getPreviousSibling() == null
+                && ast.getFirstChild().getType() == TokenTypes.LPAREN
                 && ast.findFirstToken(TokenTypes.ELIST).getChildCount() == 0) {
             log(ast, MSG_CTOR);
         }

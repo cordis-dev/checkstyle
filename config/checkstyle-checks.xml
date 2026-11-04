@@ -440,10 +440,12 @@
     <module name="EmptyStatement"/>
     <module name="EqualsAvoidNull"/>
     <module name="EqualsHashCode"/>
+    <module name="ExceptionThrowShouldUseContext"/>
     <module name="ExplicitInitialization"/>
     <module name="ExpressionOverBlockLambda"/>
     <module name="FallThrough"/>
     <module name="FinalLocalVariable"/>
+    <module name="FinalPatternVariable"/>
     <module name="HiddenField">
       <property name="ignoreConstructorParameter" value="true"/>
       <property name="ignoreSetter" value="true"/>
@@ -568,6 +570,13 @@
       <message key="matchxpath.match"
                value="All example test classes should extend AbstractExamplesModuleTestSupport."/>
     </module>
+    <module name="MatchXpath">
+      <property name="id" value="xpathTestsUseInlineConfigParser"/>
+      <property name="query"
+                value="//METHOD_CALL[.//IDENT[@text='runVerifications']]"/>
+      <message key="matchxpath.match"
+               value="Use verifyXpathWithInlineConfigParser instead of runVerifications."/>
+    </module>
     <module name="MissingCtor"/>
     <module name="MissingNullCaseInSwitch"/>
     <module name="MissingSwitchDefault"/>
@@ -585,6 +594,7 @@
       <!-- This Check is conflicting with ArrayTrailingComma -->
       <property name="severity" value="ignore"/>
     </module>
+    <module name="NoCauseGetMessageInExceptionConstructor"/>
     <module name="NoClone"/>
     <module name="NoCodeInFile"/>
     <module name="NoEnumTrailingComma">
@@ -600,6 +610,10 @@
     <module name="PackageDeclaration"/>
     <module name="ParameterAssignment"/>
     <module name="PatternVariableAssignment"/>
+    <module name="RedundantThis">
+      <!-- This check might conflict with RequireThis -->
+      <property name="severity" value="ignore"/>
+    </module>
     <module name="RequireThis"/>
     <module name="ReturnCount">
       <property name="max" value="1"/>
@@ -762,6 +776,7 @@
     <module name="InappropriateJavadocBlockTagsOnField"/>
     <module name="InappropriateJavadocBlockTagsOnPackage"/>
     <module name="InappropriateJavadocBlockTagsOnType"/>
+    <module name="BlockCommentEndPosition"/>
     <module name="InvalidJavadocPosition"/>
     <module name="JavadocBlockTagLocation">
       <!-- default tags -->
@@ -791,6 +806,12 @@
     <module name="JavadocType">
       <!-- avoid errors on tag '@noinspection' -->
       <property name="allowUnknownTags" value="true"/>
+    </module>
+    <module name="JavadocUtilizingTrailingSpace">
+      <property name="lineLimit" value="100"/>
+      <!-- default value and lines that have a single word, as in LineLength -->
+      <property name="ignorePattern"
+                value="^ *\* *[^ ]+$|href\s*=\s*&quot;[^&quot;]*&quot;|http://|https://|ftp://"/>
     </module>
     <module name="PreferLiteralJavadocInlineTag"/>
     <module name="JavadocVariable"/>
@@ -857,6 +878,7 @@
     <module name="AvoidEscapedUnicodeCharacters">
       <property name="allowIfAllCharactersEscaped" value="true"/>
     </module>
+    <module name="ClassHeaderWrapOpenjdk"/>
     <module name="CommentsIndentation"/>
     <module name="DescendantToken"/>
     <module name="FinalParameters">
@@ -907,6 +929,7 @@
     <module name="RedundantModifier">
       <property name="jdkVersion" value="${checkstyle.java.version}"/>
     </module>
+    <module name="RedundantModifierCompactSource"/>
     <module name="AnnotatedDeclarationVisibility"/>
 
     <!-- Modules -->
@@ -992,6 +1015,7 @@
       <property name="allowNoEmptyLineBetweenFields" value="true"/>
       <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
     </module>
+    <module name="EmptyLineWrappingInBlock"/>
     <module name="GenericWhitespace"/>
     <module name="MethodParamPad"/>
     <module name="NoLineWrap"/>
@@ -1042,6 +1066,12 @@
       <property name="tokens" value="LITERAL_INSTANCEOF"/>
       <property name="tokens" value="METHOD_REF"/>
       <property name="option" value="nl"/>
+    </module>
+    <module name="OpenjdkMethodParameterAlignment">
+      <!-- This Check enforces the OpenJDK style guide, our code base groups
+           related parameters on the same line of a vertically aligned
+           parameter list, so output must be ignored. -->
+      <property name="severity" value="ignore"/>
     </module>
     <module name="OperatorWrap">
       <property name="tokens" value="ASSIGN"/>

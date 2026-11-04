@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.puppycrawl.tools.checkstyle.FileStatefulCheck;
+import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.Scope;
@@ -72,12 +72,11 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *
  * @since 8.21
  */
-@FileStatefulCheck
+@StatelessCheck
 public class MissingJavadocMethodCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_JAVADOC_MISSING = "javadoc.missing.named";
 
@@ -334,7 +333,8 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
 
                 if (slist != null) {
                     DetailAST expr = slist.getFirstChild();
-                    while (expr.getType() == TokenTypes.SINGLE_LINE_COMMENT) {
+                    while (expr.getType() == TokenTypes.SINGLE_LINE_COMMENT
+                            || expr.getType() == TokenTypes.BLOCK_COMMENT_BEGIN) {
                         expr = expr.getNextSibling();
                     }
                     getterMethod = expr.getType() == TokenTypes.LITERAL_RETURN;
@@ -392,7 +392,8 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
         DetailAST child = detailAst.getFirstChild();
 
         while (child != null) {
-            if (child.getType() != TokenTypes.SINGLE_LINE_COMMENT) {
+            if (child.getType() != TokenTypes.SINGLE_LINE_COMMENT
+                    && child.getType() != TokenTypes.BLOCK_COMMENT_BEGIN) {
                 childCount += 1;
             }
             child = child.getNextSibling();

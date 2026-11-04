@@ -202,20 +202,16 @@ public class XdocsPagesTest {
             "JavadocPackage",
             "JavadocType",
             "JavadocVariable",
-            "LeftCurly",
             "LocalFinalVariableName",
             "LocalVariableName",
             "MagicNumber",
             "MemberName",
             "MethodLength",
             "MethodName",
-            "MethodParamPad",
             "MissingJavadocMethod",
             "MissingSwitchDefault",
             "ModifierOrder",
             "NewlineAtEndOfFile",
-            "NoWhitespaceAfter",
-            "NoWhitespaceBefore",
             "PackageName",
             "ParameterName",
             "ParameterNumber",
@@ -223,7 +219,6 @@ public class XdocsPagesTest {
             "RedundantImport",
             "RedundantModifier",
             "RegexpSingleline",
-            "RightCurly",
             "SimplifyBooleanExpression",
             "SimplifyBooleanReturn",
             "StaticVariableName",
@@ -233,9 +228,7 @@ public class XdocsPagesTest {
             "TypeName",
             "UnusedImports",
             "UpperEll",
-            "VisibilityModifier",
-            "WhitespaceAfter",
-            "WhitespaceAround"
+            "VisibilityModifier"
     );
 
     private static final Set<String> GOOGLE_MODULES = Collections.unmodifiableSet(
@@ -251,16 +244,6 @@ public class XdocsPagesTest {
 
     private static final Set<String> DOC_COMMENTS_MODULES = Collections.unmodifiableSet(
         CheckUtil.getConfigDocCommentsStyleModules());
-
-    /**
-     * Example pairs that are intentionally placed in the same separated group, as they
-     * demonstrate the same configuration applied to files of different types.
-     * Each entry has the form {@code templateFileName:previousExamplePrefix:currentExamplePrefix}
-     * and marks that pair as allowed to appear without a separator between them.
-     */
-    private static final Set<String> ALLOWED_EXAMPLES_WITHOUT_SEPARATOR = Set.of(
-        "newlineatendoffile.xml.template:Example4:Example6"
-    );
 
     private static final Set<String> NON_MODULE_XDOC = Set.of(
         "config-system-properties.xml",
@@ -584,6 +567,54 @@ public class XdocsPagesTest {
     }
 
     @Test
+    public void testSiteXmlModuleNamesAreInSyncWithActualNames() throws Exception {
+        final NodeList nodes = getTagSourcesNode(SITE_PATH, "item");
+        final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
+
+        final List<String> checkNames = new ArrayList<>();
+        final List<String> filterNames = new ArrayList<>();
+        final List<String> fileFilterNames = new ArrayList<>();
+
+        for (int nodeIndex = 0; nodeIndex < nodes.getLength(); nodeIndex++) {
+            final Node current = nodes.item(nodeIndex);
+            final String itemName = XmlUtil.getNameAttributeOfNode(current);
+
+            if ("Checks".equals(itemName)) {
+                for (Node groupNode : XmlUtil.getChildrenElements(current)) {
+                    checkNames.addAll(getNames(groupNode));
+                }
+            }
+            if ("Filters".equals(itemName)) {
+                filterNames.addAll(getNames(current));
+            }
+            if ("File Filters".equals(itemName)) {
+                fileFilterNames.addAll(getNames(current));
+            }
+        }
+
+        assertWithMessage("Check names must be in sync with actual names at %s", SITE_PATH)
+                .that(checkNames)
+                .containsExactlyElementsIn(getModuleNames(modules, "checks"));
+        assertWithMessage("Filter names must be in sync with actual names at %s", SITE_PATH)
+                .that(filterNames)
+                .containsExactlyElementsIn(getModuleNames(modules, "filters"));
+        assertWithMessage("File Filter names must be in sync with actual names at %s", SITE_PATH)
+                .that(fileFilterNames)
+                .containsExactlyElementsIn(getModuleNames(modules, "filefilters"));
+    }
+
+    private static Set<String> getModuleNames(Set<Class<?>> modules, String subPackage) {
+        final String packagePrefix = "com.puppycrawl.tools.checkstyle." + subPackage;
+        final Set<Class<?>> packageModules = modules.stream()
+                .filter(module -> {
+                    return module.getPackageName().equals(packagePrefix)
+                            || module.getPackageName().startsWith(packagePrefix + ".");
+                })
+                .collect(Collectors.toSet());
+        return CheckUtil.getSimpleNames(packageModules);
+    }
+
+    @Test
     public void testAlphabetOrderAtIndexPages() throws Exception {
         final Path allChecks = Path.of("src/site/xdoc/checks.xml");
         validateOrder(allChecks, "Check");
@@ -783,9 +814,13 @@ public class XdocsPagesTest {
                     "src/main/resources/com/puppycrawl/tools/checkstyle/configuration_1_3.dtd")
                     .getCanonicalPath();
 
-            code = "<?xml version=\"1.0\"?>\n<!DOCTYPE module PUBLIC "
-                    + "\"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\" \"" + dtdPath
-                    + "\">\n" + code;
+            final String template =
+                """
+                <?xml version="1.0"?>
+                <!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN" "%s">
+                %s\
+                """;
+            code = String.format(Locale.ROOT, template, dtdPath, code);
         }
         return code;
     }
@@ -1637,7 +1672,7 @@ public class XdocsPagesTest {
     private static String getPatternArrayPropertyValue(Object fieldValue) {
         Object value = fieldValue;
         String result;
-        if (value instanceof Collection<?> collection) {
+        if (value instanceof final Collection<?> collection) {
             final Pattern[] newArray = new Pattern[collection.size()];
             final Iterator<?> iterator = collection.iterator();
             int index = 0;
@@ -1686,7 +1721,7 @@ public class XdocsPagesTest {
         }
         else {
             final Stream<?> valuesStream;
-            if (value instanceof Collection<?> collection) {
+            if (value instanceof final Collection<?> collection) {
                 valuesStream = collection.stream();
             }
             else {
@@ -2932,7 +2967,7 @@ public class XdocsPagesTest {
      */
     private static void validateSubSectionExampleSeparation(Path template, Element subsection) {
         final NodeList children = subsection.getChildNodes();
-        String lastExampleIdPrefix = null;
+        String lastConfigExamplePrefix = null;
         boolean separatorSeen = false;
 
         for (int childIndex = 0; childIndex < children.getLength(); childIndex++) {
@@ -2947,22 +2982,19 @@ public class XdocsPagesTest {
             }
             else {
                 final String currentId = element.getAttribute("id");
-                if (isExampleElement(currentId)) {
+                if (isExampleConfigElement(currentId)) {
                     final String currentExPrefix = getExamplePrefix(currentId);
-                    if (lastExampleIdPrefix != null
-                            && !lastExampleIdPrefix.equals(currentExPrefix)) {
-                        final boolean isSeparated = separatorSeen
-                                || isSeparatorSuppressed(template, lastExampleIdPrefix,
-                                        currentExPrefix);
+                    if (lastConfigExamplePrefix != null
+                            && !lastConfigExamplePrefix.equals(currentExPrefix)) {
                         assertWithMessage(
                             "Missing <hr class=\"example-separator\"/> "
                                 + "between %s and %s in file: %s",
-                                lastExampleIdPrefix, currentExPrefix, template)
-                                .that(isSeparated)
+                            lastConfigExamplePrefix, currentExPrefix, template)
+                                .that(separatorSeen)
                                 .isTrue();
-                        separatorSeen = false;
                     }
-                    lastExampleIdPrefix = currentExPrefix;
+                    lastConfigExamplePrefix = currentExPrefix;
+                    separatorSeen = false;
                 }
             }
         }
@@ -2980,30 +3012,13 @@ public class XdocsPagesTest {
     }
 
     /**
-     * Checks if an element ID represents an example element.
+     * Checks if an element ID represents an example's "-config" paragraph.
      *
      * @param currentId the element ID
-     * @return true if it's an example element
+     * @return true if it's an example "-config" element
      */
-    private static boolean isExampleElement(String currentId) {
-        return currentId != null
-                && (currentId.startsWith("Example") || currentId.startsWith("UseCase"));
-    }
-
-    /**
-     * Checks whether the given pair of consecutive examples is explicitly allowed to be
-     * grouped together without a separator between them.
-     *
-     * @param template template file the examples belong to
-     * @param previousExamplePrefix prefix of the preceding example
-     * @param currentExamplePrefix prefix of the following example
-     * @return true if the missing separator is intentional
-     */
-    private static boolean isSeparatorSuppressed(Path template, String previousExamplePrefix,
-                                                 String currentExamplePrefix) {
-        final String key = template.getFileName() + ":" + previousExamplePrefix
-                + ":" + currentExamplePrefix;
-        return ALLOWED_EXAMPLES_WITHOUT_SEPARATOR.contains(key);
+    private static boolean isExampleConfigElement(String currentId) {
+        return currentId != null && EXAMPLE_ID_PATTERN.matcher(currentId).matches();
     }
 
     private static List<Path> collectAllXmlTemplatesUnderSrcSite() throws IOException {
@@ -3395,7 +3410,9 @@ public class XdocsPagesTest {
 
     @FunctionalInterface
     private interface PredicateProcess {
+
         boolean hasFit(Path path);
+
     }
 
 }

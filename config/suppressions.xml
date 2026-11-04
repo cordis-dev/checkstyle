@@ -136,6 +136,7 @@
   <suppress id="noConsecutiveLines" files="/parenpad.xml"/>
   <suppress id="noConsecutiveLines" files="/singlespaceseparator.xml"/>
   <suppress id="noConsecutiveLines" files="/typebodypadding.xml"/>
+  <suppress id="noConsecutiveLines" files="/unnecessaryparentheses.xml"/>
 
   <!-- permanent suppression to allow regexp on content of the line -->
   <suppress id="noUsageOfGetFileContentsMethod" files="RegexpCheck.java"/>
@@ -198,13 +199,67 @@
   <!-- MissingCtor only matters for production code (src/main/java) which generates Javadoc -->
   <suppress checks="MissingCtor" files=".*/src/(test|it|xdocs-examples)/.*\.java"/>
 
-  <!-- until https://github.com/checkstyle/checkstyle/issues/21288 -->
-  <suppress checks="PreferCodeOrSnippetJavadocInlineTag"
-            files=".*\.java"
-            message="Use snippet inline tag instead of .* tag\."/>
+  <!-- suppress until https://github.com/checkstyle/checkstyle/issues/21861 -->
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]coding[\\/]XpathRegressionMagicNumberTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]coding[\\/]XpathRegressionMatchXpathTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]coding[\\/]XpathRegressionUnnecessaryTypeArgumentsWithRecordPatternTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]imports[\\/]XpathRegressionAvoidModuleImportTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]imports[\\/]XpathRegressionCustomImportOrderTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]imports[\\/]XpathRegressionImportControlTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]imports[\\/]XpathRegressionImportOrderTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]imports[\\/]XpathRegressionModuleImportOrderTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]imports[\\/]XpathRegressionUnusedImportsTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]indentation[\\/]XpathRegressionCommentsIndentationTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]indentation[\\/]XpathRegressionIndentationTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionInappropriateJavadocBlockTagsOnFieldTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionInappropriateJavadocBlockTagsOnPackageTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionInappropriateJavadocBlockTagsOnTypeTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionInvalidJavadocPositionTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionJavadocContentLocationTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionJavadocMethodTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionJavadocTypeTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionMissingJavadocMethodTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionMissingJavadocPackageTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]javadoc[\\/]XpathRegressionMissingJavadocTypeTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]metrics[\\/]XpathRegressionJavaNCSSTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]modifier[\\/]XpathRegressionAnnotatedDeclarationVisibilityTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]modifier[\\/]XpathRegressionModifierOrderTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]modifier[\\/]XpathRegressionRedundantModifierTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]modules[\\/]XpathRegressionModuleDirectiveOrderTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]naming[\\/]XpathRegressionAbbreviationAsWordInNameTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]naming[\\/]XpathRegressionIllegalIdentifierNameTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]naming[\\/]XpathRegressionPackageNameTest\.java"/>
+  <suppress id="xpathTestsUseInlineConfigParser"
+            files="[\\/]src[\\/]it[\\/]java[\\/]org[\\/]checkstyle[\\/]suppressionxpathfilter[\\/]naming[\\/]XpathRegressionTypeNameTest\.java"/>
 
-  <!-- Using {@code @code} with an escaped slash renders the entity text in Javadocs. -->
-  <suppress checks="PreferCodeOrSnippetJavadocInlineTag"
-            files="JavadocEndCommentDelimiterCheck.java"
-            message="Use code or snippet inline tags instead of 'code' tag\."/>
 </suppressions>
+

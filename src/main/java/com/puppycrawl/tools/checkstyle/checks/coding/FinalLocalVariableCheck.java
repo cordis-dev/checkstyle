@@ -53,8 +53,7 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 public class FinalLocalVariableCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_KEY = "final.variable";
 
@@ -95,6 +94,10 @@ public class FinalLocalVariableCheck extends AbstractCheck {
     /** Assigned variables of current scope. */
     private final Deque<Deque<DetailAST>> currentScopeAssignedVariables =
             new ArrayDeque<>();
+
+    /** Unassigned candidates on entry to conditional blocks that end with a throw. */
+    private final Map<DetailAST, ThrowingBranch> throwingBranches =
+            new HashMap<>();
 
     /**
      * Control whether to check
@@ -189,6 +192,13 @@ public class FinalLocalVariableCheck extends AbstractCheck {
         };
     }
 
+    @Override
+    public void beginTree(DetailAST rootAST) {
+        scopeStack.clear();
+        currentScopeAssignedVariables.clear();
+        throwingBranches.clear();
+    }
+
     // -@cs[CyclomaticComplexity] The only optimization which can be done here is moving CASE-block
     // expressions to separate methods, but that will not increase readability.
     @Override
@@ -199,6 +209,9 @@ public class FinalLocalVariableCheck extends AbstractCheck {
                 scopeStack.push(new ScopeData());
 
             case TokenTypes.SLIST -> {
+                if (ThrowingBranch.isThrowingBranch(ast)) {
+                    throwingBranches.put(ast, new ThrowingBranch(scopeStack));
+                }
                 currentScopeAssignedVariables.push(new ArrayDeque<>());
                 if (ast.getParent().getType() != TokenTypes.CASE_GROUP
                     || ast.getParent().getParent()
@@ -282,6 +295,10 @@ public class FinalLocalVariableCheck extends AbstractCheck {
                 }
                 if (containsBreak || shouldUpdateUninitializedVariables(parentAst)) {
                     updateAllUninitializedVariables();
+                }
+                final ThrowingBranch branch = throwingBranches.remove(ast);
+                if (branch != null) {
+                    branch.restore();
                 }
                 updateCurrentScopeAssignedVariables();
             }
@@ -620,7 +637,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
     private static DetailAST getParentLoop(DetailAST ast) {
         DetailAST parentLoop = ast;
         while (parentLoop != null
-            && !isLoopAst(parentLoop.getType())) {
+            && !LOOP_TYPES.get(parentLoop.getType())) {
             parentLoop = parentLoop.getParent();
         }
         return parentLoop;
@@ -706,14 +723,57 @@ public class FinalLocalVariableCheck extends AbstractCheck {
         return classOrMethodOfAst1 == classOrMethodOfAst2 && ast1.getText().equals(ast2.getText());
     }
 
-    /**
-     * Checks whether the ast is a loop.
-     *
-     * @param ast the ast to check.
-     * @return true if the ast is a loop.
-     */
-    private static boolean isLoopAst(int ast) {
-        return LOOP_TYPES.get(ast);
+    /** Assignment state for a conditional branch that cannot complete normally. */
+    private static final class ThrowingBranch {
+
+        /** Candidates that were unassigned before entering the branch, with their scopes. */
+        private final Map<FinalVariableCandidate, ScopeData> unassigned = new HashMap<>();
+
+        /**
+         * Captures the state before entering a throwing branch.
+         *
+         * @param scopes enclosing scopes
+         */
+        private ThrowingBranch(Deque<ScopeData> scopes) {
+            for (ScopeData data : scopes) {
+                for (FinalVariableCandidate candidate : data.scope.values()) {
+                    if (!candidate.assigned
+                            && data.uninitializedVariables.contains(candidate.variableIdent)) {
+                        unassigned.put(candidate, data);
+                    }
+                }
+            }
+        }
+
+        /**
+         * Checks for a block ending in a throw outside exception handlers.
+         * Enclosing try statements are excluded because a handler can resume execution.
+         *
+         * @param ast block to inspect
+         * @return whether assignments in the block cannot reach following statements
+         */
+        private static boolean isThrowingBranch(DetailAST ast) {
+            boolean result = TokenUtil.isOfType(ast.getLastChild().getPreviousSibling(),
+                            TokenTypes.LITERAL_THROW);
+            for (DetailAST parent = ast; result && parent != null;
+                    parent = parent.getParent()) {
+                result = parent.getType() != TokenTypes.LITERAL_TRY;
+            }
+            return result;
+        }
+
+        /**
+         * Restores assignment state on the path that does not enter the branch.
+         */
+        private void restore() {
+            unassigned.forEach((candidate, data) -> {
+                candidate.assigned = false;
+                if (!data.uninitializedVariables.contains(candidate.variableIdent)) {
+                    data.uninitializedVariables.add(candidate.variableIdent);
+                }
+            });
+        }
+
     }
 
     /**

@@ -31,8 +31,7 @@ import com.puppycrawl.tools.checkstyle.DetailAstImpl;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class NoWhitespaceAfterCheckTest
-    extends AbstractModuleTestSupport {
+public class NoWhitespaceAfterCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -391,6 +390,40 @@ public class NoWhitespaceAfterCheckTest
 
         verifyWithInlineConfigParser(
                 getPath("InputNoWhitespaceAfterSynchronized.java"),
+                expected);
+    }
+
+    @Test
+    public void testNoWhitespaceAfterCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "13:26: " + getCheckMessage(MSG_KEY, "."),
+            "14:23: " + getCheckMessage(MSG_KEY, "!"),
+            "15:20: " + getCheckMessage(MSG_KEY, "-"),
+            "16:19: " + getCheckMessage(MSG_KEY, "~"),
+            "17:23: " + getCheckMessage(MSG_KEY, "--"),
+            "18:27: " + getCheckMessage(MSG_KEY, "numbers"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputNoWhitespaceAfterCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testNoWhitespaceAfterCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "13:26: " + getCheckMessage(MSG_KEY, "."),
+            "14:23: " + getCheckMessage(MSG_KEY, "!"),
+            "15:20: " + getCheckMessage(MSG_KEY, "-"),
+            "16:19: " + getCheckMessage(MSG_KEY, "~"),
+            "17:23: " + getCheckMessage(MSG_KEY, "--"),
+            "18:27: " + getCheckMessage(MSG_KEY, "numbers"),
+            "19:26: " + getCheckMessage(MSG_KEY, "."),
+            "22:27: " + getCheckMessage(MSG_KEY, "-"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputNoWhitespaceAfterCompactSourceFileProperties.java"),
                 expected);
     }
 

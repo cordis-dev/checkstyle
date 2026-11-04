@@ -58,8 +58,7 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 public final class BooleanExpressionComplexityCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_KEY = "booleanExpressionComplexity";
 
@@ -129,6 +128,12 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
     }
 
     @Override
+    public void beginTree(DetailAST rootAST) {
+        contextStack.clear();
+        context = new Context(false);
+    }
+
+    @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF,
@@ -168,8 +173,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
     }
 
     /**
-     * Checks if {@link TokenTypes#BOR binary OR} is applied to exceptions
-     * in
+     * Checks if {@link TokenTypes#BOR binary OR} is applied to exceptions in
      * <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-14.html#jls-14.20">
      * multi-catch</a> (pipe-syntax).
      *

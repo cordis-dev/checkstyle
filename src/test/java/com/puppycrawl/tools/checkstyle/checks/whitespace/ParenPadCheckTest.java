@@ -35,8 +35,7 @@ import com.puppycrawl.tools.checkstyle.internal.utils.TestUtil;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
-public class ParenPadCheckTest
-    extends AbstractModuleTestSupport {
+public class ParenPadCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -329,8 +328,10 @@ public class ParenPadCheckTest
             });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                 + "whitespace.ParenPadCheck");
     }
 
@@ -548,8 +549,7 @@ public class ParenPadCheckTest
      * METHOD_DEF will never reach this method. It is hard to recreate conditions for
      * all tokens to go through this method. We do not want to change main code to have
      * this set ok tokens more exact, because it will not be ease to understand.
-     * So we have to use reflection to be sure all
-     * acceptable tokens pass that check.
+     * So we have to use reflection to be sure all acceptable tokens pass that check.
      */
     @Test
     public void testIsAcceptableToken() throws Exception {
@@ -631,6 +631,28 @@ public class ParenPadCheckTest
         verifyWithInlineConfigParser(
                 getNonCompilablePath("InputParenPadForRecordPatternWithSpaceOption.java"),
                 expected);
+    }
+
+    @Test
+    public void testParenPadCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "20:11: " + getCheckMessage(MSG_WS_FOLLOWED, "("),
+            "21:18: " + getCheckMessage(MSG_WS_PRECEDED, ")"),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputParenPadCompactSourceFileDefault.java"),
+            expected);
+    }
+
+    @Test
+    public void testParenPadCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "20:18: " + getCheckMessage(MSG_WS_NOT_PRECEDED, ")"),
+            "21:11: " + getCheckMessage(MSG_WS_NOT_FOLLOWED, "("),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputParenPadCompactSourceFileProperties.java"),
+            expected);
     }
 
 }

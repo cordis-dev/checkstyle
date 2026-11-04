@@ -31,8 +31,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class SeparatorWrapCheckTest
-        extends AbstractModuleTestSupport {
+public class SeparatorWrapCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -92,8 +91,10 @@ public class SeparatorWrapCheckTest
             });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                 + "whitespace.SeparatorWrapCheck");
     }
 
@@ -146,6 +147,29 @@ public class SeparatorWrapCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputSeparatorWrapForTestTrailingWhitespace.java"), expected);
+    }
+
+    @Test
+    public void testSeparatorWrapCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "13:13: " + getCheckMessage(MSG_LINE_PREVIOUS, "."),
+            "15:13: " + getCheckMessage(MSG_LINE_PREVIOUS, ","),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputSeparatorWrapCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testSeparatorWrapCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "12:25: " + getCheckMessage(MSG_LINE_NEW, "."),
+            "14:15: " + getCheckMessage(MSG_LINE_NEW, ","),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputSeparatorWrapCompactSourceFileProperties.java"),
+                expected);
     }
 
 }

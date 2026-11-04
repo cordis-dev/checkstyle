@@ -98,8 +98,7 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 public class CovariantEqualsCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_KEY = "covariant.equals";
 
@@ -131,6 +130,11 @@ public class CovariantEqualsCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return getRequiredTokens();
+    }
+
+    @Override
+    public void beginTree(DetailAST rootAST) {
+        equalsMethods.clear();
     }
 
     @Override

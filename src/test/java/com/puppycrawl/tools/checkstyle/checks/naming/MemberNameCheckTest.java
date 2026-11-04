@@ -28,8 +28,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class MemberNameCheckTest
-    extends AbstractModuleTestSupport {
+public class MemberNameCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -226,6 +225,53 @@ public class MemberNameCheckTest
         };
         verifyWithInlineConfigParser(
                 getPath("InputMemberNameExtended.java"), expected);
+    }
+
+    @Test
+    public void testCompactSourceFileDefault() throws Exception {
+        final String pattern = "^[a-z][a-zA-Z0-9]*$";
+
+        final String[] expected = {
+            "15:5: " + getCheckMessage(MSG_INVALID_PATTERN, "Bad", pattern),
+            "16:12: " + getCheckMessage(MSG_INVALID_PATTERN, "Public_", pattern),
+            "17:15: " + getCheckMessage(MSG_INVALID_PATTERN, "Protected_", pattern),
+            "18:13: " + getCheckMessage(MSG_INVALID_PATTERN, "Private_", pattern),
+            "19:11: " + getCheckMessage(MSG_INVALID_PATTERN, "Final_", pattern),
+            "25:13: " + getCheckMessage(MSG_INVALID_PATTERN, "AnonField", pattern),
+            "33:9: " + getCheckMessage(MSG_INVALID_PATTERN, "InnerBad", pattern),
+            "43:9: " + getCheckMessage(MSG_INVALID_PATTERN, "EnumField_", pattern),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputMemberNameCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testCompactSourceFileProperties1() throws Exception {
+        final String pattern = "^m[A-Z][a-zA-Z0-9]*$";
+
+        final String[] expected = {
+            "15:5: " + getCheckMessage(MSG_INVALID_PATTERN, "bad", pattern),
+            "18:13: " + getCheckMessage(MSG_INVALID_PATTERN, "privateBad", pattern),
+            "26:9: " + getCheckMessage(MSG_INVALID_PATTERN, "innerBad", pattern),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputMemberNameCompactSourceFileProperties1.java"),
+                expected);
+    }
+
+    @Test
+    public void testCompactSourceFileProperties2() throws Exception {
+        final String pattern = "^[a-z][a-zA-Z0-9]*$";
+
+        final String[] expected = {
+            "16:12: " + getCheckMessage(MSG_INVALID_PATTERN, "Public_", pattern),
+            "17:15: " + getCheckMessage(MSG_INVALID_PATTERN, "Protected_", pattern),
+            "25:16: " + getCheckMessage(MSG_INVALID_PATTERN, "InnerPublic", pattern),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputMemberNameCompactSourceFileProperties2.java"),
+                expected);
     }
 
     @Test

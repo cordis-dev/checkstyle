@@ -22,10 +22,12 @@ package com.puppycrawl.tools.checkstyle.checks.modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
@@ -69,11 +71,22 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <li>
  * {@code final} modifier on unnamed variables when using JDK 22 or later.
  * </li>
+ * <li>
+ * {@code public} modifier on top-level methods of compact source files.
+ * </li>
  * </ol>
  *
  * <p>
- * ATTENTION: Top-level members of compact source files are skipped from validation by this check.
+ * ATTENTION: Except for the {@code public} modifier on top-level methods,
+ * top-level members of compact source files are skipped from validation by this check.
  * </p>
+ *
+ * <p>The implicitly declared class of a compact source file is final and cannot be
+ * referenced by name from other classes, so the {@code public} modifier on its
+ * top-level methods is redundant. Methods that override methods of {@code java.lang.Object},
+ * such as {@code equals(Object)}, {@code hashCode()} or {@code toString()}, are not reported,
+ * as their access cannot be reduced.
+ * See <a href="https://openjdk.org/jeps/512">JEP 512</a> for more info.</p>
  *
  * <p>
  * interfaces by definition are abstract so the {@code abstract} modifier is redundant on them.
@@ -86,8 +99,7 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * </p>
  *
  * <p>Fields in interfaces and annotations are automatically
- * public, static and final, so these modifiers are redundant as
- * well.</p>
+ * public, static and final, so these modifiers are redundant as well.</p>
  *
  * <p>As annotations are a form of interface, their fields are also
  * automatically public, static and final just as their
@@ -165,12 +177,10 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * @since 3.0
  */
 @StatelessCheck
-public class RedundantModifierCheck
-    extends AbstractCheck {
+public class RedundantModifierCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_KEY = "redundantModifier";
 
@@ -192,6 +202,13 @@ public class RedundantModifierCheck
      *
      */
     private static final int JDK_17 = 17;
+
+    /**
+     * Names of overridable methods without parameters of {@code java.lang.Object}.
+     */
+    private static final Set<String> OBJECT_METHODS_WITHOUT_PARAMETERS = Set.of(
+        "hashCode", "toString", "clone", "finalize"
+    );
 
     /**
      * Set the JDK version that you are using.
@@ -314,8 +331,7 @@ public class RedundantModifierCheck
      * Check if the variable is unnamed and has redundant final modifier.
      *
      * @param ast node of type {@link TokenTypes#VARIABLE_DEF}
-     *     or {@link TokenTypes#PATTERN_VARIABLE_DEF}
-     *     or {@link TokenTypes#PARAMETER_DEF}
+     *     or {@link TokenTypes#PATTERN_VARIABLE_DEF} or {@link TokenTypes#PARAMETER_DEF}
      */
     private void checkUnnamedVariables(DetailAST ast) {
         if (jdkVersion >= JDK_22 && isUnnamedVariable(ast)) {
@@ -327,8 +343,7 @@ public class RedundantModifierCheck
      * Check if the variable is unnamed.
      *
      * @param ast node of type {@link TokenTypes#VARIABLE_DEF}
-     *     or {@link TokenTypes#PATTERN_VARIABLE_DEF}
-     *     or {@link TokenTypes#PARAMETER_DEF}
+     *     or {@link TokenTypes#PATTERN_VARIABLE_DEF} or {@link TokenTypes#PARAMETER_DEF}
      * @return true if the variable is unnamed
      */
     private static boolean isUnnamedVariable(DetailAST ast) {
@@ -447,6 +462,60 @@ public class RedundantModifierCheck
         if (ast.findFirstToken(TokenTypes.SLIST) == null) {
             processAbstractMethodParameters(ast);
         }
+
+        checkCompactSourceFileMethodModifiers(ast);
+    }
+
+    /**
+     * Checks if top-level method of compact source file has redundant public modifier.
+     *
+     * @param methodDef method AST
+     */
+    private void checkCompactSourceFileMethodModifiers(DetailAST methodDef) {
+        if (methodDef.getParent().getType() == TokenTypes.COMPACT_COMPILATION_UNIT
+                && !isObjectMethodOverride(methodDef)) {
+            checkForRedundantModifier(methodDef, TokenTypes.LITERAL_PUBLIC);
+        }
+    }
+
+    /**
+     * Checks if method overrides one of the overridable methods of {@code java.lang.Object},
+     * so its {@code public} modifier cannot be removed.
+     *
+     * @param methodDef method AST
+     * @return true if method overrides a method of {@code java.lang.Object}
+     */
+    private static boolean isObjectMethodOverride(DetailAST methodDef) {
+        DetailAST methodName = methodDef.getFirstChild();
+        while (methodName.getType() != TokenTypes.IDENT) {
+            methodName = methodName.getNextSibling();
+        }
+        final String name = methodName.getText();
+        // method name is followed by LPAREN and PARAMETERS
+        final DetailAST parameters = methodName.getNextSibling().getNextSibling();
+        final boolean result;
+        if (parameters.getChildCount() == 0) {
+            result = OBJECT_METHODS_WITHOUT_PARAMETERS.contains(name);
+        }
+        else {
+            result = "equals".equals(name)
+                    && parameters.getChildCount() == 1
+                    && isObjectType(parameters.getFirstChild());
+        }
+        return result;
+    }
+
+    /**
+     * Checks if parameter is of {@code java.lang.Object} type.
+     *
+     * @param parameterDef parameter AST
+     * @return true if parameter is of {@code java.lang.Object} type
+     */
+    private static boolean isObjectType(DetailAST parameterDef) {
+        // parameter type follows MODIFIERS
+        final DetailAST type = parameterDef.getFirstChild().getNextSibling();
+        final String typeName = FullIdent.createFullIdentBelow(type).getText();
+        return "Object".equals(typeName) || "java.lang.Object".equals(typeName);
     }
 
     /**

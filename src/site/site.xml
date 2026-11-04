@@ -140,11 +140,14 @@
           <item name="EmptyStatement" href="checks/coding/emptystatement.html"/>
           <item name="EqualsAvoidNull" href="checks/coding/equalsavoidnull.html"/>
           <item name="EqualsHashCode" href="checks/coding/equalshashcode.html"/>
+          <item name="ExceptionThrowShouldUseContext"
+                href="checks/coding/exceptionthrowshouldusecontext.html"/>
           <item name="ExplicitInitialization" href="checks/coding/explicitinitialization.html"/>
           <item name="ExpressionOverBlockLambda"
                 href="checks/coding/expressionoverblocklambda.html"/>
           <item name="FallThrough" href="checks/coding/fallthrough.html"/>
           <item name="FinalLocalVariable" href="checks/coding/finallocalvariable.html"/>
+          <item name="FinalPatternVariable" href="checks/coding/finalpatternvariable.html"/>
           <item name="HiddenField" href="checks/coding/hiddenfield.html"/>
           <item name="IllegalCatch" href="checks/coding/illegalcatch.html"/>
           <item name="IllegalInstantiation" href="checks/coding/illegalinstantiation.html"/>
@@ -167,6 +170,8 @@
           <item name="NestedIfDepth" href="checks/coding/nestedifdepth.html"/>
           <item name="NestedTryDepth" href="checks/coding/nestedtrydepth.html"/>
           <item name="NoArrayTrailingComma" href="checks/coding/noarraytrailingcomma.html"/>
+          <item name="NoCauseGetMessageInExceptionConstructor"
+                href="checks/coding/nocausegetmessageinexceptionconstructor.html"/>
           <item name="NoClone" href="checks/coding/noclone.html"/>
           <item name="NoEnumTrailingComma" href="checks/coding/noenumtrailingcomma.html"/>
           <item name="NoFinalizer" href="checks/coding/nofinalizer.html"/>
@@ -177,6 +182,7 @@
           <item name="ParameterAssignment" href="checks/coding/parameterassignment.html"/>
           <item name="PatternVariableAssignment"
                 href="checks/coding/patternvariableassignment.html"/>
+          <item name="RedundantThis" href="checks/coding/redundantthis.html"/>
           <item name="RequireThis" href="checks/coding/requirethis.html"/>
           <item name="ReturnCount" href="checks/coding/returncount.html"/>
           <item name="SimplifyBooleanExpression"
@@ -185,7 +191,7 @@
           <item name="StringLiteralEquality" href="checks/coding/stringliteralequality.html"/>
           <item name="SuperClone" href="checks/coding/superclone.html"/>
           <item name="SuperFinalize" href="checks/coding/superfinalize.html"/>
-          <item name="TextBlockGoogleStyle"
+          <item name="TextBlockGoogleStyleFormatting"
                 href="checks/coding/textblockgooglestyleformatting.html"/>
           <item name="UnnecessaryNullCheckWithInstanceOf"
                 href="checks/coding/unnecessarynullcheckwithinstanceof.html"/>
@@ -237,10 +243,11 @@
         </item>
         <item name="Javadoc Comments" href="checks/javadoc/index.html" collapse="true">
           <item name="AtclauseOrder" href="checks/javadoc/atclauseorder.html"/>
+          <item name="BlockCommentEndPosition" href="checks/javadoc/blockcommentendposition.html"/>
           <item name="IllegalBlockTag" href="checks/javadoc/illegalblocktag.html"/>
           <item name="InappropriateJavadocBlockTagsOnField"
                 href="checks/javadoc/inappropriatejavadocblocktagsonfield.html"/>
-          <item name="InappropriateJavadocBlockTagsOnPackageCheck"
+          <item name="InappropriateJavadocBlockTagsOnPackage"
                 href="checks/javadoc/inappropriatejavadocblocktagsonpackage.html"/>
           <item name="InappropriateJavadocBlockTagsOnType"
                 href="checks/javadoc/inappropriatejavadocblocktagsontype.html"/>
@@ -271,6 +278,8 @@
                 href="checks/javadoc/javadoctagcontinuationindentation.html"/>
           <item name="JavadocThrowsOrder" href="checks/javadoc/javadocthrowsorder.html"/>
           <item name="JavadocType" href="checks/javadoc/javadoctype.html"/>
+          <item name="JavadocUtilizingTrailingSpace"
+                href="checks/javadoc/javadocutilizingtrailingspace.html"/>
           <item name="JavadocVariable" href="checks/javadoc/javadocvariable.html"/>
           <item name="MissingJavadocMethod" href="checks/javadoc/missingjavadocmethod.html"/>
           <item name="MissingJavadocPackage" href="checks/javadoc/missingjavadocpackage.html"/>
@@ -301,6 +310,8 @@
           <item name="ArrayTypeStyle" href="checks/misc/arraytypestyle.html"/>
           <item name="AvoidEscapedUnicodeCharacters"
                 href="checks/misc/avoidescapedunicodecharacters.html"/>
+          <item name="ClassHeaderWrapOpenjdk"
+                href="checks/misc/classheaderwrapopenjdk.html"/>
           <item name="CommentsIndentation" href="checks/misc/commentsindentation.html"/>
           <item name="DescendantToken" href="checks/misc/descendanttoken.html"/>
           <item name="FinalParameters" href="checks/misc/finalparameters.html"/>
@@ -313,7 +324,7 @@
           <item name="NoCodeInFile" href="checks/misc/nocodeinfile.html"/>
           <item name="NumericalPrefixesInfixesSuffixesCharacterCase"
                 href="checks/misc/numericalprefixesinfixessuffixescharactercase.html"/>
-          <item name="OpenjdkMethodThrowsAlignmentCheck"
+          <item name="OpenjdkMethodThrowsAlignment"
                 href="checks/misc/openjdkmethodthrowsalignment.html"/>
           <item name="OrderedProperties" href="checks/misc/orderedproperties.html"/>
           <item name="OuterTypeFilename" href="checks/misc/outertypefilename.html"/>
@@ -333,6 +344,8 @@
                 href="checks/modifier/interfacememberimpliedmodifier.html"/>
           <item name="ModifierOrder" href="checks/modifier/modifierorder.html"/>
           <item name="RedundantModifier" href="checks/modifier/redundantmodifier.html"/>
+          <item name="RedundantModifierCompactSource"
+                href="checks/modifier/redundantmodifiercompactsource.html"/>
         </item>
 
         <item name="Modules" href="checks/modules/index.html" collapse="true">
@@ -392,6 +405,8 @@
                 href="checks/whitespace/emptyforinitializerpad.html"/>
           <item name="EmptyForIteratorPad" href="checks/whitespace/emptyforiteratorpad.html"/>
           <item name="EmptyLineSeparator" href="checks/whitespace/emptylineseparator.html"/>
+          <item name="EmptyLineWrappingInBlock"
+                href="checks/whitespace/emptylinewrappinginblock.html"/>
           <item name="FileTabCharacter" href="checks/whitespace/filetabcharacter.html"/>
           <item name="GenericWhitespace" href="checks/whitespace/genericwhitespace.html"/>
           <item name="MethodParamPad" href="checks/whitespace/methodparampad.html"/>
@@ -400,6 +415,8 @@
           <item name="NoWhitespaceBefore" href="checks/whitespace/nowhitespacebefore.html"/>
           <item name="NoWhitespaceBeforeCaseDefaultColon"
                 href="checks/whitespace/nowhitespacebeforecasedefaultcolon.html"/>
+          <item name="OpenjdkMethodParameterAlignment"
+                href="checks/whitespace/openjdkmethodparameteralignment.html"/>
           <item name="OperatorWrap" href="checks/whitespace/operatorwrap.html"/>
           <item name="ParenPad" href="checks/whitespace/parenpad.html"/>
           <item name="SeparatorWrap" href="checks/whitespace/separatorwrap.html"/>

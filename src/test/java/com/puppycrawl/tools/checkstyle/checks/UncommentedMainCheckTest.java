@@ -33,8 +33,7 @@ import com.puppycrawl.tools.checkstyle.DetailAstImpl;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class UncommentedMainCheckTest
-    extends AbstractModuleTestSupport {
+public class UncommentedMainCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -117,7 +116,7 @@ public class UncommentedMainCheckTest
     public void testCompactSourceFile() throws Exception {
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
         verifyWithInlineConfigParser(
-                getNonCompilablePath("InputUncommentedMainCompactSourceFile.java"),
+                getNonCompilablePath("compact/InputUncommentedMainCompactSourceFile.java"),
                 expected);
     }
 
@@ -126,7 +125,30 @@ public class UncommentedMainCheckTest
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
         verifyWithInlineConfigParser(
                 getNonCompilablePath(
-                    "InputUncommentedMainCompactSourceFileTraditional.java"),
+                    "compact/InputUncommentedMainCompactSourceFileTraditional.java"),
+                expected);
+    }
+
+    @Test
+    public void testCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "11:5: " + getCheckMessage(MSG_KEY),
+            "16:5: " + getCheckMessage(MSG_KEY),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                    "compact/InputUncommentedMainCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "16:5: " + getCheckMessage(MSG_KEY),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                    "compact/InputUncommentedMainCompactSourceFileProperties.java"),
                 expected);
     }
 

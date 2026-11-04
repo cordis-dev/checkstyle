@@ -28,8 +28,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class LocalVariableNameCheckTest
-    extends AbstractModuleTestSupport {
+public class LocalVariableNameCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -112,6 +111,34 @@ public class LocalVariableNameCheckTest
         verifyWithInlineConfigParser(
                 getNonCompilablePath("InputLocalVariableNameUnnamedVariables.java"), expected);
 
+    }
+
+    @Test
+    public void testLocalVariableNameCompactSourceFileDefault() throws Exception {
+        final String pattern = "^([a-z][a-zA-Z0-9]*|_)$";
+
+        final String[] expected = {
+            "13:9: " + getCheckMessage(MSG_INVALID_PATTERN, "Bad", pattern),
+            "14:14: " + getCheckMessage(MSG_INVALID_PATTERN, "I", pattern),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputLocalVariableNameCompactSourceFileDefault.java"),
+            expected);
+    }
+
+    @Test
+    public void testLocalVariableNameCompactSourceFileProperties() throws Exception {
+        final String pattern = "^[a-z][a-zA-Z]+$";
+
+        final String[] expected = {
+            "12:9: " + getCheckMessage(MSG_INVALID_PATTERN, "x", pattern),
+            "16:14: " + getCheckMessage(MSG_INVALID_PATTERN, "Bad", pattern),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/"
+                        + "InputLocalVariableNameCompactSourceFileProperties.java"),
+            expected);
     }
 
 }

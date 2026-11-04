@@ -29,8 +29,7 @@ import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
-public class AvoidStarImportCheckTest
-    extends AbstractModuleTestSupport {
+public class AvoidStarImportCheckTest extends AbstractModuleTestSupport {
 
     @Override
     public String getPackageLocation() {
@@ -136,6 +135,42 @@ public class AvoidStarImportCheckTest
                 getPath("InputAvoidStarImportMaxAllowed.java"),
                 getPath("InputAvoidStarImportMaxAllowed2.java"),
                 excepted);
+    }
+
+    @Test
+    public void testAvoidStarImportCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "12:15: " + getCheckMessage(MSG_KEY, "java.io.*"),
+            "13:17: " + getCheckMessage(MSG_KEY, "java.util.*"),
+            "14:29: " + getCheckMessage(MSG_KEY, "java.lang.Math.*"),
+        };
+
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputAvoidStarImportCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testAvoidStarImportCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "14:17: " + getCheckMessage(MSG_COUNT, 1),
+            "15:29: " + getCheckMessage(MSG_COUNT, 1),
+        };
+
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputAvoidStarImportCompactSourceFileProperties.java"),
+                expected);
+    }
+
+    @Test
+    public void testAvoidStarImportCompactSourceFileAllowImports() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputAvoidStarImportCompactSourceFileAllowImports.java"),
+                expected);
     }
 
 }

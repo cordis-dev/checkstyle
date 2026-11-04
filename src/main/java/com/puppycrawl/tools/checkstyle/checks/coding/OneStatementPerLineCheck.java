@@ -64,8 +64,7 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 public final class OneStatementPerLineCheck extends AbstractCheck {
 
     /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
+     * A key is pointing to the warning message text in "messages.properties" file.
      */
     public static final String MSG_KEY = "multiple.statements.line";
 
@@ -162,9 +161,11 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
 
     @Override
     public void beginTree(DetailAST rootAST) {
+        nestingScope.clear();
         lastStatementEnd = 0;
         lastVariableResourceStatementEnd = lastStatementEnd;
         lastStatementInCurrentScope = lastStatementEnd;
+        isFirstStatementOfLambdaOrAnonymous = false;
     }
 
     @Override
@@ -218,8 +219,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
     }
 
     /**
-     * Checks if statement of given semicolon is in different line
-     * than previous statement.
+     * Checks if statement of given semicolon is in different line than previous statement.
      *
      * @param ast semicolon to check
      */

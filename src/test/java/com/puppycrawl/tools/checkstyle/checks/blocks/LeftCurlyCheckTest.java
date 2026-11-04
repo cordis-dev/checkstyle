@@ -359,11 +359,11 @@ public class LeftCurlyCheckTest extends AbstractModuleTestSupport {
             "49:21: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 21),
             "52:29: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 29),
             "52:34: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 34),
-            "58:37: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 37),
-            "64:12: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 12),
-            "67:5: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 5),
-            "69:19: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 19),
-            "79:1: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 1),
+            "61:37: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 37),
+            "67:12: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 12),
+            "70:5: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 5),
+            "72:19: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 19),
+            "82:1: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 1),
         };
         verifyWithInlineConfigParser(
                 getPath("InputLeftCurlyTestLineBreakAfter.java"), expected);
@@ -622,8 +622,10 @@ public class LeftCurlyCheckTest extends AbstractModuleTestSupport {
                 });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                 + "blocks.LeftCurlyCheck");
     }
 
@@ -645,6 +647,18 @@ public class LeftCurlyCheckTest extends AbstractModuleTestSupport {
         };
         verifyWithInlineConfigParser(
                 getPath("InputLeftCurlyEnumConstantDef.java"), expected);
+    }
+
+    @Test
+    public void testNlOrSingleline() throws Exception {
+        final String[] expected = {
+            "28:30: " + getCheckMessage(MSG_KEY_LINE_NEW, "{", 30),
+            "40:31: " + getCheckMessage(MSG_KEY_LINE_NEW, "{", 31),
+            "51:42: " + getCheckMessage(MSG_KEY_LINE_NEW, "{", 42),
+            "56:47: " + getCheckMessage(MSG_KEY_LINE_NEW, "{", 47),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputLeftCurlyTestNlOrSingleline.java"), expected);
     }
 
     @Test
@@ -747,6 +761,30 @@ public class LeftCurlyCheckTest extends AbstractModuleTestSupport {
         };
         verifyWithInlineConfigParser(
                 getPath("InputLeftCurlyAnonymousClassEol.java"), expected);
+    }
+
+    @Test
+    public void testLeftCurlyCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "17:1: " + getCheckMessage(MSG_KEY_LINE_PREVIOUS, "{", 1),
+            "18:15: " + getCheckMessage(MSG_KEY_LINE_BREAK_AFTER, "{", 15),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputLeftCurlyCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testLeftCurlyCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "16:32: " + getCheckMessage(MSG_KEY_LINE_NEW, "{", 32),
+            "21:15: " + getCheckMessage(MSG_KEY_LINE_NEW, "{", 15),
+            "32:13: " + getCheckMessage(MSG_KEY_LINE_NEW, "{", 13),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputLeftCurlyCompactSourceFileProperties.java"),
+                expected);
     }
 
 }

@@ -345,8 +345,10 @@ public class RightCurlyCheckTest extends AbstractModuleTestSupport {
                 });
         assertWithMessage("Invalid exception message")
             .that(exc.getMessage())
-            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
-                + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker");
+        assertWithMessage("Invalid exception message")
+            .that(exc.getCause().getMessage())
+            .isEqualTo("cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                 + "blocks.RightCurlyCheck");
     }
 
@@ -1143,6 +1145,32 @@ public class RightCurlyCheckTest extends AbstractModuleTestSupport {
         };
         verifyWithInlineConfigParser(
                 getPath("InputRightCurlyTestDoubleBrace3.java"), expected);
+    }
+
+    @Test
+    public void testRightCurlyCompactSourceFileDefault() throws Exception {
+        final String[] expected = {
+            "13:5: " + getCheckMessage(MSG_KEY_LINE_SAME, "}", 5),
+            "22:5: " + getCheckMessage(MSG_KEY_LINE_SAME, "}", 5),
+            "31:45: " + getCheckMessage(MSG_KEY_LINE_BREAK_BEFORE, "}", 45),
+            "35:5: " + getCheckMessage(MSG_KEY_LINE_ALONE, "}", 5),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath("compact/InputRightCurlyCompactSourceFileDefault.java"),
+                expected);
+    }
+
+    @Test
+    public void testRightCurlyCompactSourceFileProperties() throws Exception {
+        final String[] expected = {
+            "13:5: " + getCheckMessage(MSG_KEY_LINE_ALONE, "}", 5),
+            "18:5: " + getCheckMessage(MSG_KEY_LINE_ALONE, "}", 5),
+            "24:52: " + getCheckMessage(MSG_KEY_LINE_ALONE, "}", 52),
+        };
+        verifyWithInlineConfigParser(
+                getNonCompilablePath(
+                        "compact/InputRightCurlyCompactSourceFileProperties.java"),
+                expected);
     }
 
 }
