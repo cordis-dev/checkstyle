@@ -35,46 +35,39 @@
 </div>
       <subsection name="Description" id="CyclomaticComplexity_Description">
         <div>
-          Checks cyclomatic complexity against a specified limit. It is a measure of
-          the minimum number of possible paths through the source and therefore the
-          number of required tests, it is not about quality of code! It is only
-          applied to methods, c-tors,
+          Reports the modified cyclomatic complexity of every method, constructor,
+          static initializer and instance initializer. It is a measure of the
+          number of independent paths through the source and therefore of the number
+          of required tests, it is not about quality of code. See
           <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html">
-          static initializers and instance initializers</a>.
+          initializer blocks</a> for details on initializers.
         </div>
 
         <p>
-          The complexity is equal to the number of decision points <code>+ 1</code>.
+          Counting starts at <code>0</code> and each decision point adds <code>1</code>.
           Decision points:
         </p>
         <ul>
         <li>
-          <code>if</code>, <code>while</code>, <code>do</code>, <code>for</code>,
-          <code>?:</code>, <code>catch</code>, <code>switch</code>, <code>case</code> statements.
+          <code>if</code>, <code>else</code>, <code>while</code>, <code>do</code>, <code>for</code>,
+          <code>?:</code>, <code>catch</code> and <code>switch</code> statements. An <code>else if</code>
+          counts once, and a whole <code>switch</code> block counts as a single decision point
+          regardless of the cases, guards or nested statements it contains.
         </li>
         <li>
-          Operators <code>&amp;&amp;</code> and <code>||</code> in the body of target.
+          Sequences of the same logical operator <code>&amp;&amp;</code> or <code>||</code> in the body
+          of target. Each uninterrupted sequence counts once regardless of its length.
         </li>
         <li>
-          <code>when</code> expression in case labels, also known as guards.
+          Recursive calls, that is calls to a method with the same name as the enclosing
+          method.
         </li>
         </ul>
 
         <p>
-          By pure theory level 1-4 is considered easy to test, 5-7 OK, 8-10 consider
-          re-factoring to ease testing, and 11+ re-factor now as testing will be painful.
-        </p>
-
-        <p>
-          When it comes to code quality measurement by this metric level 10 is very
-          good level as a ultimate target (that is hard to archive). Do not be ashamed
-          to have complexity level 15 or even higher, but keep it below 20 to catch
-          really bad-designed code automatically.
-        </p>
-
-        <p>
-          Please use Suppression to avoid violations on cases that could not be split
-          in few methods without damaging readability of code or encapsulation.
+          The complexity is reported for every target together with its name. Initializer
+          blocks are reported as <code>ClassName.INSTANCE_INIT</code> and
+          <code>ClassName.STATIC_INIT</code>.
         </p>
       </subsection>
 
@@ -114,10 +107,14 @@
                     LITERAL_FOR</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_IF">
                     LITERAL_IF</a>
+                , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_ELSE">
+                    LITERAL_ELSE</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SWITCH">
                     LITERAL_SWITCH</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CASE">
                     LITERAL_CASE</a>
+                , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_DEFAULT">
+                    LITERAL_DEFAULT</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">
                     LITERAL_CATCH</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">
@@ -128,6 +125,8 @@
                     LOR</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHEN">
                     LITERAL_WHEN</a>
+                , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
+                    METHOD_CALL</a>
                   .
               </td>
               <td>
@@ -139,10 +138,14 @@
                     LITERAL_FOR</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_IF">
                     LITERAL_IF</a>
+                , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_ELSE">
+                    LITERAL_ELSE</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SWITCH">
                     LITERAL_SWITCH</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CASE">
                     LITERAL_CASE</a>
+                , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_DEFAULT">
+                    LITERAL_DEFAULT</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">
                     LITERAL_CATCH</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">
@@ -153,6 +156,8 @@
                     LOR</a>
                 , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHEN">
                     LITERAL_WHEN</a>
+                , <a href="../../apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
+                    METHOD_CALL</a>
                   .
               </td>
               <td>3.2</td>
